@@ -269,62 +269,65 @@ export function createStyles<
     };
   });
 
+  function create(
+    config?: StylesConfig<TClassesValue, TVariantsValue>,
+    overrides?: Partial<TClassesValue> | string,
+  ) {
+    const configVariantsValue = createConfigVariantsValue(config?.variants);
+    const configClassesValue =
+      config?.classes &&
+      (typeof config.classes === "function"
+        ? config.classes(configVariantsValue || EMPTY_OBJECT)
+        : config.classes);
+    const overridesClassesValue =
+      overrides &&
+      (typeof overrides === "string"
+        ? ({ root: overrides } as unknown as Partial<TClassesValue>)
+        : overrides);
+
+    const classesValues = createVariantsClassesValues(configVariantsValue);
+
+    if (configClassesValue) {
+      classesValues.push(configClassesValue);
+    }
+
+    if (overridesClassesValue) {
+      classesValues.push(overridesClassesValue);
+    }
+
+    if (classesValues.length === 0) {
+      return styles.classes;
+    }
+
+    return Object.entries(styles.classes).reduce((result, [key, value]) => {
+      const name = key as keyof TClassesValue;
+
+      const classes = classesValues.reduce<string[]>((result, classes) => {
+        const value = classes[name];
+
+        if (value) {
+          result.push(value);
+        }
+
+        return result;
+      }, []);
+
+      result[name] = (
+        classes.length > 0 ? mergeClasses(value, ...classes) : value
+      ) as TClassesValue[keyof TClassesValue];
+
+      return result;
+    }, {} as TClassesValue);
+  }
+
   let _classes: TClassesValue;
 
   function createClasses(
     config?: StylesConfig<TClassesValue, TVariantsValue>,
     overrides?: Partial<TClassesValue> | string,
   ): TClassesValue {
-    function create() {
-      const configVariantsValue = createConfigVariantsValue(config?.variants);
-      const configClassesValue =
-        config?.classes &&
-        (typeof config.classes === "function"
-          ? config.classes(configVariantsValue || EMPTY_OBJECT)
-          : config.classes);
-      const overridesClassesValue =
-        overrides &&
-        (typeof overrides === "string"
-          ? ({ root: overrides } as unknown as Partial<TClassesValue>)
-          : overrides);
-
-      const classesValues = createVariantsClassesValues(configVariantsValue);
-
-      if (configClassesValue) {
-        classesValues.push(configClassesValue);
-      }
-
-      if (overridesClassesValue) {
-        classesValues.push(overridesClassesValue);
-      }
-
-      if (classesValues.length === 0) {
-        return styles.classes;
-      }
-
-      return Object.entries(styles.classes).reduce((result, [key, value]) => {
-        const name = key as keyof TClassesValue;
-
-        const classes = classesValues.reduce<string[]>((result, classes) => {
-          const value = classes[name];
-
-          if (value) {
-            result.push(value);
-          }
-
-          return result;
-        }, []);
-
-        result[name] = (
-          classes.length > 0 ? mergeClasses(value, ...classes) : value
-        ) as TClassesValue[keyof TClassesValue];
-
-        return result;
-      }, {} as TClassesValue);
-    }
-
     if ((config && (config.classes || config.variants)) || overrides) {
-      return create();
+      return create(config, overrides);
     }
 
     if (!_classes) {

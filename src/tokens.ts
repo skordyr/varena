@@ -7,7 +7,7 @@ export type TokenProperty = `--${string}`;
 export type TokenVariable = `var(${string})`;
 
 export type TokensStyle = {
-  [name: TokenProperty]: TokenPrimitive;
+  [key: TokenProperty]: TokenPrimitive;
 };
 
 export type TokensValue = {
@@ -97,38 +97,34 @@ export function createTokens<TTokensValue extends TokensValue>(
     key: TKey,
     fallback?: NonNullable<TTokensValue[TKey]>,
   ): TokenVariable {
-    const propertyName = property(key);
-
-    return fallback === undefined ? `var(${propertyName})` : `var(${propertyName}, ${fallback})`;
+    return fallback === undefined ? `var(${property(key)})` : `var(${property(key)}, ${fallback})`;
   }
 
   function extend(config: TokensConfig<TTokensValue>): Tokens<TTokensValue> {
     return createTokens<TTokensValue>({ ...tokens, ...config }, options);
   }
 
+  function create(config: TokensConfig<TTokensValue>): TokensStyle {
+    const style: TokensStyle = {};
+
+    for (const [key, value] of Object.entries(config)) {
+      if (value !== undefined) {
+        style[property(key)] = value;
+      }
+    }
+
+    return style;
+  }
+
   let _style: TokensStyle;
 
   function createStyle(config: TokensConfig<TTokensValue>): TokensStyle {
-    function create() {
-      const style: TokensStyle = {};
-
-      for (const [key, value] of Object.entries(config)) {
-        if (value !== undefined) {
-          const propertyName = property(key);
-
-          style[propertyName] = value;
-        }
-      }
-
-      return style;
-    }
-
     if (config !== tokens) {
-      return create();
+      return create(config);
     }
 
     if (!_style) {
-      _style = create();
+      _style = create(config);
     }
 
     return _style;
@@ -154,11 +150,19 @@ export function createTokens<TTokensValue extends TokensValue>(
 }
 
 function createVariableNameWithDash(key: string, prefix?: string) {
-  const path = key.split(".");
+  if (key.includes(".")) {
+    const path = key.split(".");
 
-  if (prefix) {
-    path.unshift(prefix);
+    if (prefix) {
+      path.unshift(prefix);
+    }
+
+    return path.join("-");
   }
 
-  return path.join("-");
+  if (prefix) {
+    return `${prefix}-${key}`;
+  }
+
+  return key;
 }
