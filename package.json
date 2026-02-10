@@ -1,0 +1,40 @@
+{
+  "name": "varena",
+  "version": "0.0.0",
+  "description": "A framework-agnostic, type-safe styling library for building component variants with multi-part support. Inspired by `stitches`.",
+  "homepage": "https://github.com/skordyr/varena#readme",
+  "bugs": {
+    "url": "https://github.com/skordyr/varena/issues"
+  },
+  "license": "MIT",
+  "author": "skordyr <xyan.sk@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skordyr/varena.git"
+  },
+  "files": [
+    "dist",
+    "*.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "build": "tsdown",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@types/node": "^25.2.2",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
+    "tsdown": "^0.20.3",
+    "typescript": "^5.9.3"
+  }
+}

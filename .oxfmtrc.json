@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "experimentalSortImports": {
+    "groups": [
+      "side-effect",
+      "side-effect-style",
+      "type-builtin",
+      "builtin",
+      "type-external",
+      "external",
+      "type-internal",
+      "internal",
+      "type-index",
+      "index",
+      ["type-parent", "type-sibling"],
+      ["parent", "sibling"],
+      "style",
+      "ts-equals-import",
+      "unknown"
+    ]
+  },
+  "ignorePatterns": []
+}
