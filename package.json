@@ -1,6 +1,6 @@
 {
   "name": "varena",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A framework-agnostic, type-safe styling library for building component variants and design tokens, with first-class slots support. Inspired by `stitches`.",
   "homepage": "https://github.com/skordyr/varena#readme",
   "bugs": {

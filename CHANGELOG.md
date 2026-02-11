@@ -1,5 +1,11 @@
 # varena
 
+## 0.2.2
+
+### Patch Changes
+
+- 461b0b6: refine API reference and examples; standardize naming and style terminology
+
 ## 0.2.1
 
 ### Patch Changes
