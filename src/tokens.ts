@@ -42,23 +42,23 @@ export interface Tokens<TTokensValue extends TokensValue> {
 export type InferTokensConfig<TTokens extends Tokens<any>> =
   TTokens extends Tokens<infer TTokenValue> ? TokensConfig<TTokenValue> : never;
 
-export function isTokensType(target: any): target is Tokens<any> {
+export function isTokens(target: unknown): target is Tokens<any> {
   const candidate = target as Tokens<any>;
 
   return Boolean(
     candidate &&
-    typeof candidate === "function" &&
     candidate.definition &&
-    typeof candidate.definition === "object" &&
     candidate.style &&
-    typeof candidate.style === "object" &&
     candidate.value &&
-    typeof candidate.value === "function" &&
     candidate.property &&
-    typeof candidate.property === "function" &&
     candidate.variable &&
-    typeof candidate.variable === "function" &&
     candidate.extend &&
+    typeof candidate === "function" &&
+    typeof candidate.definition === "object" &&
+    typeof candidate.style === "object" &&
+    typeof candidate.value === "function" &&
+    typeof candidate.property === "function" &&
+    typeof candidate.variable === "function" &&
     typeof candidate.extend === "function",
   );
 }

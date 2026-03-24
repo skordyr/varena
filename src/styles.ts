@@ -96,15 +96,15 @@ export type InferComponentStylesConfig<T extends Styles<any, any>> = Simplify<
   Pick<InferStylesConfig<T>, "classes"> & InferStylesConfig<T>["variants"]
 >;
 
-export function isStylesType(target: any): target is Styles<any, any> {
+export function isStyles(target: unknown): target is Styles<any, any> {
   const candidate = target as Styles<any, any>;
 
   return Boolean(
     candidate &&
-    typeof candidate === "function" &&
     candidate.definition &&
-    typeof candidate.definition === "object" &&
     candidate.classes &&
+    typeof candidate === "function" &&
+    typeof candidate.definition === "object" &&
     typeof candidate.classes === "object",
   );
 }

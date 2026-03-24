@@ -118,8 +118,8 @@ classes.icon;
 
 ```ts
 const classes = ButtonStyles({
-  variants: { size: "lg" },
   classes: { icon: "custom-icon" },
+  variants: { size: "lg" },
 });
 
 classes.root;
@@ -131,10 +131,10 @@ classes.icon;
 
 ```ts
 const classes = ButtonStyles({
-  variants: { tone: "danger" },
   classes: (variants) => ({
     root: variants.tone === "danger" ? "btn--ring" : undefined,
   }),
+  variants: { tone: "danger" },
 });
 
 classes.root;
@@ -288,6 +288,30 @@ const style = sx({ padding: "8px", borderRadius: "8px" }, undefined, {
 // => { padding: "12px", borderRadius: "8px", color: "white" }
 ```
 
+### `isStyles`
+
+```ts
+import { isStyles, createStyles } from "varena";
+
+const ButtonStyles = createStyles({ classes: { root: "btn" } });
+
+isStyles(ButtonStyles); // => true
+isStyles({}); // => false
+isStyles(null); // => false
+```
+
+### `isTokens`
+
+```ts
+import { isTokens, createTokens } from "varena";
+
+const ThemeTokens = createTokens({ "color.primary": "#0ea5e9" });
+
+isTokens(ThemeTokens); // => true
+isTokens({}); // => false
+isTokens(null); // => false
+```
+
 ## API Reference
 
 ### `create(options?)`
@@ -377,6 +401,30 @@ Merge style objects and ignore `undefined` entries.
 **Returns**
 
 - `object | undefined` - Merged style object with `undefined` entries skipped.
+
+### `isStyles(target)`
+
+Type guard to check if a value is a `Styles` instance.
+
+**Parameters**
+
+- `target: unknown` - The value to check.
+
+**Returns**
+
+- `target is Styles<any, any>` - `true` if the value is a `Styles` instance, narrowing the type in TypeScript.
+
+### `isTokens(target)`
+
+Type guard to check if a value is a `Tokens` instance.
+
+**Parameters**
+
+- `target: unknown` - The value to check.
+
+**Returns**
+
+- `target is Tokens<any>` - `true` if the value is a `Tokens` instance, narrowing the type in TypeScript.
 
 ### Infer Utilities
 
