@@ -1,5 +1,12 @@
 # varena
 
+## 0.2.3
+
+### Patch Changes
+
+- f6a7924: Expose `isTokens` and `isStyles` type guards
+- d4b3cea: Refactor: reorganize internal utilities into `src/shared/` directory
+
 ## 0.2.2
 
 ### Patch Changes
