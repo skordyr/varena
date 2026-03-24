@@ -1,7 +1,7 @@
 import type { CreateStylesOptions } from "./styles";
 import type { CreateTokensOptions } from "./tokens";
 
-import { EMPTY_OBJECT, run } from "./internals";
+import { EMPTY_OBJECT, run } from "./shared/utils";
 import { createStyles } from "./styles";
 import { createTokens } from "./tokens";
 import { sx } from "./utils";

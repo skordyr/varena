@@ -1,4 +1,4 @@
-import { EMPTY_OBJECT } from "./internals";
+import { EMPTY_OBJECT } from "./shared/utils";
 
 export type TokenPrimitive = string | number;
 

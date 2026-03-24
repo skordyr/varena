@@ -1,4 +1,6 @@
-import { EMPTY_OBJECT, run, type Simplify } from "./internals";
+import type { Simplify } from "./shared/types";
+
+import { EMPTY_OBJECT, run } from "./shared/utils";
 
 export type ClassValue = string;
 
