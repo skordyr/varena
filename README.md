@@ -442,6 +442,32 @@ Infers the full `createStyles` call config type.
 
 - `{ classes?: Partial<ClassesValue> | ((variants) => Partial<ClassesValue> | undefined); variants?: Partial<Variants<...>> }` - Full config shape accepted by `Styles(config)`.
 
+#### `ExtractStylesConfig<TStyles, TRules>`
+
+Extracts matching slot keys from the `createStyles` config type.
+
+**Input**
+
+- `TStyles extends Styles<any, any>` - A `createStyles` return type.
+- `TRules extends string` - A string literal type pattern to match slot keys.
+
+**Output**
+
+- `StylesConfig` with only the matching slot keys in `classes`.
+
+#### `ExcludeStylesConfig<TStyles, TRules>`
+
+Excludes matching slot keys from the `createStyles` config type.
+
+**Input**
+
+- `TStyles extends Styles<any, any>` - A `createStyles` return type.
+- `TRules extends string` - A string literal type pattern to exclude slot keys.
+
+**Output**
+
+- `StylesConfig` without the excluded slot keys in `classes`.
+
 #### `InferComponentStylesConfig<TStyles>`
 
 Infers a component-friendly flattened style config type.
@@ -453,6 +479,32 @@ Infers a component-friendly flattened style config type.
 **Output**
 
 - `{ classes?: Partial<ClassesValue> | ((variants) => Partial<ClassesValue> | undefined); [variantName]?: VariantValue }` - Flattened component props style config.
+
+#### `ExtractComponentStylesConfig<TStyles, TRules>`
+
+Extracts a component-friendly config type with only matching slots and flattened variants.
+
+**Input**
+
+- `TStyles extends Styles<any, any>` - A `createStyles` return type.
+- `TRules extends string` - A string literal type pattern to match slot keys.
+
+**Output**
+
+- Flattened config type with only matching slots and top-level variant keys.
+
+#### `ExcludeComponentStylesConfig<TStyles, TRules>`
+
+Excludes matching slots from a component-friendly config type and flattens variants.
+
+**Input**
+
+- `TStyles extends Styles<any, any>` - A `createStyles` return type.
+- `TRules extends string` - A string literal type pattern to exclude slot keys.
+
+**Output**
+
+- Flattened config type without excluded slots and with top-level variant keys.
 
 #### `InferTokensConfig<TTokens>`
 
