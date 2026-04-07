@@ -1,5 +1,11 @@
 # varena
 
+## 0.2.5
+
+### Patch Changes
+
+- d2f4a5c: docs: add documentation for ExtractStylesConfig, ExcludeStylesConfig, ExtractComponentStylesConfig, and ExcludeComponentStylesConfig
+
 ## 0.2.4
 
 ### Patch Changes
