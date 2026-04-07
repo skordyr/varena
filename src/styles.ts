@@ -87,13 +87,43 @@ export interface Styles<
   classes: TClassesValue;
 }
 
-export type InferStylesConfig<T extends Styles<any, any>> =
-  T extends Styles<infer TClassesValue, infer TVariantsValue>
+export type InferStylesConfig<TStyles extends Styles<any, any>> =
+  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
     ? StylesConfig<TClassesValue, VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue>
     : never;
 
-export type InferComponentStylesConfig<T extends Styles<any, any>> = Simplify<
-  Pick<InferStylesConfig<T>, "classes"> & InferStylesConfig<T>["variants"]
+export type ExtractStylesConfig<TStyles extends Styles<any, any>, TRules extends string> =
+  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
+    ? StylesConfig<
+        Simplify<Pick<TClassesValue, Extract<keyof TClassesValue, TRules>>>,
+        VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue
+      >
+    : never;
+
+export type ExcludeStylesConfig<TStyles extends Styles<any, any>, TRules extends string> =
+  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
+    ? StylesConfig<
+        Simplify<Pick<TClassesValue, Exclude<keyof TClassesValue, TRules>>>,
+        VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue
+      >
+    : never;
+
+export type InferComponentStylesConfig<TStyles extends Styles<any, any>> = Simplify<
+  Pick<InferStylesConfig<TStyles>, "classes"> & InferStylesConfig<TStyles>["variants"]
+>;
+
+export type ExtractComponentStylesConfig<
+  TStyles extends Styles<any, any>,
+  TRules extends string,
+> = Simplify<
+  Pick<ExtractStylesConfig<TStyles, TRules>, "classes"> & InferStylesConfig<TStyles>["variants"]
+>;
+
+export type ExcludeComponentStylesConfig<
+  TStyles extends Styles<any, any>,
+  TRules extends string,
+> = Simplify<
+  Pick<ExcludeStylesConfig<TStyles, TRules>, "classes"> & InferStylesConfig<TStyles>["variants"]
 >;
 
 export function isStyles(target: unknown): target is Styles<any, any> {
