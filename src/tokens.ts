@@ -22,6 +22,7 @@ export interface Tokens<TTokensValue extends TokensValue> {
   (config: TokensConfig<TTokensValue>): TokensStyle;
   definition: TTokensValue;
   style: TokensStyle;
+  css(selector?: string, wrapper?: string): string;
   value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey];
   value<TKey extends TokensKey<TTokensValue>>(
     key: TKey,
@@ -49,6 +50,7 @@ export function isTokens(target: unknown): target is Tokens<any> {
     candidate &&
     candidate.definition &&
     candidate.style &&
+    candidate.css &&
     candidate.value &&
     candidate.property &&
     candidate.variable &&
@@ -56,12 +58,15 @@ export function isTokens(target: unknown): target is Tokens<any> {
     typeof candidate === "function" &&
     typeof candidate.definition === "object" &&
     typeof candidate.style === "object" &&
+    typeof candidate.css === "function" &&
     typeof candidate.value === "function" &&
     typeof candidate.property === "function" &&
     typeof candidate.variable === "function" &&
     typeof candidate.extend === "function",
   );
 }
+
+const ROOT_SELECTOR = ":root";
 
 export interface CreateTokensOptions {
   prefix?: string;
@@ -104,6 +109,41 @@ export function createTokens<TTokensValue extends TokensValue>(
     return createTokens<TTokensValue>({ ...tokens, ...config }, options);
   }
 
+  function css(selector: string = ROOT_SELECTOR, wrapper?: string): string {
+    const entries = Object.entries(createStyle(tokens));
+
+    if (entries.length === 0) {
+      return "";
+    }
+
+    const output: string[] = [];
+    const $selector = selector || ROOT_SELECTOR;
+
+    if (wrapper) {
+      output.push(`${wrapper} {
+  ${$selector} {`);
+
+      for (const [name, value] of entries) {
+        output.push(`    ${name}:${value};`);
+      }
+
+      output.push(`  }
+}
+`);
+    } else {
+      output.push(`${$selector} {`);
+
+      for (const [name, value] of entries) {
+        output.push(`  ${name}: ${value};`);
+      }
+
+      output.push(`}
+`);
+    }
+
+    return output.join("\n");
+  }
+
   function create(config: TokensConfig<TTokensValue>): TokensStyle {
     const style: TokensStyle = {};
 
@@ -139,6 +179,8 @@ export function createTokens<TTokensValue extends TokensValue>(
   createStyle.variable = variable;
 
   createStyle.extend = extend;
+
+  createStyle.css = css;
 
   Object.defineProperty(createStyle, "style", {
     get() {

@@ -189,6 +189,29 @@ ThemeTokens({ "color.primary": "#0369a1" });
 ThemeTokens.style;
 // => { "--app-color-primary": "#0ea5e9", "--app-radius-md": "8px" }
 
+ThemeTokens.css();
+// =>
+// :root {
+//   --app-color-primary: #0ea5e9;
+//   --app-radius-md: 8px;
+// }
+
+ThemeTokens.css("#main");
+// =>
+// #main {
+//   --app-color-primary: #0ea5e9;
+//   --app-radius-md: 8px;
+// }
+
+ThemeTokens.css(":root", "@media (prefers-color-scheme: dark)");
+// =>
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --app-color-primary: #0ea5e9;
+//     --app-radius-md: 8px;
+//   }
+// }
+
 ThemeTokens.property("color.primary");
 // => "--app-color-primary"
 
@@ -369,6 +392,7 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens(config) => CSSVariablesObject` - Generates a CSS variable style object from token overrides.
 - `Tokens.definition` - Original token definition passed to `createTokens`.
 - `Tokens.style` - Cached style object generated from full default token values.
+- `Tokens.css(selector?, wrapper?)` - Returns a formatted CSS string for creating CSS files.
 - `Tokens.value(key, fallback?)` - Reads a token value, using `fallback` when the key is missing.
 - `Tokens.property(key)` - Returns the CSS custom property name for a token key.
 - `Tokens.variable(key, fallback?)` - Returns `var(...)` reference for a token key, with optional fallback.
