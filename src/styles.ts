@@ -4,7 +4,7 @@ import { EMPTY_OBJECT, run } from "./shared/utils";
 
 export type ClassValue = string;
 
-export type ClassesValue = {
+export type SlotsValue = {
   [name: string]: ClassValue;
 };
 
@@ -16,22 +16,22 @@ export type VariantValue<TVariantValue extends VariantPrimitive> = TVariantValue
   ? boolean
   : TVariantValue;
 
-export type VariantsValue<TClassesValue extends ClassesValue> = {
+export type VariantsValue<TSlotsValue extends SlotsValue> = {
   [name: string]: {
-    [value: VariantPrimitive]: Partial<TClassesValue>;
+    [value: VariantPrimitive]: Partial<TSlotsValue>;
   };
 };
 
 export type Variants<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > = {
   [TName in keyof TVariantsValue]: VariantValue<keyof TVariantsValue[TName] & VariantPrimitive>;
 };
 
 export type CompoundVariantVariantsValue<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > = {
   [TName in keyof TVariantsValue]?:
     | VariantValue<keyof TVariantsValue[TName] & VariantPrimitive>
@@ -39,91 +39,89 @@ export type CompoundVariantVariantsValue<
 };
 
 export interface CompoundVariant<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > {
-  variants: CompoundVariantVariantsValue<TClassesValue, TVariantsValue>;
-  classes: Partial<TClassesValue>;
+  variants: CompoundVariantVariantsValue<TSlotsValue, TVariantsValue>;
+  slots: Partial<TSlotsValue>;
 }
 
 export type CompoundVariants<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
-> =
-  | CompoundVariant<TClassesValue, TVariantsValue>
-  | CompoundVariant<TClassesValue, TVariantsValue>[];
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
+> = CompoundVariant<TSlotsValue, TVariantsValue> | CompoundVariant<TSlotsValue, TVariantsValue>[];
 
 export interface StylesValue<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > {
-  classes: TClassesValue;
+  slots: TSlotsValue;
   variants?: TVariantsValue;
-  compoundVariants?: CompoundVariants<TClassesValue, TVariantsValue>;
-  defaultVariants?: Partial<Variants<TClassesValue, TVariantsValue>>;
+  compoundVariants?: CompoundVariants<TSlotsValue, TVariantsValue>;
+  defaultVariants?: Partial<Variants<TSlotsValue, TVariantsValue>>;
 }
 
 export interface StylesConfig<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > {
-  classes?:
+  slots?:
     | ((
-        variants: Partial<Variants<TClassesValue, TVariantsValue>>,
-      ) => Partial<TClassesValue> | undefined)
-    | Partial<TClassesValue>;
-  variants?: Partial<Variants<TClassesValue, TVariantsValue>>;
+        variants: Partial<Variants<TSlotsValue, TVariantsValue>>,
+      ) => Partial<TSlotsValue> | undefined)
+    | Partial<TSlotsValue>;
+  variants?: Partial<Variants<TSlotsValue, TVariantsValue>>;
 }
 
 export interface Styles<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 > {
   (
-    config?: StylesConfig<TClassesValue, TVariantsValue>,
-    overrides?: Partial<TClassesValue> | string,
-  ): TClassesValue;
-  definition: StylesValue<TClassesValue, TVariantsValue>;
-  classes: TClassesValue;
+    config?: StylesConfig<TSlotsValue, TVariantsValue>,
+    overrides?: Partial<TSlotsValue> | string,
+  ): TSlotsValue;
+  definition: StylesValue<TSlotsValue, TVariantsValue>;
+  slots: TSlotsValue;
 }
 
 export type InferStylesConfig<TStyles extends Styles<any, any>> =
-  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
-    ? StylesConfig<TClassesValue, VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue>
+  TStyles extends Styles<infer TSlotsValue, infer TVariantsValue>
+    ? StylesConfig<TSlotsValue, VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue>
     : never;
 
 export type ExtractStylesConfig<TStyles extends Styles<any, any>, TRules extends string> =
-  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
+  TStyles extends Styles<infer TSlotsValue, infer TVariantsValue>
     ? StylesConfig<
-        Simplify<Pick<TClassesValue, Extract<keyof TClassesValue, TRules>>>,
+        Simplify<Pick<TSlotsValue, Extract<keyof TSlotsValue, TRules>>>,
         VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue
       >
     : never;
 
 export type ExcludeStylesConfig<TStyles extends Styles<any, any>, TRules extends string> =
-  TStyles extends Styles<infer TClassesValue, infer TVariantsValue>
+  TStyles extends Styles<infer TSlotsValue, infer TVariantsValue>
     ? StylesConfig<
-        Simplify<Pick<TClassesValue, Exclude<keyof TClassesValue, TRules>>>,
+        Simplify<Pick<TSlotsValue, Exclude<keyof TSlotsValue, TRules>>>,
         VariantsValue<any> extends TVariantsValue ? {} : TVariantsValue
       >
     : never;
 
 export type InferComponentStylesConfig<TStyles extends Styles<any, any>> = Simplify<
-  Pick<InferStylesConfig<TStyles>, "classes"> & InferStylesConfig<TStyles>["variants"]
+  Pick<InferStylesConfig<TStyles>, "slots"> & InferStylesConfig<TStyles>["variants"]
 >;
 
 export type ExtractComponentStylesConfig<
   TStyles extends Styles<any, any>,
   TRules extends string,
 > = Simplify<
-  Pick<ExtractStylesConfig<TStyles, TRules>, "classes"> & InferStylesConfig<TStyles>["variants"]
+  Pick<ExtractStylesConfig<TStyles, TRules>, "slots"> & InferStylesConfig<TStyles>["variants"]
 >;
 
 export type ExcludeComponentStylesConfig<
   TStyles extends Styles<any, any>,
   TRules extends string,
 > = Simplify<
-  Pick<ExcludeStylesConfig<TStyles, TRules>, "classes"> & InferStylesConfig<TStyles>["variants"]
+  Pick<ExcludeStylesConfig<TStyles, TRules>, "slots"> & InferStylesConfig<TStyles>["variants"]
 >;
 
 export function isStyles(target: unknown): target is Styles<any, any> {
@@ -132,10 +130,10 @@ export function isStyles(target: unknown): target is Styles<any, any> {
   return Boolean(
     candidate &&
     candidate.definition &&
-    candidate.classes &&
+    candidate.slots &&
     typeof candidate === "function" &&
     typeof candidate.definition === "object" &&
-    typeof candidate.classes === "object",
+    typeof candidate.slots === "object",
   );
 }
 
@@ -144,18 +142,18 @@ export interface CreateStylesOptions {
 }
 
 export function createStyles<
-  TClassesValue extends ClassesValue,
-  TVariantsValue extends VariantsValue<TClassesValue>,
+  TSlotsValue extends SlotsValue,
+  TVariantsValue extends VariantsValue<TSlotsValue>,
 >(
-  styles: StylesValue<TClassesValue, TVariantsValue>,
+  styles: StylesValue<TSlotsValue, TVariantsValue>,
   options: CreateStylesOptions = EMPTY_OBJECT,
-): Styles<TClassesValue, TVariantsValue> {
+): Styles<TSlotsValue, TVariantsValue> {
   const { mergeClasses = mergeClassesWithSpace } = options;
 
   const createConfigVariantsValue = run<
     (
-      configVariants?: Partial<Variants<TClassesValue, TVariantsValue>>,
-    ) => Partial<Variants<TClassesValue, TVariantsValue>> | undefined
+      configVariants?: Partial<Variants<TSlotsValue, TVariantsValue>>,
+    ) => Partial<Variants<TSlotsValue, TVariantsValue>> | undefined
   >(() => {
     const { variants } = styles;
 
@@ -183,36 +181,36 @@ export function createStyles<
         ...Object.entries(configVariants).reduce(
           (result, [key, value]) => {
             if (value !== undefined) {
-              result[key as keyof Partial<Variants<TClassesValue, TVariantsValue>>] = value;
+              result[key as keyof Partial<Variants<TSlotsValue, TVariantsValue>>] = value;
             }
 
             return result;
           },
-          {} as Partial<Variants<TClassesValue, TVariantsValue>>,
+          {} as Partial<Variants<TSlotsValue, TVariantsValue>>,
         ),
       };
     };
   });
 
-  const createVariantsClassesValues = run<
+  const createVariantsSlotsValues = run<
     (
-      configVariantsValue?: Partial<Variants<TClassesValue, TVariantsValue>>,
-      classesValues?: Partial<TClassesValue>[],
-    ) => Partial<TClassesValue>[]
+      configVariantsValue?: Partial<Variants<TSlotsValue, TVariantsValue>>,
+      slotsValues?: Partial<TSlotsValue>[],
+    ) => Partial<TSlotsValue>[]
   >(() => {
     const { variants } = styles;
 
     if (!variants) {
-      return (_, classesValues = []) => {
-        return classesValues;
+      return (_, slotsValues = []) => {
+        return slotsValues;
       };
     }
 
-    const createCompoundVariantsClassesValues = run<
+    const createCompoundVariantsSlotsValues = run<
       (
-        configVariantsValue: Partial<Variants<TClassesValue, TVariantsValue>>,
-        classesValues?: Partial<TClassesValue>[],
-      ) => Partial<TClassesValue>[]
+        configVariantsValue: Partial<Variants<TSlotsValue, TVariantsValue>>,
+        slotsValues?: Partial<TSlotsValue>[],
+      ) => Partial<TSlotsValue>[]
     >(() => {
       const compoundVariants =
         styles.compoundVariants &&
@@ -221,12 +219,12 @@ export function createStyles<
           : [styles.compoundVariants]);
 
       if (!compoundVariants || compoundVariants.length === 0) {
-        return (_, classesValues = []) => {
-          return classesValues;
+        return (_, slotsValues = []) => {
+          return slotsValues;
         };
       }
 
-      return (configVariantsValue, classesValues = []) => {
+      return (configVariantsValue, slotsValues = []) => {
         for (const compoundVariant of compoundVariants) {
           const isMatched = Object.entries(compoundVariant.variants).every(
             ([compoundVariantName, compoundVariantValue]) => {
@@ -257,26 +255,26 @@ export function createStyles<
           );
 
           if (isMatched) {
-            classesValues.push(compoundVariant.classes);
+            slotsValues.push(compoundVariant.slots);
           }
         }
 
-        return classesValues;
+        return slotsValues;
       };
     });
 
     return (
-      configVariantsValue?: Partial<Variants<TClassesValue, TVariantsValue>>,
-      classesValues = [],
+      configVariantsValue?: Partial<Variants<TSlotsValue, TVariantsValue>>,
+      slotsValues = [],
     ) => {
       if (!configVariantsValue) {
-        return classesValues;
+        return slotsValues;
       }
 
       const configVariantsValueEntries = Object.entries(configVariantsValue);
 
       if (configVariantsValueEntries.length === 0) {
-        return classesValues;
+        return slotsValues;
       }
 
       let isNonEmptyVariantsValue = false;
@@ -285,57 +283,57 @@ export function createStyles<
         if (configVariantValue !== undefined) {
           isNonEmptyVariantsValue = true;
 
-          const configVariantClassesValue = variants[configVariantName][String(configVariantValue)];
+          const configVariantSlotsValue = variants[configVariantName][String(configVariantValue)];
 
-          if (configVariantClassesValue) {
-            classesValues.push(configVariantClassesValue);
+          if (configVariantSlotsValue) {
+            slotsValues.push(configVariantSlotsValue);
           }
         }
       }
 
       if (isNonEmptyVariantsValue) {
-        createCompoundVariantsClassesValues(configVariantsValue, classesValues);
+        createCompoundVariantsSlotsValues(configVariantsValue, slotsValues);
       }
 
-      return classesValues;
+      return slotsValues;
     };
   });
 
   function create(
-    config?: StylesConfig<TClassesValue, TVariantsValue>,
-    overrides?: Partial<TClassesValue> | string,
+    config?: StylesConfig<TSlotsValue, TVariantsValue>,
+    overrides?: Partial<TSlotsValue> | string,
   ) {
     const configVariantsValue = createConfigVariantsValue(config?.variants);
-    const configClassesValue =
-      config?.classes &&
-      (typeof config.classes === "function"
-        ? config.classes(configVariantsValue || EMPTY_OBJECT)
-        : config.classes);
-    const overridesClassesValue =
+    const configSlotsValue =
+      config?.slots &&
+      (typeof config.slots === "function"
+        ? config.slots(configVariantsValue || EMPTY_OBJECT)
+        : config.slots);
+    const overridesSlotsValue =
       overrides &&
       (typeof overrides === "string"
-        ? ({ root: overrides } as unknown as Partial<TClassesValue>)
+        ? ({ root: overrides } as unknown as Partial<TSlotsValue>)
         : overrides);
 
-    const classesValues = createVariantsClassesValues(configVariantsValue);
+    const slotsValues = createVariantsSlotsValues(configVariantsValue);
 
-    if (configClassesValue) {
-      classesValues.push(configClassesValue);
+    if (configSlotsValue) {
+      slotsValues.push(configSlotsValue);
     }
 
-    if (overridesClassesValue) {
-      classesValues.push(overridesClassesValue);
+    if (overridesSlotsValue) {
+      slotsValues.push(overridesSlotsValue);
     }
 
-    if (classesValues.length === 0) {
-      return styles.classes;
+    if (slotsValues.length === 0) {
+      return styles.slots;
     }
 
-    return Object.entries(styles.classes).reduce((result, [key, value]) => {
-      const name = key as keyof TClassesValue;
+    return Object.entries(styles.slots).reduce((result, [key, value]) => {
+      const name = key as keyof TSlotsValue;
 
-      const classes = classesValues.reduce<string[]>((result, classes) => {
-        const value = classes[name];
+      const classes = slotsValues.reduce<string[]>((result, slots) => {
+        const value = slots[name];
 
         if (value) {
           result.push(value);
@@ -346,38 +344,38 @@ export function createStyles<
 
       result[name] = (
         classes.length > 0 ? mergeClasses(value, ...classes) : value
-      ) as TClassesValue[keyof TClassesValue];
+      ) as TSlotsValue[keyof TSlotsValue];
 
       return result;
-    }, {} as TClassesValue);
+    }, {} as TSlotsValue);
   }
 
-  let _classes: TClassesValue;
+  let _slots: TSlotsValue;
 
-  function createClasses(
-    config?: StylesConfig<TClassesValue, TVariantsValue>,
-    overrides?: Partial<TClassesValue> | string,
-  ): TClassesValue {
-    if ((config && (config.classes || config.variants)) || overrides) {
+  function createSlots(
+    config?: StylesConfig<TSlotsValue, TVariantsValue>,
+    overrides?: Partial<TSlotsValue> | string,
+  ): TSlotsValue {
+    if ((config && (config.slots || config.variants)) || overrides) {
       return create(config, overrides);
     }
 
-    if (!_classes) {
-      _classes = create();
+    if (!_slots) {
+      _slots = create();
     }
 
-    return _classes;
+    return _slots;
   }
 
-  createClasses.definition = styles;
+  createSlots.definition = styles;
 
-  Object.defineProperty(createClasses, "classes", {
+  Object.defineProperty(createSlots, "slots", {
     get() {
-      return createClasses();
+      return createSlots();
     },
   });
 
-  return createClasses as Styles<TClassesValue, TVariantsValue>;
+  return createSlots as Styles<TSlotsValue, TVariantsValue>;
 }
 
 function mergeClassesWithSpace(...classes: string[]) {

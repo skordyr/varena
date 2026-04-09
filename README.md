@@ -6,8 +6,8 @@ A framework-agnostic, type-safe styling library for building component variants 
 
 - Framework agnostic: works anywhere you can use plain strings and style objects.
 - Type-safe variants: strongly typed variant names and values.
-- Slot-based components: define classes for `root`, `icon`, `label`, and any custom slot.
-- Compound variants: apply classes when multiple variant conditions match.
+- Slot-based components: define slot classes for `root`, `icon`, `label`, and any custom slot.
+- Compound variants: apply slot classes when multiple variant conditions match.
 - Design tokens: generate CSS custom properties and `var(...)` references with types.
 - Tiny utilities: `cx` for class merging and `sx` for style merging.
 
@@ -57,7 +57,7 @@ import * as React from "react";
 import { createStyles } from "@/lib/varena";
 
 const ButtonStyles = createStyles({
-  classes: {
+  slots: {
     root: "inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition-colors",
     icon: "mr-2 h-4 w-4",
   },
@@ -96,16 +96,16 @@ export interface ButtonProps extends Omit<ButtonStylesConfig, "icon"> {
 }
 
 export function Button(props: ButtonProps) {
-  const { style, className, children, icon, classes, disabled, variant, size } = props;
+  const { style, className, children, icon, slots, disabled, variant, size } = props;
 
-  const $classes = ButtonStyles(
-    { classes, variants: { disabled, variant, size, icon: Boolean(icon) && !children } },
+  const $slots = ButtonStyles(
+    { slots, variants: { disabled, variant, size, icon: Boolean(icon) && !children } },
     className,
   );
 
   return (
-    <button style={style} className={$classes.root} disabled={disabled}>
-      {icon && <span className={$classes.icon}>{icon}</span>}
+    <button style={style} className={$slots.root} disabled={disabled}>
+      {icon && <span className={$slots.icon}>{icon}</span>}
       {children}
     </button>
   );
@@ -133,11 +133,11 @@ export function Button(props: ButtonProps) {
 // Icon-only button for compact UI
 <Button icon={<SettingsIcon />} />
 
-// Override root classes via className
+// Override root slot class via className
 <Button className="bg-green-600 hover:bg-green-700">Custom Color</Button>
 
-// Override multiple slots via classes
-<Button classes={{ root: "w-full", icon: "animate-spin" }} icon={<LoadingIcon />}>
+// Override multiple slots via slots prop
+<Button slots={{ root: "w-full", icon: "animate-spin" }} icon={<LoadingIcon />}>
   Loading...
 </Button>
 ```
@@ -172,28 +172,28 @@ export const { createStyles, createTokens } = create({
 
 ### `createStyles(styles, options?)`
 
-Create a typed classes factory for slot-based components with variants, compound variants, and defaults.
+Create a typed slot styles factory for slot-based components with variants, compound variants, and defaults.
 
 **Parameters**
 
-- `styles.classes: ClassesValue` - Base classes for each slot key.
-- `styles.variants?: VariantsValue<classes>` - Variant definitions that patch slot classes by variant value.
-- `styles.compoundVariants?: CompoundVariants<classes, variants>` - Extra class patches applied when multiple variant conditions match.
-- `styles.defaultVariants?: Partial<Variants<classes, variants>>` - Default variants used when call-time variants are omitted.
+- `styles.slots: SlotsValue` - Base class names for each slot key.
+- `styles.variants?: VariantsValue<slots>` - Variant definitions that override slot classes based on variant values.
+- `styles.compoundVariants?: CompoundVariants<slots, variants>` - Additional slot classes applied when multiple variant conditions match simultaneously.
+- `styles.defaultVariants?: Partial<Variants<slots, variants>>` - Default variants used when call-time variants are omitted.
 - `options?: CreateStylesOptions` - Optional style factory behavior overrides.
 - `options.mergeClasses?: (...classes: string[]) => string` - Custom class merging function (default joins with spaces).
 
 **Returns**
 
-- `Styles(config?, overrides?)` - Resolves final classes by combining defaults, variants, and overrides.
+- `Styles(config?, overrides?)` - Resolves final slot classes by combining defaults, variants, and overrides.
 - `Styles.definition` - Original style definition passed to `createStyles`.
-- `Styles.classes` - Cached classes resolved from base classes + `defaultVariants`.
+- `Styles.slots` - Cached slots resolved from base slots + `defaultVariants`.
 
 **Call-time Parameters**
 
-- `config.variants?: Partial<Variants<classes, variants>>` - Per-call variant overrides.
-- `config.classes?: Partial<classes> | ((variants) => Partial<classes> | undefined)` - Per-call slot class patches, either object or function form.
-- `overrides?: Partial<classes> | string` (`string` is treated as `root`) - Final override layer applied after variants/config classes.
+- `config.variants?: Partial<Variants<slots, variants>>` - Per-call variant overrides.
+- `config.slots?: Partial<slots> | ((variants) => Partial<slots> | undefined)` - Per-call slot class patches, either object or function form.
+- `overrides?: Partial<slots> | string` (`string` is treated as `root`) - Final override layer applied after variants/config slots.
 
 **Examples**
 
@@ -202,7 +202,7 @@ import type { InferComponentStylesConfig } from "varena";
 import { createStyles } from "varena";
 
 export const ButtonStyles = createStyles({
-  classes: {
+  slots: {
     root: "btn",
     icon: "btn__icon",
   },
@@ -219,7 +219,7 @@ export const ButtonStyles = createStyles({
   compoundVariants: [
     {
       variants: { size: "lg", tone: "danger" },
-      classes: { root: "btn--lg-danger" },
+      slots: { root: "btn--lg-danger" },
     },
   ],
   defaultVariants: {
@@ -230,7 +230,7 @@ export const ButtonStyles = createStyles({
 
 export type ButtonStylesConfig = InferComponentStylesConfig<typeof ButtonStyles>;
 // => {
-//   classes?: { root?: string; icon?: string } | ...;
+//   slots?: { root?: string; icon?: string } | ...;
 //   size?: "sm" | "lg";
 //   tone?: "neutral" | "danger";
 // }
@@ -238,65 +238,65 @@ export type ButtonStylesConfig = InferComponentStylesConfig<typeof ButtonStyles>
 
 ```ts
 ButtonStyles.definition;
-// => { classes: {...}, variants: {...}, compoundVariants: [...], defaultVariants: {...} }
+// => { slots: {...}, variants: {...}, compoundVariants: [...], defaultVariants: {...} }
 
-ButtonStyles.classes;
+ButtonStyles.slots;
 // => { root: "btn btn--sm btn--neutral", icon: "btn__icon btn__icon--sm" }
 
-const classes = ButtonStyles();
+const slots = ButtonStyles();
 
-classes.root;
+slots.root;
 // => "btn btn--sm btn--neutral"
 
-classes.icon;
+slots.icon;
 // => "btn__icon btn__icon--sm"
 ```
 
 ```ts
-const classes = ButtonStyles({ variants: { size: "lg", tone: "danger" } });
+const slots = ButtonStyles({ variants: { size: "lg", tone: "danger" } });
 
-classes.root;
+slots.root;
 // => "btn btn--lg btn--danger btn--lg-danger"
 
-classes.icon;
+slots.icon;
 // => "btn__icon btn__icon--lg"
 ```
 
 ```ts
-const classes = ButtonStyles(
-  { classes: { icon: "custom-icon" }, variants: { size: "lg" } },
+const slots = ButtonStyles(
+  { slots: { icon: "custom-icon" }, variants: { size: "lg" } },
   "override-root",
 );
 
-classes.root;
+slots.root;
 // => "btn btn--lg btn--neutral override-root"
 
-classes.icon;
+slots.icon;
 // => "btn__icon btn__icon--lg custom-icon"
 ```
 
 ```ts
-const classes = ButtonStyles(
-  { classes: { icon: "custom-icon" }, variants: { size: "lg" } },
+const slots = ButtonStyles(
+  { slots: { icon: "custom-icon" }, variants: { size: "lg" } },
   { root: "override-root" },
 );
 
-classes.root;
+slots.root;
 // => "btn btn--lg btn--neutral override-root"
 
-classes.icon;
+slots.icon;
 // => "btn__icon btn__icon--lg custom-icon"
 ```
 
 ```ts
-const classes = ButtonStyles({
-  classes: (variants) => ({
+const slots = ButtonStyles({
+  slots: (variants) => ({
     root: variants.tone === "danger" ? "btn--ring" : undefined,
   }),
   variants: { tone: "danger" },
 });
 
-classes.root;
+slots.root;
 // => "btn btn--sm btn--danger btn--ring"
 ```
 
@@ -509,7 +509,7 @@ Type guard to check if a value is a `Styles` instance.
 ```ts
 import { isStyles, createStyles } from "varena";
 
-const ButtonStyles = createStyles({ classes: { root: "btn" } });
+const ButtonStyles = createStyles({ slots: { root: "btn" } });
 
 isStyles(ButtonStyles);
 // => true
@@ -560,7 +560,7 @@ Infers the full `createStyles` call config type.
 
 **Output**
 
-- `{ classes?: Partial<ClassesValue> | ((variants) => Partial<ClassesValue> | undefined); variants?: Partial<Variants<...>> }` - Full config shape accepted by `Styles(config)`.
+- `{ slots?: Partial<SlotsValue> | ((variants) => Partial<SlotsValue> | undefined); variants?: Partial<Variants<...>> }` - Full config shape accepted by `Styles(config)`.
 
 **Examples**
 
@@ -569,7 +569,7 @@ import type { InferStylesConfig } from "varena";
 
 export type ButtonStylesConfig = InferStylesConfig<typeof ButtonStyles>;
 // => {
-//   classes?: { root?: string; icon?: string } | ...;
+//   slots?: { root?: string; icon?: string } | ...;
 //   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
 // }
 ```
@@ -585,7 +585,7 @@ Extracts matching slot keys from the `createStyles` config type.
 
 **Output**
 
-- `StylesConfig` with only the matching slot keys in `classes`.
+- `StylesConfig` with only the matching slot keys in `slots`.
 
 **Examples**
 
@@ -594,7 +594,7 @@ import type { ExtractStylesConfig } from "varena";
 
 export type IconOnlyButtonStylesConfig = ExtractStylesConfig<typeof ButtonStyles, "icon">;
 // => {
-//   classes?: { icon?: string } | ...;
+//   slots?: { icon?: string } | ...;
 //   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
 // }
 ```
@@ -610,7 +610,7 @@ Excludes matching slot keys from the `createStyles` config type.
 
 **Output**
 
-- `StylesConfig` without the excluded slot keys in `classes`.
+- `StylesConfig` without the excluded slot keys in `slots`.
 
 **Examples**
 
@@ -619,7 +619,7 @@ import type { ExcludeStylesConfig } from "varena";
 
 export type WithoutIconButtonStylesConfig = ExcludeStylesConfig<typeof ButtonStyles, "icon">;
 // => {
-//   classes?: { root?: string } | ...;
+//   slots?: { root?: string } | ...;
 //   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
 // }
 ```
@@ -634,7 +634,7 @@ Infers a component-friendly flattened style config type.
 
 **Output**
 
-- `{ classes?: Partial<ClassesValue> | ((variants) => Partial<ClassesValue> | undefined); [variantName]?: VariantValue }` - Flattened component props style config.
+- `{ slots?: Partial<SlotsValue> | ((variants) => Partial<SlotsValue> | undefined); [variantName]?: VariantValue }` - Flattened component props style config.
 
 **Examples**
 
@@ -643,7 +643,7 @@ import type { InferComponentStylesConfig } from "varena";
 
 export type ButtonStylesConfig = InferComponentStylesConfig<typeof ButtonStyles>;
 // => {
-//   classes?: { root?: string; icon?: string } | ...;
+//   slots?: { root?: string; icon?: string } | ...;
 //   size?: "sm" | "lg";
 //   tone?: "neutral" | "danger";
 // }
@@ -660,7 +660,7 @@ Extracts a component-friendly config type with only matching slots and flattened
 
 **Output**
 
-- Flattened config type with only the matching slot keys in `classes`.
+- Flattened config type with only the matching slot keys in `slots`.
 
 **Examples**
 
@@ -669,7 +669,7 @@ import type { ExtractComponentStylesConfig } from "varena";
 
 export type IconOnlyButtonStylesConfig = ExtractComponentStylesConfig<typeof ButtonStyles, "icon">;
 // => {
-//   classes?: { icon?: string } | ...;
+//   slots?: { icon?: string } | ...;
 //   size?: "sm" | "lg";
 //   tone?: "neutral" | "danger";
 // }
@@ -686,7 +686,7 @@ Excludes a component-friendly config type with excluded slots and flattened vari
 
 **Output**
 
-- Flattened config type without the excluded slot keys in `classes`.
+- Flattened config type without the excluded slot keys in `slots`.
 
 **Examples**
 
@@ -698,7 +698,7 @@ export type WithoutIconButtonStylesConfig = ExcludeComponentStylesConfig<
   "icon"
 >;
 // => {
-//   classes?: { root?: string } | ...;
+//   slots?: { root?: string } | ...;
 //   size?: "sm" | "lg";
 //   tone?: "neutral" | "danger";
 // }
