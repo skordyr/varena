@@ -1,5 +1,13 @@
 # varena
 
+## 0.2.7
+
+### Patch Changes
+
+- 4564aa4: feat: :sparkles: add `Tokens.css(config, selector?, wrapper?)` overload
+
+  Support passing a config object to generate CSS with token overrides.
+
 ## 0.2.6
 
 ### Patch Changes
