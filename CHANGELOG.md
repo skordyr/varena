@@ -1,5 +1,13 @@
 # varena
 
+## 0.2.9
+
+### Patch Changes
+
+- 47ee512: docs: :memo: rewrite README with comprehensive Quick Start tutorial
+
+  Add Button component tutorial with Tailwind CSS, file structure, TypeScript integration, and usage examples. Restructure API Reference with detailed examples per function.
+
 ## 0.2.8
 
 ### Patch Changes
