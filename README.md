@@ -81,7 +81,12 @@ ButtonStyles.definition;
 //       danger: { root: "btn--danger" },
 //     },
 //   },
-//   compoundVariants: [{ variants: { size: "lg", tone: "danger" }, classes: { root: "btn--lg-danger" } }],
+//   compoundVariants: [
+//     {
+//       variants: { size: "lg", tone: "danger" },
+//       classes: { root: "btn--lg-danger" },
+//     }
+//   ],
 //   defaultVariants: { size: "sm", tone: "neutral" },
 // }
 ```
@@ -271,23 +276,11 @@ export const DarkThemeTokens = ThemeTokens.extend({
 DarkThemeTokens.definition;
 // => { "radius.md": "8px", "color.primary": "#0284c7" }
 
-DarkThemeTokens({});
-// => {}
-
-DarkThemeTokens({ "color.primary": "#075985" });
-// => { "--app-color-primary": "#075985" }
-
 DarkThemeTokens.style;
 // => { "--app-radius-md": "8px", "--app-color-primary": "#0284c7" }
 
-DarkThemeTokens.property("color.primary");
-// => "--app-color-primary"
-
-DarkThemeTokens.variable("color.primary");
-// => "var(--app-color-primary)"
-
-DarkThemeTokens.variable("radius.md", "6px");
-// => "var(--app-radius-md, 6px)"
+DarkThemeTokens.value("color.primary");
+// => "#0284c7"
 ```
 
 ### `create`
@@ -498,6 +491,57 @@ Type guard to check if a value is a `Tokens` instance.
 ### Infer Utilities
 
 Type helpers for extracting config types from `createStyles` and `createTokens` outputs.
+
+```ts
+import type {
+  InferStylesConfig,
+  ExtractStylesConfig,
+  ExcludeStylesConfig,
+  InferComponentStylesConfig,
+  ExtractComponentStylesConfig,
+  ExcludeComponentStylesConfig,
+} from "varena";
+import { ButtonStyles } from "./button.styles";
+
+type StylesConfig = InferStylesConfig<typeof ButtonStyles>;
+// => {
+//   classes?: { root?: string; icon?: string } | ...;
+//   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
+// }
+
+type IconOnlyStylesConfig = ExtractStylesConfig<typeof ButtonStyles, "icon">;
+// => {
+//   classes?: { icon?: string } | ...;
+//   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
+// }
+
+type WithoutIconStylesConfig = ExcludeStylesConfig<typeof ButtonStyles, "icon">;
+// => {
+//   classes?: { root?: string } | ...;
+//   variants?: { size?: "sm" | "lg"; tone?: "neutral" | "danger" };
+// }
+
+type ButtonStylesConfig = InferComponentStylesConfig<typeof ButtonStyles>;
+// => {
+//   classes?: { root?: string; icon?: string } | ...;
+//   size?: "sm" | "lg";
+//   tone?: "neutral" | "danger";
+// }
+
+type IconOnlyButtonStylesConfig = ExtractComponentStylesConfig<typeof ButtonStyles, "icon">;
+// => {
+//   classes?: { icon?: string } | ...;
+//   size?: "sm" | "lg";
+//   tone?: "neutral" | "danger";
+// }
+
+type WithoutIconButtonStylesConfig = ExcludeComponentStylesConfig<typeof ButtonStyles, "icon">;
+// => {
+//   classes?: { root?: string } | ...;
+//   size?: "sm" | "lg";
+//   tone?: "neutral" | "danger";
+// }
+```
 
 #### `InferStylesConfig<TStyles>`
 
