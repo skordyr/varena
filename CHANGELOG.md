@@ -1,5 +1,11 @@
 # varena
 
+## 0.2.8
+
+### Patch Changes
+
+- e04b476: docs: :memo: add type utilities usage examples
+
 ## 0.2.7
 
 ### Patch Changes
