@@ -23,6 +23,7 @@ export interface Tokens<TTokensValue extends TokensValue> {
   definition: TTokensValue;
   style: TokensStyle;
   css(selector?: string, wrapper?: string): string;
+  css(config: TokensConfig<TTokensValue>, selector?: string, wrapper?: string): string;
   value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey];
   value<TKey extends TokensKey<TTokensValue>>(
     key: TKey,
@@ -109,29 +110,46 @@ export function createTokens<TTokensValue extends TokensValue>(
     return createTokens<TTokensValue>({ ...tokens, ...config }, options);
   }
 
-  function css(selector: string = ROOT_SELECTOR, wrapper?: string): string {
-    const entries = Object.entries(createStyle(tokens));
+  function css(
+    maybeConfig?: TokensConfig<TTokensValue> | string,
+    maybeSelector?: string,
+    maybeWrapper?: string,
+  ): string {
+    let config: TokensConfig<TTokensValue>;
+    let selector: string;
+    let wrapper: string | undefined;
+
+    if (typeof maybeConfig === "object") {
+      config = maybeConfig;
+      selector = maybeSelector || ROOT_SELECTOR;
+      wrapper = maybeWrapper;
+    } else {
+      config = tokens;
+      selector = maybeConfig || ROOT_SELECTOR;
+      wrapper = maybeSelector;
+    }
+
+    const entries = Object.entries(createStyle(config));
 
     if (entries.length === 0) {
       return "";
     }
 
     const output: string[] = [];
-    const $selector = selector || ROOT_SELECTOR;
 
     if (wrapper) {
       output.push(`${wrapper} {
-  ${$selector} {`);
+  ${selector} {`);
 
       for (const [name, value] of entries) {
-        output.push(`    ${name}:${value};`);
+        output.push(`    ${name}: ${value};`);
       }
 
       output.push(`  }
 }
 `);
     } else {
-      output.push(`${$selector} {`);
+      output.push(`${selector} {`);
 
       for (const [name, value] of entries) {
         output.push(`  ${name}: ${value};`);

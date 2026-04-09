@@ -161,7 +161,11 @@ classes.icon;
 import type { InferTokensConfig } from "varena";
 import { createTokens } from "varena";
 
-export const ThemeTokens = createTokens(
+export const ThemeTokens = createTokens<{
+  "color.primary": string;
+  "color.secondary"?: string;
+  "radius.md": string;
+}>(
   {
     "color.primary": "#0ea5e9",
     "radius.md": "8px",
@@ -172,6 +176,7 @@ export const ThemeTokens = createTokens(
 export type ThemeTokensConfig = InferTokensConfig<typeof ThemeTokens>;
 // => {
 //   "color.primary"?: string;
+//   "color.secondary"?: string;
 //   "radius.md"?: string;
 // }
 ```
@@ -212,6 +217,42 @@ ThemeTokens.css(":root", "@media (prefers-color-scheme: dark)");
 //   }
 // }
 
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" });
+// =>
+// :root {
+//   --app-radius-md: 8px;
+//   --app-color-primary: #ff0000;
+// }
+
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" }, "#main");
+// =>
+// #main {
+//   --app-radius-md: 8px;
+//   --app-color-primary: #ff0000;
+// }
+
+ThemeTokens.css(
+  { ...ThemeTokens.definition, "color.primary": "#ff0000" },
+  ":root",
+  "@media (prefers-color-scheme: dark)",
+);
+// =>
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --app-radius-md: 8px;
+//     --app-color-primary: #ff0000;
+//   }
+// }
+
+ThemeTokens.css({});
+// => ""
+
+ThemeTokens.value("color.primary");
+// => "#0ea5e9"
+
+ThemeTokens.value("color.secondary", "#64748b");
+// => "#64748b" (returns fallback since key not in definition)
+
 ThemeTokens.property("color.primary");
 // => "--app-color-primary"
 
@@ -228,7 +269,7 @@ export const DarkThemeTokens = ThemeTokens.extend({
 });
 
 DarkThemeTokens.definition;
-// => { "color.primary": "#0284c7", "radius.md": "8px" }
+// => { "radius.md": "8px", "color.primary": "#0284c7" }
 
 DarkThemeTokens({});
 // => {}
@@ -237,7 +278,7 @@ DarkThemeTokens({ "color.primary": "#075985" });
 // => { "--app-color-primary": "#075985" }
 
 DarkThemeTokens.style;
-// => { "--app-color-primary": "#0284c7", "--app-radius-md": "8px" }
+// => { "--app-radius-md": "8px", "--app-color-primary": "#0284c7" }
 
 DarkThemeTokens.property("color.primary");
 // => "--app-color-primary"
@@ -349,7 +390,8 @@ Create a preconfigured varena instance so `createStyles` and `createTokens` shar
 
 **Returns**
 
-- `{ createStyles, createTokens }` - Preconfigured factories with the provided defaults applied.
+- `createStyles(styles, options?)` - Preconfigured `createStyles` function with the provided defaults applied.
+- `createTokens(tokens, options?)` - Preconfigured `createTokens` function with the provided defaults applied.
 
 ### `createStyles(styles, options?)`
 
@@ -366,7 +408,7 @@ Create a typed classes factory for slot-based components with variants, compound
 
 **Returns**
 
-- `Styles(config?, overrides?) => classes` - Resolves final classes by combining defaults, variants, and overrides.
+- `Styles(config?, overrides?)` - Resolves final classes by combining defaults, variants, and overrides.
 - `Styles.definition` - Original style definition passed to `createStyles`.
 - `Styles.classes` - Cached classes resolved from base classes + `defaultVariants`.
 
@@ -389,11 +431,14 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 
 **Returns**
 
-- `Tokens(config) => CSSVariablesObject` - Generates a CSS variable style object from token overrides.
+- `Tokens(config)` - Generates a style object with only the specified CSS custom property overrides.
 - `Tokens.definition` - Original token definition passed to `createTokens`.
 - `Tokens.style` - Cached style object generated from full default token values.
 - `Tokens.css(selector?, wrapper?)` - Returns a formatted CSS string for creating CSS files.
-- `Tokens.value(key, fallback?)` - Reads a token value, using `fallback` when the key is missing.
+- `Tokens.css(config, selector?, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides.
+- `Tokens.value<TKey>(key)` - Reads a token value. Returns `undefined` if the key is not defined.
+- `Tokens.value<TKey>(key, fallback)` - Reads a token value with a guaranteed non-null return, using `fallback` when the key is missing.
+- `Tokens.value<TKey>(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
 - `Tokens.property(key)` - Returns the CSS custom property name for a token key.
 - `Tokens.variable(key, fallback?)` - Returns `var(...)` reference for a token key, with optional fallback.
 - `Tokens.extend(config)` - Returns a new `Tokens` instance with merged default values.
