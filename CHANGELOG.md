@@ -1,5 +1,11 @@
 # varena
 
+## 0.2.6
+
+### Patch Changes
+
+- f8208b7: feat: :sparkles: add Tokens.css() method for generating CSS strings from design tokens
+
 ## 0.2.5
 
 ### Patch Changes
