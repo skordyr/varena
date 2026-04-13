@@ -178,21 +178,17 @@ export function createStyles<
         return defaultVariants;
       }
 
-      return {
-        ...defaultVariants,
-        ...Object.entries(configVariants).reduce<Partial<Variants<TSlotsValue, TVariantsValue>>>(
-          (result, [key, value]) => {
-            if (value !== undefined) {
-              const name = key as keyof Variants<TSlotsValue, TVariantsValue>;
+      const mergedVariants = { ...defaultVariants };
 
-              result[name] = value;
-            }
+      for (const [key, value] of Object.entries(configVariants)) {
+        if (value !== undefined) {
+          const name = key as keyof Variants<TSlotsValue, TVariantsValue>;
 
-            return result;
-          },
-          {},
-        ),
-      };
+          mergedVariants[name] = value;
+        }
+      }
+
+      return mergedVariants;
     };
   });
 
@@ -228,38 +224,49 @@ export function createStyles<
         };
       }
 
+      const compoundConditions = compoundVariants.map((compoundVariant) => {
+        const { slots, variants } = compoundVariant;
+
+        return {
+          slots,
+          conditions: Object.entries(variants).map(([key, value]) => {
+            return [
+              key,
+              value,
+              Array.isArray(value) ? value.map((value) => String(value)) : String(value),
+            ] as const;
+          }),
+        };
+      });
+
       return (configVariantsValue, slotsValues = []) => {
-        for (const compoundVariant of compoundVariants) {
-          const isMatched = Object.entries(compoundVariant.variants).every(
-            ([compoundVariantName, compoundVariantValue]) => {
-              if (compoundVariantValue === undefined) {
-                return true;
-              }
+        for (const compoundCondition of compoundConditions) {
+          const isMatch = compoundCondition.conditions.every(([key, value, valueString]) => {
+            if (value === undefined) {
+              return true;
+            }
 
-              const configVariantValue = configVariantsValue[compoundVariantName];
+            const variantValue = configVariantsValue[key];
 
-              if (configVariantValue === undefined) {
-                return false;
-              }
+            if (variantValue === undefined) {
+              return false;
+            }
 
-              if (configVariantValue === compoundVariantValue) {
-                return true;
-              }
+            if (variantValue === value) {
+              return true;
+            }
 
-              const configVariantValueString = String(configVariantValue);
+            const variantValueString = String(variantValue);
 
-              if (!Array.isArray(compoundVariantValue)) {
-                return String(compoundVariantValue) === configVariantValueString;
-              }
+            if (!Array.isArray(valueString)) {
+              return variantValueString === valueString;
+            }
 
-              return compoundVariantValue.some(
-                (value) => String(value) === configVariantValueString,
-              );
-            },
-          );
+            return valueString.includes(variantValueString);
+          });
 
-          if (isMatched) {
-            slotsValues.push(compoundVariant.slots);
+          if (isMatch) {
+            slotsValues.push(compoundCondition.slots);
           }
         }
 
@@ -281,21 +288,21 @@ export function createStyles<
         return slotsValues;
       }
 
-      let isNonEmptyVariantsValue = false;
+      let hasDefinedVariants = false;
 
-      for (const [configVariantName, configVariantValue] of configVariantsValueEntries) {
-        if (configVariantValue !== undefined) {
-          isNonEmptyVariantsValue = true;
+      for (const [key, value] of configVariantsValueEntries) {
+        if (value !== undefined) {
+          hasDefinedVariants = true;
 
-          const configVariantSlotsValue = variants[configVariantName][String(configVariantValue)];
+          const slotsValue = variants[key][String(value)];
 
-          if (configVariantSlotsValue) {
-            slotsValues.push(configVariantSlotsValue);
+          if (slotsValue) {
+            slotsValues.push(slotsValue);
           }
         }
       }
 
-      if (isNonEmptyVariantsValue) {
+      if (hasDefinedVariants) {
         createCompoundVariantsSlotsValues(configVariantsValue, slotsValues);
       }
 
@@ -303,10 +310,16 @@ export function createStyles<
     };
   });
 
+  const slotsEntries = Object.entries(styles.slots);
+
   function create(
     config?: StylesConfig<TSlotsValue, TVariantsValue>,
     overrides?: Partial<Slots<TSlotsValue>> | string,
   ): Slots<TSlotsValue> {
+    if (slotsEntries.length === 0) {
+      return styles.slots;
+    }
+
     const configVariantsValue = createConfigVariantsValue(config?.variants);
     const configSlotsValue =
       config?.slots &&
@@ -333,23 +346,25 @@ export function createStyles<
       return styles.slots;
     }
 
-    return Object.entries(styles.slots).reduce((result, [key, value]) => {
+    const mergedSlots = {} as Slots<TSlotsValue>;
+
+    for (const [key, value] of slotsEntries) {
       const name = key as keyof TSlotsValue;
 
-      const classes = slotsValues.reduce<string[]>((result, slots) => {
+      const classes: string[] = [];
+
+      for (const slots of slotsValues) {
         const value = slots[name];
 
         if (value) {
-          result.push(value);
+          classes.push(value);
         }
+      }
 
-        return result;
-      }, []);
+      mergedSlots[name] = classes.length > 0 ? mergeClasses(value, ...classes) : value;
+    }
 
-      result[name] = classes.length > 0 ? mergeClasses(value, ...classes) : value;
-
-      return result;
-    }, {} as Slots<TSlotsValue>);
+    return mergedSlots;
   }
 
   let _slots: Slots<TSlotsValue>;
