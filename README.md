@@ -150,9 +150,9 @@ Create a preconfigured varena instance so `createStyles` and `createTokens` shar
 
 **Parameters**
 
-- `options?: CreateOptions` - Optional global defaults applied to both factories.
-- `options.mergeClasses?: (...classes: string[]) => string` - Default class merge strategy injected into `createStyles`.
-- `options.createVariableName?: (key: string, prefix?: string) => string` - Default token-key-to-variable-name mapper injected into `createTokens`.
+- `options?` - Optional global defaults applied to both factories.
+- `options.mergeClasses?(...classes)` - Default class merge strategy injected into `createStyles`.
+- `options.createVariableName?(key, prefix?)` - Default token-key-to-variable-name mapper injected into `createTokens`.
 
 **Returns**
 
@@ -176,12 +176,12 @@ Create a typed slot styles factory for slot-based components with variants, comp
 
 **Parameters**
 
-- `styles.slots: SlotsValue` - Base class names for each slot key.
-- `styles.variants?: VariantsValue<slots>` - Variant definitions that override slot classes based on variant values.
-- `styles.compoundVariants?: CompoundVariants<slots, variants>` - Additional slot classes applied when multiple variant conditions match simultaneously.
-- `styles.defaultVariants?: Partial<Variants<slots, variants>>` - Default variants used when call-time variants are omitted.
-- `options?: CreateStylesOptions` - Optional style factory behavior overrides.
-- `options.mergeClasses?: (...classes: string[]) => string` - Custom class merging function (default joins with spaces).
+- `styles.slots` - Base class names for each slot key.
+- `styles.variants?` - Variant definitions that override slot classes based on variant values.
+- `styles.compoundVariants?` - Additional slot classes applied when multiple variant conditions match simultaneously.
+- `styles.defaultVariants?` - Default variants used when call-time variants are omitted.
+- `options?` - Optional style factory behavior overrides.
+- `options.mergeClasses?(...classes)` - Custom class merging function (default joins with spaces).
 
 **Returns**
 
@@ -191,9 +191,9 @@ Create a typed slot styles factory for slot-based components with variants, comp
 
 **Call-time Parameters**
 
-- `config.variants?: Partial<Variants<slots, variants>>` - Per-call variant overrides.
-- `config.slots?: Partial<slots> | ((variants) => Partial<slots> | undefined)` - Per-call slot class patches, either object or function form.
-- `overrides?: Partial<slots> | string` (`string` is treated as `root`) - Final override layer applied after variants/config slots.
+- `config.variants?` - Per-call variant overrides.
+- `config.slots?` - Per-call slot class patches, either object or function form.
+- `overrides?` - Final override layer applied after variants/config slots. When a `string`, it is treated as the `root` slot.
 
 **Examples**
 
@@ -306,10 +306,10 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 
 **Parameters**
 
-- `tokens: TokensValue` - Base token definition map.
-- `options?: CreateTokensOptions` - Optional token factory behavior overrides.
-- `options.prefix?: string` - Prefix prepended to generated CSS custom property names.
-- `options.createVariableName?: (key: string, prefix?: string) => string` - Custom formatter for CSS variable names.
+- `tokens` - Base token definition map.
+- `options?` - Optional token factory behavior overrides.
+- `options.prefix?` - Prefix prepended to generated CSS custom property names.
+- `options.createVariableName?(key, prefix?)` - Custom formatter for CSS variable names.
 
 **Returns**
 
@@ -318,16 +318,16 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens.style` - Cached style object generated from full default token values.
 - `Tokens.css(selector?, wrapper?)` - Returns a formatted CSS string for creating CSS files.
 - `Tokens.css(config, selector?, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides.
-- `Tokens.value<TKey>(key)` - Reads a token value. Returns `undefined` if the key is not defined.
-- `Tokens.value<TKey>(key, fallback)` - Reads a token value with a guaranteed non-null return, using `fallback` when the key is missing.
-- `Tokens.value<TKey>(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
+- `Tokens.value(key)` - Reads a token value. Returns `undefined` if the key is not defined.
+- `Tokens.value(key, fallback)` - Reads a token value with a guaranteed non-null return, using `fallback` when the key is missing.
+- `Tokens.value(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
 - `Tokens.property(key)` - Returns the CSS custom property name for a token key.
 - `Tokens.variable(key, fallback?)` - Returns `var(...)` reference for a token key, with optional fallback.
 - `Tokens.extend(config)` - Returns a new `Tokens` instance with merged default values.
 
 **Call-time Parameters**
 
-- `config: Partial<typeof tokens>` - Partial token overrides to generate a style object for a specific context.
+- `config` - Partial token overrides to generate a style object for a specific context.
 
 **Examples**
 
@@ -456,11 +456,11 @@ Merge class names and ignore falsy `undefined` entries.
 
 **Parameters**
 
-- `classes: (string | undefined)[]` - Class names to merge in order.
+- `classes` - Class names to merge in order.
 
 **Returns**
 
-- `string | undefined` - Merged class string with `undefined` entries skipped.
+- Merged class string with `undefined` entries skipped.
 
 **Examples**
 
@@ -477,11 +477,11 @@ Merge style objects and ignore `undefined` entries.
 
 **Parameters**
 
-- `styles: (object | undefined)[]` - Style objects to shallow-merge in order.
+- `styles` - Style objects to shallow-merge in order.
 
 **Returns**
 
-- `object | undefined` - Merged style object with `undefined` entries skipped.
+- Merged style object with `undefined` entries skipped.
 
 **Examples**
 
@@ -498,11 +498,11 @@ Type guard to check if a value is a `Styles` instance.
 
 **Parameters**
 
-- `target: unknown` - The value to check.
+- `target` - The value to check.
 
 **Returns**
 
-- `target is Styles<any, any>` - `true` if the value is a `Styles` instance, narrowing the type in TypeScript.
+- `true` if the value is a `Styles` instance, narrowing the type in TypeScript.
 
 **Examples**
 
@@ -527,11 +527,11 @@ Type guard to check if a value is a `Tokens` instance.
 
 **Parameters**
 
-- `target: unknown` - The value to check.
+- `target` - The value to check.
 
 **Returns**
 
-- `target is Tokens<any>` - `true` if the value is a `Tokens` instance, narrowing the type in TypeScript.
+- `true` if the value is a `Tokens` instance, narrowing the type in TypeScript.
 
 **Examples**
 
@@ -560,7 +560,7 @@ Infers the full `createStyles` call config type.
 
 **Output**
 
-- `{ slots?: Partial<SlotsValue> | ((variants) => Partial<SlotsValue> | undefined); variants?: Partial<Variants<...>> }` - Full config shape accepted by `Styles(config)`.
+- `{ slots?: Partial<Slots<TSlotsValue>> | ((variants) => Partial<Slots<TSlotsValue>> | undefined); variants?: Partial<Variants<TSlotsValue, TVariantsValue>> }` - Full config shape accepted by `Styles(config)`.
 
 **Examples**
 
@@ -634,7 +634,7 @@ Infers a component-friendly flattened style config type.
 
 **Output**
 
-- `{ slots?: Partial<SlotsValue> | ((variants) => Partial<SlotsValue> | undefined); [variantName]?: VariantValue }` - Flattened component props style config.
+- `{ slots?: Partial<Slots<TSlotsValue>> | ((variants) => Partial<Slots<TSlotsValue>> | undefined); [variantName]?: VariantValue }` - Flattened component props style config.
 
 **Examples**
 
