@@ -1,5 +1,11 @@
 # varena
 
+## 0.3.2
+
+### Patch Changes
+
+- 724638b: docs: :memo: simplify API documentation style
+
 ## 0.3.1
 
 ### Patch Changes
