@@ -1,5 +1,17 @@
 # varena
 
+## 0.3.1
+
+### Patch Changes
+
+- c9ca716: refactor: :recycle: optimize variant resolution in `createStyles`
+  - Replace `.reduce()` with explicit `for...of` loops for readability
+  - Pre-compute compound variant conditions to avoid redundant iteration
+  - Extract `slotsEntries` outside `create()` to avoid repeated `Object.entries()`
+  - Rename `isMatched` → `isMatch`, `isNonEmptyVariantsValue` → `hasDefinedVariants`
+
+- bc4e41f: refactor: :recycle: add `Slots` utility type to normalize slot value types to `string`
+
 ## 0.3.0
 
 ### Minor Changes
