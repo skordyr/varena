@@ -2,10 +2,12 @@ import type { Simplify } from "./shared/types";
 
 import { EMPTY_OBJECT, run } from "./shared/utils";
 
-export type ClassValue = string;
-
 export type SlotsValue = {
-  [name: string]: ClassValue;
+  [name: string]: string;
+};
+
+export type Slots<TSlotsValue extends SlotsValue> = {
+  [name in keyof TSlotsValue]: string;
 };
 
 export type VariantPrimitive = string | number;
@@ -18,7 +20,7 @@ export type VariantValue<TVariantValue extends VariantPrimitive> = TVariantValue
 
 export type VariantsValue<TSlotsValue extends SlotsValue> = {
   [name: string]: {
-    [value: VariantPrimitive]: Partial<TSlotsValue>;
+    [value: VariantPrimitive]: Partial<Slots<TSlotsValue>>;
   };
 };
 
@@ -43,7 +45,7 @@ export interface CompoundVariant<
   TVariantsValue extends VariantsValue<TSlotsValue>,
 > {
   variants: CompoundVariantVariantsValue<TSlotsValue, TVariantsValue>;
-  slots: Partial<TSlotsValue>;
+  slots: Partial<Slots<TSlotsValue>>;
 }
 
 export type CompoundVariants<
@@ -68,8 +70,8 @@ export interface StylesConfig<
   slots?:
     | ((
         variants: Partial<Variants<TSlotsValue, TVariantsValue>>,
-      ) => Partial<TSlotsValue> | undefined)
-    | Partial<TSlotsValue>;
+      ) => Partial<Slots<TSlotsValue>> | undefined)
+    | Partial<Slots<TSlotsValue>>;
   variants?: Partial<Variants<TSlotsValue, TVariantsValue>>;
 }
 
@@ -79,10 +81,10 @@ export interface Styles<
 > {
   (
     config?: StylesConfig<TSlotsValue, TVariantsValue>,
-    overrides?: Partial<TSlotsValue> | string,
-  ): TSlotsValue;
+    overrides?: Partial<Slots<TSlotsValue>> | string,
+  ): Slots<TSlotsValue>;
   definition: StylesValue<TSlotsValue, TVariantsValue>;
-  slots: TSlotsValue;
+  slots: Slots<TSlotsValue>;
 }
 
 export type InferStylesConfig<TStyles extends Styles<any, any>> =
@@ -178,15 +180,17 @@ export function createStyles<
 
       return {
         ...defaultVariants,
-        ...Object.entries(configVariants).reduce(
+        ...Object.entries(configVariants).reduce<Partial<Variants<TSlotsValue, TVariantsValue>>>(
           (result, [key, value]) => {
             if (value !== undefined) {
-              result[key as keyof Partial<Variants<TSlotsValue, TVariantsValue>>] = value;
+              const name = key as keyof Variants<TSlotsValue, TVariantsValue>;
+
+              result[name] = value;
             }
 
             return result;
           },
-          {} as Partial<Variants<TSlotsValue, TVariantsValue>>,
+          {},
         ),
       };
     };
@@ -195,8 +199,8 @@ export function createStyles<
   const createVariantsSlotsValues = run<
     (
       configVariantsValue?: Partial<Variants<TSlotsValue, TVariantsValue>>,
-      slotsValues?: Partial<TSlotsValue>[],
-    ) => Partial<TSlotsValue>[]
+      slotsValues?: Partial<Slots<TSlotsValue>>[],
+    ) => Partial<Slots<TSlotsValue>>[]
   >(() => {
     const { variants } = styles;
 
@@ -209,8 +213,8 @@ export function createStyles<
     const createCompoundVariantsSlotsValues = run<
       (
         configVariantsValue: Partial<Variants<TSlotsValue, TVariantsValue>>,
-        slotsValues?: Partial<TSlotsValue>[],
-      ) => Partial<TSlotsValue>[]
+        slotsValues?: Partial<Slots<TSlotsValue>>[],
+      ) => Partial<Slots<TSlotsValue>>[]
     >(() => {
       const compoundVariants =
         styles.compoundVariants &&
@@ -301,8 +305,8 @@ export function createStyles<
 
   function create(
     config?: StylesConfig<TSlotsValue, TVariantsValue>,
-    overrides?: Partial<TSlotsValue> | string,
-  ) {
+    overrides?: Partial<Slots<TSlotsValue>> | string,
+  ): Slots<TSlotsValue> {
     const configVariantsValue = createConfigVariantsValue(config?.variants);
     const configSlotsValue =
       config?.slots &&
@@ -312,7 +316,7 @@ export function createStyles<
     const overridesSlotsValue =
       overrides &&
       (typeof overrides === "string"
-        ? ({ root: overrides } as unknown as Partial<TSlotsValue>)
+        ? ({ root: overrides } as Partial<Slots<TSlotsValue>>)
         : overrides);
 
     const slotsValues = createVariantsSlotsValues(configVariantsValue);
@@ -342,20 +346,18 @@ export function createStyles<
         return result;
       }, []);
 
-      result[name] = (
-        classes.length > 0 ? mergeClasses(value, ...classes) : value
-      ) as TSlotsValue[keyof TSlotsValue];
+      result[name] = classes.length > 0 ? mergeClasses(value, ...classes) : value;
 
       return result;
-    }, {} as TSlotsValue);
+    }, {} as Slots<TSlotsValue>);
   }
 
-  let _slots: TSlotsValue;
+  let _slots: Slots<TSlotsValue>;
 
   function createSlots(
     config?: StylesConfig<TSlotsValue, TVariantsValue>,
-    overrides?: Partial<TSlotsValue> | string,
-  ): TSlotsValue {
+    overrides?: Partial<Slots<TSlotsValue>> | string,
+  ): Slots<TSlotsValue> {
     if ((config && (config.slots || config.variants)) || overrides) {
       return create(config, overrides);
     }
