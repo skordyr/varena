@@ -10,6 +10,7 @@ import type { LayoutSystem } from "./layout";
 import type { SpacingSystem } from "./spacing";
 import type { TypographySystem } from "./typography";
 
+import { run } from "../shared/utils";
 import { createTokens } from "../tokens";
 import { AnimationTokens } from "./animation";
 import { BorderTokens } from "./border";
@@ -34,15 +35,17 @@ export type DesignSystem = Simplify<
     TypographySystem
 >;
 
-export const DesignTokens: Tokens<DesignSystem> = /* @__PURE__ */ createTokens({
-  ...AnimationTokens.definition,
-  ...BorderTokens.definition,
-  ...ColorTokens.definition,
-  ...EffectTokens.definition,
-  ...FilterTokens.definition,
-  ...InteractivityTokens.definition,
-  ...LayoutTokens.definition,
-  ...PaletteTokens.definition,
-  ...SpacingTokens.definition,
-  ...TypographyTokens.definition,
-});
+export const DesignTokens: Tokens<DesignSystem> = /* @__PURE__ */ run(() =>
+  createTokens({
+    ...AnimationTokens.definition,
+    ...BorderTokens.definition,
+    ...ColorTokens.definition,
+    ...EffectTokens.definition,
+    ...FilterTokens.definition,
+    ...InteractivityTokens.definition,
+    ...LayoutTokens.definition,
+    ...PaletteTokens.definition,
+    ...SpacingTokens.definition,
+    ...TypographyTokens.definition,
+  }),
+);
