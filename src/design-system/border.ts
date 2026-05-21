@@ -3,6 +3,7 @@ import type { Tokens } from "../tokens";
 import { createTokens } from "../tokens";
 
 export type BorderSystem = {
+  radius: string;
   "radius-none": string;
   "radius-xs": string;
   "radius-sm": string;
@@ -16,6 +17,7 @@ export type BorderSystem = {
 };
 
 export const BorderTokens: Tokens<BorderSystem> = /* @__PURE__ */ createTokens({
+  radius: "0.5rem",
   "radius-none": "0",
   "radius-xs": "0.125rem",
   "radius-sm": "0.25rem",

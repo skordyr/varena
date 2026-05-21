@@ -855,6 +855,7 @@ Border radius scales.
 
 ```ts
 type BorderSystem = {
+  radius: string;
   "radius-none": string;
   "radius-xs": string;
   "radius-sm": string;
@@ -1434,6 +1435,7 @@ type TypographySystem = {
   "font-weight-extrabold": string;
   "font-weight-black": string;
 
+  text: string;
   "text-xs": string;
   "text-xs--line-height": string;
   "text-sm": string;

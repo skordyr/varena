@@ -29,6 +29,7 @@ export type TypographySystem = {
   "font-weight-extrabold": string;
   "font-weight-black": string;
 
+  text: string;
   "text-xs": string;
   "text-xs--line-height": string;
   "text-sm": string;
@@ -101,6 +102,7 @@ export const TypographyTokens: Tokens<TypographySystem> = /* @__PURE__ */ create
   "font-weight-extrabold": "800",
   "font-weight-black": "900",
 
+  text: "1rem",
   "text-xs": "0.75rem",
   "text-xs--line-height": "calc(1 / 0.75)",
   "text-sm": "0.875rem",
