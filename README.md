@@ -158,6 +158,10 @@ project/
     └── global.css             # Global CSS imports
 ```
 
+```bash
+pnpm add varena @emotion/css
+```
+
 ```ts
 // styles/theme.ts
 import { ColorTokens } from "varena/design-system";
