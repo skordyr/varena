@@ -1,5 +1,12 @@
 # varena
 
+## 0.4.2
+
+### Patch Changes
+
+- e4f8f31: feat(design-system): :zap: optimize tree-shaking for DesignTokens
+  - Wrap `createTokens` call in `run()` function for better tree-shaking support
+
 ## 0.4.1
 
 ### Patch Changes
