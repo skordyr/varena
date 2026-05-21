@@ -1,5 +1,12 @@
 # varena
 
+## 0.4.0
+
+### Minor Changes
+
+- 38bad1f: Add built-in design system tokens
+  - Add `varena/design-system` entry point with animation, border, color, effect, filter, interactivity, layout, palette, spacing, and typography tokens
+
 ## 0.3.2
 
 ### Patch Changes
