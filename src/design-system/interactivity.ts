@@ -8,6 +8,6 @@ export type InteractivitySystem = {
 };
 
 export const InteractivityTokens: Tokens<InteractivitySystem> = /* @__PURE__ */ createTokens({
-  "cursor-interactive": "default",
+  "cursor-interactive": "pointer",
   "cursor-disabled": "not-allowed",
 });
