@@ -1,8 +1,8 @@
-import { defineConfig } from "oxfmt";
-
-export default defineConfig({
-  experimentalSortImports: {
-    groups: [
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [],
+  "experimentalSortImports": {
+    "groups": [
       "side_effect",
       "side_effect_style",
       "type-builtin",
@@ -16,8 +16,7 @@ export default defineConfig({
       ["type-parent", "type-sibling"],
       ["parent", "sibling"],
       "style",
-      "unknown",
-    ],
-  },
-  ignorePatterns: [],
-});
+      "unknown"
+    ]
+  }
+}

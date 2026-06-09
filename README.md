@@ -178,7 +178,7 @@ import { injectGlobal } from "@emotion/css";
 import { ThemeTokens } from "@/styles/theme";
 
 // Inject tokens as CSS variables globally
-injectGlobal(ThemeTokens.css());
+injectGlobal(ThemeTokens.css(":root"));
 ```
 
 ```tsx
@@ -216,7 +216,7 @@ ${ThemeTokens.css(
   }, {}),
   "@theme inline",
 )}
-${ThemeTokens.css()}
+${ThemeTokens.css(":root")}
 `,
 );
 ```
@@ -415,8 +415,10 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens(config)` - Generates a style object with only the specified CSS custom property overrides.
 - `Tokens.definition` - Original token definition passed to `createTokens`.
 - `Tokens.style` - Cached style object generated from full default token values.
-- `Tokens.css(selector?, wrapper?)` - Returns a formatted CSS string for creating CSS files.
-- `Tokens.css(config, selector?, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides.
+- `Tokens.css()` - Returns a formatted CSS string of token declarations without a selector.
+- `Tokens.css(selector, wrapper?)` - Returns a formatted CSS string wrapped in a CSS selector for creating CSS files.
+- `Tokens.css(config)` - Returns a formatted CSS string with only the specified CSS custom property overrides, without a selector.
+- `Tokens.css(config, selector, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides, wrapped in a CSS selector.
 - `Tokens.value(key)` - Reads a token value. Returns `undefined` if the key is not defined.
 - `Tokens.value(key, fallback)` - Reads a token value with a guaranteed non-null return, using `fallback` when the key is missing.
 - `Tokens.value(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
@@ -465,14 +467,12 @@ ThemeTokens.style;
 
 ThemeTokens.css();
 // =>
-// :root {
-//   --app-color-primary: #0ea5e9;
-//   --app-radius-md: 8px;
-// }
+// --app-color-primary: #0ea5e9;
+// --app-radius-md: 8px;
 
-ThemeTokens.css("#main");
+ThemeTokens.css(":root");
 // =>
-// #main {
+// :root {
 //   --app-color-primary: #0ea5e9;
 //   --app-radius-md: 8px;
 // }
@@ -488,14 +488,12 @@ ThemeTokens.css(":root", "@media (prefers-color-scheme: dark)");
 
 ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" });
 // =>
-// :root {
-//   --app-radius-md: 8px;
-//   --app-color-primary: #ff0000;
-// }
+// --app-radius-md: 8px;
+// --app-color-primary: #ff0000;
 
-ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" }, "#main");
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" }, ":root");
 // =>
-// #main {
+// :root {
 //   --app-radius-md: 8px;
 //   --app-color-primary: #ff0000;
 // }

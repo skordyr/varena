@@ -22,8 +22,10 @@ export interface Tokens<TTokensValue extends TokensValue> {
   (config: TokensConfig<TTokensValue>): TokensStyle;
   definition: TTokensValue;
   style: TokensStyle;
-  css(selector?: string, wrapper?: string): string;
-  css(config: TokensConfig<TTokensValue>, selector?: string, wrapper?: string): string;
+  css(): string;
+  css(selector: string, wrapper?: string): string;
+  css(config: TokensConfig<TTokensValue>): string;
+  css(config: TokensConfig<TTokensValue>, selector: string, wrapper?: string): string;
   value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey];
   value<TKey extends TokensKey<TTokensValue>>(
     key: TKey,
@@ -66,8 +68,6 @@ export function isTokens(target: unknown): target is Tokens<any> {
     typeof candidate.extend === "function",
   );
 }
-
-const ROOT_SELECTOR = ":root";
 
 export interface CreateTokensOptions {
   prefix?: string;
@@ -116,16 +116,16 @@ export function createTokens<TTokensValue extends TokensValue>(
     maybeWrapper?: string,
   ): string {
     let config: TokensConfig<TTokensValue>;
-    let selector: string;
+    let selector: string | undefined;
     let wrapper: string | undefined;
 
     if (typeof maybeConfig === "object") {
       config = maybeConfig;
-      selector = maybeSelector || ROOT_SELECTOR;
+      selector = maybeSelector;
       wrapper = maybeWrapper;
     } else {
       config = tokens;
-      selector = maybeConfig || ROOT_SELECTOR;
+      selector = maybeConfig;
       wrapper = maybeSelector;
     }
 
@@ -137,7 +137,7 @@ export function createTokens<TTokensValue extends TokensValue>(
 
     const output: string[] = [];
 
-    if (wrapper) {
+    if (wrapper && selector) {
       output.push(`${wrapper} {
   ${selector} {`);
 
@@ -146,17 +146,19 @@ export function createTokens<TTokensValue extends TokensValue>(
       }
 
       output.push(`  }
-}
-`);
-    } else {
+}`);
+    } else if (selector) {
       output.push(`${selector} {`);
 
       for (const [name, value] of entries) {
         output.push(`  ${name}: ${value};`);
       }
 
-      output.push(`}
-`);
+      output.push(`}`);
+    } else {
+      for (const [name, value] of entries) {
+        output.push(`${name}: ${value};`);
+      }
     }
 
     return output.join("\n");
