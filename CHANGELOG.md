@@ -1,5 +1,13 @@
 # varena
 
+## 0.4.4
+
+### Patch Changes
+
+- 134c5a0: refactor(tokens): :recycle: remove implicit :root default from css()
+
+  css() no longer defaults to :root — pass :root explicitly when a selector is needed.
+
 ## 0.4.3
 
 ### Patch Changes
