@@ -413,6 +413,12 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 **Returns**
 
 - `Tokens(config)` - Generates a style object with only the specified CSS custom property overrides.
+
+  > Token values may contain `{key[?? fallback]}` references.
+  >
+  > - `{key}` → `variable('key')`
+  > - `{key ?? fallback}` → `variable('key', 'fallback')`
+
 - `Tokens.definition` - Original token definition passed to `createTokens`.
 - `Tokens.style` - Cached style object generated from full default token values.
 - `Tokens.css()` - Returns a formatted CSS string of token declarations without a selector.
@@ -420,6 +426,12 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens.css(config)` - Returns a formatted CSS string with only the specified CSS custom property overrides, without a selector.
 - `Tokens.css(config, selector, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides, wrapped in a CSS selector.
 - `Tokens.value(key)` - Reads a token value. Returns `undefined` if the key is not defined.
+
+  > Token value may contain `{key[?? fallback]}` references.
+  >
+  > - `{key}` → `variable('key')`
+  > - `{key ?? fallback}` → `variable('key', 'fallback')`
+
 - `Tokens.value(key, fallback)` - Reads a token value with a guaranteed non-null return, using `fallback` when the key is missing.
 - `Tokens.value(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
 - `Tokens.property(key)` - Returns the CSS custom property name for a token key.
@@ -438,23 +450,25 @@ import { createTokens } from "varena";
 
 export const ThemeTokens = createTokens<{
   "color.primary": string;
-  "color.secondary"?: string;
+  "color.border"?: string;
   "radius.md": string;
+  border: string;
 }>(
   {
     "color.primary": "#0ea5e9",
     "radius.md": "8px",
+    border: "1px solid {color.border ?? #e5e7eb}",
   },
   { prefix: "app" },
 );
 
 export type ThemeTokensConfig = InferTokensConfig<typeof ThemeTokens>;
-// => { "color.primary"?: string; "color.secondary"?: string; "radius.md"?: string }
+// => { "color.primary"?: string; "color.border"?: string; "radius.md"?: string; "border"?: string }
 ```
 
 ```ts
 ThemeTokens.definition;
-// => { "color.primary": "#0ea5e9", "radius.md": "8px" }
+// => { "color.primary": "#0ea5e9", "radius.md": "8px", border: "1px solid {color.border ?? #e5e7eb}" }
 
 ThemeTokens({});
 // => {}
@@ -463,51 +477,57 @@ ThemeTokens({ "color.primary": "#0369a1" });
 // => { "--app-color-primary": "#0369a1" }
 
 ThemeTokens.style;
-// => { "--app-color-primary": "#0ea5e9", "--app-radius-md": "8px" }
+// => {
+//   "--app-color-primary": "#0ea5e9",
+//   "--app-radius-md": "8px",
+//   "--app-border": "1px solid var(--app-color-border, #e5e7eb)",
+// }
 
 ThemeTokens.css();
 // =>
 // --app-color-primary: #0ea5e9;
 // --app-radius-md: 8px;
+// --app-border: 1px solid var(--app-color-border, #e5e7eb);
 
 ThemeTokens.css(":root");
 // =>
 // :root {
 //   --app-color-primary: #0ea5e9;
 //   --app-radius-md: 8px;
+//   --app-border: 1px solid var(--app-color-border, #e5e7eb);
 // }
 
-ThemeTokens.css(":root", "@media (prefers-color-scheme: dark)");
+ThemeTokens.css(":root", "@layer theme");
 // =>
-// @media (prefers-color-scheme: dark) {
+// @layer theme {
 //   :root {
 //     --app-color-primary: #0ea5e9;
 //     --app-radius-md: 8px;
+//     --app-border: 1px solid var(--app-color-border, #e5e7eb);
 //   }
 // }
 
-ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" });
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#f97316" });
 // =>
+// --app-color-primary: #f97316;
 // --app-radius-md: 8px;
-// --app-color-primary: #ff0000;
+// --app-border: 1px solid var(--app-color-border, #e5e7eb);
 
-ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#ff0000" }, ":root");
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#f97316" }, ":root");
 // =>
 // :root {
+//   --app-color-primary: #f97316;
 //   --app-radius-md: 8px;
-//   --app-color-primary: #ff0000;
+//   --app-border: 1px solid var(--app-color-border, #e5e7eb);
 // }
 
-ThemeTokens.css(
-  { ...ThemeTokens.definition, "color.primary": "#ff0000" },
-  ":root",
-  "@media (prefers-color-scheme: dark)",
-);
+ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#f97316" }, ":root", "@layer theme");
 // =>
-// @media (prefers-color-scheme: dark) {
+// @layer theme {
 //   :root {
+//     --app-color-primary: #f97316;
 //     --app-radius-md: 8px;
-//     --app-color-primary: #ff0000;
+//     --app-border: 1px solid var(--app-color-border, #e5e7eb);
 //   }
 // }
 
@@ -517,8 +537,11 @@ ThemeTokens.css({});
 ThemeTokens.value("color.primary");
 // => "#0ea5e9"
 
-ThemeTokens.value("color.secondary", "#64748b");
-// => "#64748b" (returns fallback since key not in definition)
+ThemeTokens.value("color.border", "#e5e7eb");
+// => "#e5e7eb" (returns fallback since key not in definition)
+
+ThemeTokens.value("border");
+// => "1px solid var(--app-color-border, #e5e7eb)"
 
 ThemeTokens.property("color.primary");
 // => "--app-color-primary"
@@ -532,19 +555,23 @@ ThemeTokens.variable("radius.md", "6px");
 
 ```ts
 export const DarkThemeTokens = ThemeTokens.extend({
-  "color.primary": "#0284c7",
+  "color.primary": "#1e40af",
 });
 ```
 
 ```ts
 DarkThemeTokens.definition;
-// => { "color.primary": "#0284c7", "radius.md": "8px" }
+// => { "color.primary": "#1e40af", "radius.md": "8px", border: "1px solid {color.border ?? #e5e7eb}" }
 
 DarkThemeTokens.style;
-// => { "--app-color-primary": "#0284c7", "--app-radius-md": "8px" }
+// => {
+//   "--app-color-primary": "#1e40af",
+//   "--app-radius-md": "8px",
+//   "--app-border": "1px solid var(--app-color-border, #e5e7eb)",
+// }
 
 DarkThemeTokens.value("color.primary");
-// => "#0284c7"
+// => "#1e40af"
 ```
 
 #### `cx(...classes)`
@@ -819,7 +846,7 @@ Infers the config shape accepted by a `Tokens(config)` call.
 import type { InferTokensConfig } from "varena";
 
 export type ThemeTokensConfig = InferTokensConfig<typeof ThemeTokens>;
-// => { "color.primary"?: string; "color.secondary"?: string; "radius.md"?: string }
+// => { "color.primary"?: string; "color.border"?: string; "radius.md"?: string; "border"?: string }
 ```
 
 ### varena/design-system

@@ -80,34 +80,41 @@ export function createTokens<TTokensValue extends TokensValue>(
 ): Tokens<TTokensValue> {
   const { prefix, createVariableName = createVariableNameWithDash } = options;
 
-  function value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey] | undefined;
-  function value<TKey extends TokensKey<TTokensValue>>(
-    key: TKey,
-    fallback: NonNullable<TTokensValue[TKey]>,
-  ): NonNullable<TTokensValue[TKey]>;
-  function value<TKey extends TokensKey<TTokensValue>>(
-    key: TKey,
-    fallback?: NonNullable<TTokensValue[TKey]>,
-  ): NonNullable<TTokensValue[TKey]> | undefined;
-  function value<TKey extends TokensKey<TTokensValue>>(key: TKey, fallback?: TTokensValue[TKey]) {
-    const { [key]: value = fallback } = tokens;
+  function dereference(value: TokenPrimitive): TokenPrimitive {
+    if (!hasReference(value)) {
+      return value;
+    }
 
-    return value;
+    return value.replace(/\{([^}]+)\}/g, (_, expression: string) => {
+      let key;
+      let fallback;
+
+      const fallbackMarkerIndex = expression.indexOf("??");
+
+      if (fallbackMarkerIndex > -1) {
+        key = expression.slice(0, fallbackMarkerIndex).trim();
+        fallback = expression.slice(fallbackMarkerIndex + 2).trim();
+      } else {
+        key = expression.trim();
+      }
+
+      return variable(
+        key as TokensKey<TTokensValue>,
+        fallback as TTokensValue[TokensKey<TTokensValue>] | undefined,
+      );
+    });
   }
 
-  function property<TKey extends TokensKey<TTokensValue>>(key: TKey): TokenProperty {
-    return `--${createVariableName(key, prefix)}`;
-  }
+  function create(config: TokensConfig<TTokensValue>): TokensStyle {
+    const style: TokensStyle = {};
 
-  function variable<TKey extends TokensKey<TTokensValue>>(
-    key: TKey,
-    fallback?: NonNullable<TTokensValue[TKey]>,
-  ): TokenVariable {
-    return fallback === undefined ? `var(${property(key)})` : `var(${property(key)}, ${fallback})`;
-  }
+    for (const [key, value] of Object.entries(config)) {
+      if (value !== undefined) {
+        style[property(key)] = dereference(value);
+      }
+    }
 
-  function extend(config: TokensConfig<TTokensValue>): Tokens<TTokensValue> {
-    return createTokens<TTokensValue>({ ...tokens, ...config }, options);
+    return style;
   }
 
   function css(
@@ -164,16 +171,34 @@ export function createTokens<TTokensValue extends TokensValue>(
     return output.join("\n");
   }
 
-  function create(config: TokensConfig<TTokensValue>): TokensStyle {
-    const style: TokensStyle = {};
+  function value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey] | undefined;
+  function value<TKey extends TokensKey<TTokensValue>>(
+    key: TKey,
+    fallback: NonNullable<TTokensValue[TKey]>,
+  ): NonNullable<TTokensValue[TKey]>;
+  function value<TKey extends TokensKey<TTokensValue>>(
+    key: TKey,
+    fallback?: NonNullable<TTokensValue[TKey]>,
+  ): NonNullable<TTokensValue[TKey]> | undefined;
+  function value<TKey extends TokensKey<TTokensValue>>(key: TKey, fallback?: TTokensValue[TKey]) {
+    const { [key]: value } = tokens;
 
-    for (const [key, value] of Object.entries(config)) {
-      if (value !== undefined) {
-        style[property(key)] = value;
-      }
-    }
+    return value !== undefined ? dereference(value) : fallback;
+  }
 
-    return style;
+  function property<TKey extends TokensKey<TTokensValue>>(key: TKey): TokenProperty {
+    return `--${createVariableName(key, prefix)}`;
+  }
+
+  function variable<TKey extends TokensKey<TTokensValue>>(
+    key: TKey,
+    fallback?: NonNullable<TTokensValue[TKey]>,
+  ): TokenVariable {
+    return fallback === undefined ? `var(${property(key)})` : `var(${property(key)}, ${fallback})`;
+  }
+
+  function extend(config: TokensConfig<TTokensValue>): Tokens<TTokensValue> {
+    return createTokens<TTokensValue>({ ...tokens, ...config }, options);
   }
 
   let _style: TokensStyle;
@@ -192,6 +217,8 @@ export function createTokens<TTokensValue extends TokensValue>(
 
   createStyle.definition = tokens;
 
+  createStyle.css = css;
+
   createStyle.value = value;
 
   createStyle.property = property;
@@ -200,8 +227,6 @@ export function createTokens<TTokensValue extends TokensValue>(
 
   createStyle.extend = extend;
 
-  createStyle.css = css;
-
   Object.defineProperty(createStyle, "style", {
     get() {
       return createStyle(tokens);
@@ -209,6 +234,10 @@ export function createTokens<TTokensValue extends TokensValue>(
   });
 
   return createStyle as Tokens<TTokensValue>;
+}
+
+function hasReference(value: unknown): value is string {
+  return typeof value === "string" && value.includes("{");
 }
 
 function createVariableNameWithDash(key: string, prefix?: string) {
