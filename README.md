@@ -853,49 +853,49 @@ export type ThemeTokensConfig = InferTokensConfig<typeof ThemeTokens>;
 
 Design token systems for consistent foundations.
 
-#### `AnimationTokens: Tokens<AnimationSystem>`
+#### `DesignTokens: Tokens<DesignSystem>`
 
-Animation durations and easing curves.
-
-**System**
-
-```ts
-type AnimationSystem = {
-  "duration-fastest": string; //  50ms
-  "duration-faster": string; //   100ms
-  "duration-fast": string; //     150ms
-  "duration-normal": string; //   200ms
-  "duration-slow": string; //     300ms
-  "duration-slower": string; //   400ms
-  "duration-slowest": string; //  500ms
-
-  "ease-linear": string; //       linear
-  "ease-in": string; //           cubic-bezier(0.4, 0, 1, 1)
-  "ease-out": string; //          cubic-bezier(0, 0, 0.2, 1)
-  "ease-in-out": string; //       cubic-bezier(0.4, 0, 0.2, 1)
-};
-```
-
-#### `BorderTokens: Tokens<BorderSystem>`
-
-Border radius scales.
+Ready-to-use preset of all design tokens.
 
 **System**
 
 ```ts
-type BorderSystem = {
-  radius: string; //          0.5rem                 // :8px
-  "radius-none": string; //   0                      // :0
-  "radius-xs": string; //     calc({radius} * 0.25)  // :2px
-  "radius-sm": string; //     calc({radius} * 0.5)   // :4px
-  "radius-md": string; //     calc({radius} * 0.75)  // :6px
-  "radius-lg": string; //     {radius}               // :8px
-  "radius-xl": string; //     calc({radius} * 1.5)   // :12px
-  "radius-2xl": string; //    calc({radius} * 2)     // :16px
-  "radius-3xl": string; //    calc({radius} * 3)     // :24px
-  "radius-4xl": string; //    calc({radius} * 4)     // :32px
-  "radius-full": string; //   9999px                 // :9999px
-};
+type DesignSystem = ColorSystem &
+  SpacingSystem &
+  TypographySystem &
+  BorderSystem &
+  EffectSystem &
+  AnimationSystem &
+  LayoutSystem &
+  InteractivitySystem &
+  FilterSystem &
+  BlackWhiteSystem &
+  RedSystem &
+  OrangeSystem &
+  AmberSystem &
+  YellowSystem &
+  LimeSystem &
+  GreenSystem &
+  EmeraldSystem &
+  TealSystem &
+  CyanSystem &
+  SkySystem &
+  BlueSystem &
+  IndigoSystem &
+  VioletSystem &
+  PurpleSystem &
+  FuchsiaSystem &
+  PinkSystem &
+  RoseSystem &
+  SlateSystem &
+  GraySystem &
+  ZincSystem &
+  NeutralSystem &
+  StoneSystem &
+  MauveSystem &
+  OliveSystem &
+  MistSystem &
+  TaupeSystem;
 ```
 
 #### `ColorTokens: Tokens<ColorSystem>`
@@ -952,433 +952,6 @@ type ColorSystem = {
   "color-chart-3": string; //                      221.34 97.06% 53.5%  // color-blue-600   :hsl(221.34 97.06% 53.5%)
   "color-chart-4": string; //                      225.35 84.1% 48.98%  // color-blue-700   :hsl(225.35 84.1% 48.98%)
   "color-chart-5": string; //                      227.1 75.74% 41.14%  // color-blue-800   :hsl(227.1 75.74% 41.14%)
-};
-```
-
-#### `EffectTokens: Tokens<EffectSystem>`
-
-Shadow effects for boxes and text.
-
-**System**
-
-```ts
-type EffectSystem = {
-  "shadow-none": string; //       0 0 #0000
-  "shadow-2xs": string; //        0 1px rgb(0 0 0 / 0.05)
-  "shadow-xs": string; //         0 1px 2px 0 rgb(0 0 0 / 0.05)
-  "shadow-sm": string; //         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
-  "shadow-md": string; //         0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
-  "shadow-lg": string; //         0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)
-  "shadow-xl": string; //         0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)
-  "shadow-2xl": string; //        0 25px 50px -12px rgb(0 0 0 / 0.25)
-
-  "inset-shadow-none": string; // inset 0 0 #0000
-  "inset-shadow-2xs": string; //  inset 0 1px rgb(0 0 0 / 0.05)
-  "inset-shadow-xs": string; //   inset 0 1px 1px rgb(0 0 0 / 0.05)
-  "inset-shadow-sm": string; //   inset 0 2px 4px rgb(0 0 0 / 0.05)
-
-  "text-shadow-none": string; //  none
-  "text-shadow-2xs": string; //   0px 1px 0px rgb(0 0 0 / 0.15)
-  "text-shadow-xs": string; //    0px 1px 1px rgb(0 0 0 / 0.2)
-  "text-shadow-sm": string; //    0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)
-  "text-shadow-md": string; //    0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1)
-  "text-shadow-lg": string; //    0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1)
-};
-```
-
-#### `FilterTokens: Tokens<FilterSystem>`
-
-Visual filters like blur and drop shadow.
-
-**System**
-
-```ts
-type FilterSystem = {
-  "blur-none": string; //         ""
-  "blur-xs": string; //           4px
-  "blur-sm": string; //           8px
-  "blur-md": string; //           12px
-  "blur-lg": string; //           16px
-  "blur-xl": string; //           24px
-  "blur-2xl": string; //          40px
-  "blur-3xl": string; //          64px
-
-  "drop-shadow-none": string; //  0 0 #0000
-  "drop-shadow-xs": string; //    0 1px 1px rgb(0 0 0 / 0.05)
-  "drop-shadow-sm": string; //    0 1px 2px rgb(0 0 0 / 0.15)
-  "drop-shadow-md": string; //    0 3px 3px rgb(0 0 0 / 0.12)
-  "drop-shadow-lg": string; //    0 4px 4px rgb(0 0 0 / 0.15)
-  "drop-shadow-xl": string; //    0 9px 7px rgb(0 0 0 / 0.1)
-  "drop-shadow-2xl": string; //   0 25px 25px rgb(0 0 0 / 0.15)
-};
-```
-
-#### `InteractivityTokens: Tokens<InteractivitySystem>`
-
-Interactive cursor styles.
-
-**System**
-
-```ts
-type InteractivitySystem = {
-  "cursor-interactive": string; //  pointer
-  "cursor-disabled": string; //     not-allowed
-};
-```
-
-#### `LayoutTokens: Tokens<LayoutSystem>`
-
-Layout layers and proportions.
-
-**System**
-
-```ts
-type LayoutSystem = {
-  "z-hide": string; //            -1
-  "z-base": string; //            0
-  "z-docked": string; //          10
-  "z-dropdown": string; //        1000
-  "z-sticky": string; //          1100
-  "z-banner": string; //          1200
-  "z-overlay": string; //         1300
-  "z-modal": string; //           1400
-  "z-popover": string; //         1500
-  "z-skip-nav": string; //        1600
-  "z-toast": string; //           1700
-  "z-tooltip": string; //         1800
-  "z-max": string; //             2147483647
-
-  "aspect-square": string; //     1 / 1
-  "aspect-landscape": string; //  4 / 3
-  "aspect-portrait": string; //   3 / 4
-  "aspect-wide": string; //       16 / 9
-  "aspect-ultrawide": string; //  18 / 5
-  "aspect-golden": string; //     1.618 / 1
-};
-```
-
-#### `PaletteTokens: Tokens<PaletteSystem>`
-
-Color palette shades.
-
-**System**
-
-```ts
-type PaletteSystem = {
-  "color-black": string; //       :hsl(0 0% 0%)
-  "color-white": string; //       :hsl(0 0% 100%)
-
-  "color-red-50": string; //      :hsl(0 88.21% 97.32%)
-  "color-red-100": string; //     :hsl(359.98 98.78% 94.25%)
-  "color-red-200": string; //     :hsl(359.95 100% 89.49%)
-  "color-red-300": string; //     :hsl(359.72 100% 81.73%)
-  "color-red-400": string; //     :hsl(358.75 100% 69.56%)
-  "color-red-500": string; //     :hsl(356.95 95.9% 57.72%)
-  "color-red-600": string; //     :hsl(357.21 100% 45.32%)
-  "color-red-700": string; //     :hsl(357.72 100% 37.84%)
-  "color-red-800": string; //     :hsl(355.94 91.15% 32.55%)
-  "color-red-900": string; //     :hsl(358.8 69.3% 30.07%)
-  "color-red-950": string; //     :hsl(359.29 79.42% 15.35%)
-
-  "color-orange-50": string; //   :hsl(33.75 100% 96.46%)
-  "color-orange-100": string; //  :hsl(34.51 100% 91.63%)
-  "color-orange-200": string; //  :hsl(32.22 100% 82.84%)
-  "color-orange-300": string; //  :hsl(31.57 100% 70.7%)
-  "color-orange-400": string; //  :hsl(31.83 100% 50.69%)
-  "color-orange-500": string; //  :hsl(24.64 100% 50%)
-  "color-orange-600": string; //  :hsl(18 100% 48.04%)
-  "color-orange-700": string; //  :hsl(15.7 100% 39.59%)
-  "color-orange-800": string; //  :hsl(16.97 100% 31.22%)
-  "color-orange-900": string; //  :hsl(15.99 83.12% 27.04%)
-  "color-orange-950": string; //  :hsl(12.88 84.81% 14.42%)
-
-  "color-amber-50": string; //    :hsl(48.38 100% 96%)
-  "color-amber-100": string; //   :hsl(47.99 97.34% 88.73%)
-  "color-amber-200": string; //   :hsl(48.02 98.23% 75.9%)
-  "color-amber-300": string; //   :hsl(46.99 100% 59.38%)
-  "color-amber-400": string; //   :hsl(43.65 100% 50%)
-  "color-amber-500": string; //   :hsl(36.49 100% 49.6%)
-  "color-amber-600": string; //   :hsl(30.1 100% 44.19%)
-  "color-amber-700": string; //   :hsl(24.68 100% 36.59%)
-  "color-amber-800": string; //   :hsl(23.76 100% 29.52%)
-  "color-amber-900": string; //   :hsl(23.04 90.17% 25.26%)
-  "color-amber-950": string; //   :hsl(20.9 96.65% 13.94%)
-
-  "color-yellow-50": string; //   :hsl(54.55 90.61% 95.28%)
-  "color-yellow-100": string; //  :hsl(54.89 97.52% 87.84%)
-  "color-yellow-200": string; //  :hsl(52.74 99.45% 76.08%)
-  "color-yellow-300": string; //  :hsl(51.51 100% 56.29%)
-  "color-yellow-400": string; //  :hsl(47.61 100% 49.38%)
-  "color-yellow-500": string; //  :hsl(44.37 100% 46.93%)
-  "color-yellow-600": string; //  :hsl(38.87 100% 40.88%)
-  "color-yellow-700": string; //  :hsl(34.39 100% 32.55%)
-  "color-yellow-800": string; //  :hsl(32.77 100% 26.8%)
-  "color-yellow-900": string; //  :hsl(29.52 83.35% 24.57%)
-  "color-yellow-950": string; //  :hsl(26.16 87.52% 13.96%)
-
-  "color-lime-50": string; //     :hsl(78.26 92.84% 95.14%)
-  "color-lime-100": string; //    :hsl(79.56 89.72% 89.11%)
-  "color-lime-200": string; //    :hsl(80.7 89.71% 78.91%)
-  "color-lime-300": string; //    :hsl(80.92 87.66% 63.65%)
-  "color-lime-400": string; //    :hsl(79.91 100% 45.08%)
-  "color-lime-500": string; //    :hsl(83.9 100% 40.5%)
-  "color-lime-600": string; //    :hsl(85.83 100% 32.37%)
-  "color-lime-700": string; //    :hsl(85.23 100% 24.58%)
-  "color-lime-800": string; //    :hsl(83.32 100% 19.4%)
-  "color-lime-900": string; //    :hsl(86.52 71.11% 19.12%)
-  "color-lime-950": string; //    :hsl(88.95 88.62% 9.61%)
-
-  "color-green-50": string; //    :hsl(138.46 76.51% 96.68%)
-  "color-green-100": string; //   :hsl(140.65 84.38% 92.45%)
-  "color-green-200": string; //   :hsl(141.14 81.07% 84.82%)
-  "color-green-300": string; //   :hsl(142.66 81.25% 71.39%)
-  "color-green-400": string; //   :hsl(150.06 95.56% 44.76%)
-  "color-green-500": string; //   :hsl(144.06 100% 39.36%)
-  "color-green-600": string; //   :hsl(142.29 100% 32.57%)
-  "color-green-700": string; //   :hsl(144.68 100% 25.5%)
-  "color-green-800": string; //   :hsl(147.72 97.15% 20.36%)
-  "color-green-900": string; //   :hsl(145.73 73.08% 18.99%)
-  "color-green-950": string; //   :hsl(145.39 87.57% 9.65%)
-
-  "color-emerald-50": string; //  :hsl(151.78 80.95% 95.82%)
-  "color-emerald-100": string; // :hsl(149.32 81.17% 89.84%)
-  "color-emerald-200": string; // :hsl(152.54 77.89% 80.02%)
-  "color-emerald-300": string; // :hsl(157.3 76.25% 64.25%)
-  "color-emerald-400": string; // :hsl(161.25 100% 41.63%)
-  "color-emerald-500": string; // :hsl(159.74 100% 36.94%)
-  "color-emerald-600": string; // :hsl(159.97 100% 29.95%)
-  "color-emerald-700": string; // :hsl(161.85 100% 23.91%)
-  "color-emerald-800": string; // :hsl(162.98 100% 18.89%)
-  "color-emerald-900": string; // :hsl(164.76 100% 15.41%)
-  "color-emerald-950": string; // :hsl(165.88 100% 8.68%)
-
-  "color-teal-50": string; //     :hsl(166.15 77.06% 96.74%)
-  "color-teal-100": string; //    :hsl(167.27 86.98% 89.13%)
-  "color-teal-200": string; //    :hsl(168.51 85.39% 77.72%)
-  "color-teal-300": string; //    :hsl(171.35 81.79% 60.15%)
-  "color-teal-400": string; //    :hsl(173.4 100% 41.76%)
-  "color-teal-500": string; //    :hsl(173.58 100% 36.67%)
-  "color-teal-600": string; //    :hsl(174.71 100% 29.46%)
-  "color-teal-700": string; //    :hsl(175.65 100% 23.45%)
-  "color-teal-800": string; //    :hsl(176.62 100% 18.66%)
-  "color-teal-900": string; //    :hsl(176.3 76.01% 17.51%)
-  "color-teal-950": string; //    :hsl(178.66 91.58% 9.64%)
-
-  "color-cyan-50": string; //     :hsl(183.16 99.92% 96.25%)
-  "color-cyan-100": string; //    :hsl(185.11 96.43% 90.29%)
-  "color-cyan-200": string; //    :hsl(186.2 95.77% 81.44%)
-  "color-cyan-300": string; //    :hsl(186.71 97.47% 65.9%)
-  "color-cyan-400": string; //    :hsl(187.8 100% 47.55%)
-  "color-cyan-500": string; //    :hsl(189.48 100% 42.87%)
-  "color-cyan-600": string; //    :hsl(192.32 100% 36.13%)
-  "color-cyan-700": string; //    :hsl(192.78 100% 29.16%)
-  "color-cyan-800": string; //    :hsl(192.74 100% 23.56%)
-  "color-cyan-900": string; //    :hsl(195.82 72.14% 22.87%)
-  "color-cyan-950": string; //    :hsl(196.69 85.44% 14.55%)
-
-  "color-sky-50": string; //      :hsl(203.34 100% 96.99%)
-  "color-sky-100": string; //     :hsl(203.99 96.54% 93.67%)
-  "color-sky-200": string; //     :hsl(200.57 97.87% 85.94%)
-  "color-sky-300": string; //     :hsl(198.47 100% 72.66%)
-  "color-sky-400": string; //     :hsl(195.82 100% 50%)
-  "color-sky-500": string; //     :hsl(199.27 100% 47.86%)
-  "color-sky-600": string; //     :hsl(202.08 100% 40.99%)
-  "color-sky-700": string; //     :hsl(202.6 100% 33.01%)
-  "color-sky-800": string; //     :hsl(201.21 100% 26.99%)
-  "color-sky-900": string; //     :hsl(200.84 96.98% 22.39%)
-  "color-sky-950": string; //     :hsl(203.63 87.23% 15.52%)
-
-  "color-blue-50": string; //     :hsl(213.75 96.48% 96.79%)
-  "color-blue-100": string; //    :hsl(214.28 96.22% 92.78%)
-  "color-blue-200": string; //    :hsl(213.27 100% 87.25%)
-  "color-blue-300": string; //    :hsl(210.69 100% 77.83%)
-  "color-blue-400": string; //    :hsl(211.96 100% 65.79%)
-  "color-blue-500": string; //    :hsl(216.26 100% 58.47%)
-  "color-blue-600": string; //    :hsl(221.34 97.06% 53.5%)
-  "color-blue-700": string; //    :hsl(225.35 84.1% 48.98%)
-  "color-blue-800": string; //    :hsl(227.1 75.74% 41.14%)
-  "color-blue-900": string; //    :hsl(224.86 67.28% 33.33%)
-  "color-blue-950": string; //    :hsl(226.51 58.74% 21.15%)
-
-  "color-indigo-50": string; //   :hsl(225.82 100% 96.67%)
-  "color-indigo-100": string; //  :hsl(226.28 100% 93.9%)
-  "color-indigo-200": string; //  :hsl(227.86 100% 88.92%)
-  "color-indigo-300": string; //  :hsl(229.52 100% 81.96%)
-  "color-indigo-400": string; //  :hsl(235.47 100% 74.39%)
-  "color-indigo-500": string; //  :hsl(240.98 100% 68.59%)
-  "color-indigo-600": string; //  :hsl(246.99 91.66% 59.53%)
-  "color-indigo-700": string; //  :hsl(247.88 68.29% 51.07%)
-  "color-indigo-800": string; //  :hsl(246.14 60.99% 41.85%)
-  "color-indigo-900": string; //  :hsl(243.26 50.34% 34.77%)
-  "color-indigo-950": string; //  :hsl(244.4 49.1% 20.16%)
-
-  "color-violet-50": string; //   :hsl(250 98.58% 97.62%)
-  "color-violet-100": string; //  :hsl(251.44 93.48% 95.5%)
-  "color-violet-200": string; //  :hsl(250.61 100% 91.89%)
-  "color-violet-300": string; //  :hsl(253.4 100% 85.2%)
-  "color-violet-400": string; //  :hsl(256.85 100% 75.85%)
-  "color-violet-500": string; //  :hsl(260.92 100% 65.91%)
-  "color-violet-600": string; //  :hsl(265.48 99.08% 56.49%)
-  "color-violet-700": string; //  :hsl(268 93.3% 46.89%)
-  "color-violet-800": string; //  :hsl(266.64 86.27% 40.44%)
-  "color-violet-900": string; //  :hsl(264.88 74.27% 34.64%)
-  "color-violet-950": string; //  :hsl(262.22 77.74% 22.86%)
-
-  "color-purple-50": string; //   :hsl(270 98.85% 98.04%)
-  "color-purple-100": string; //  :hsl(268.7 99.95% 95.45%)
-  "color-purple-200": string; //  :hsl(269.45 100% 91.65%)
-  "color-purple-300": string; //  :hsl(271.09 100% 84.89%)
-  "color-purple-400": string; //  :hsl(272.27 100% 73.99%)
-  "color-purple-500": string; //  :hsl(273.31 100% 63.8%)
-  "color-purple-600": string; //  :hsl(274.91 96.1% 52.15%)
-  "color-purple-700": string; //  :hsl(275.69 100% 42.86%)
-  "color-purple-800": string; //  :hsl(274.93 82.4% 37.87%)
-  "color-purple-900": string; //  :hsl(274.52 72.39% 31.62%)
-  "color-purple-950": string; //  :hsl(274.32 94.3% 20.66%)
-
-  "color-fuchsia-50": string; //  :hsl(289.09 95.95% 97.79%)
-  "color-fuchsia-100": string; // :hsl(287.85 100% 95.45%)
-  "color-fuchsia-200": string; // :hsl(288.42 100% 90.67%)
-  "color-fuchsia-300": string; // :hsl(292.14 100% 82.86%)
-  "color-fuchsia-400": string; // :hsl(292.78 100% 70.88%)
-  "color-fuchsia-500": string; // :hsl(292.61 96.35% 57.51%)
-  "color-fuchsia-600": string; // :hsl(293.95 100% 43.58%)
-  "color-fuchsia-700": string; // :hsl(295.03 100% 35.9%)
-  "color-fuchsia-800": string; // :hsl(295.8 98.24% 29.35%)
-  "color-fuchsia-900": string; // :hsl(296.7 72.35% 27.25%)
-  "color-fuchsia-950": string; // :hsl(296.75 99.06% 15.6%)
-
-  "color-pink-50": string; //     :hsl(327.28 71.09% 97%)
-  "color-pink-100": string; //    :hsl(325.7 78.63% 94.7%)
-  "color-pink-200": string; //    :hsl(325.85 87.87% 89.84%)
-  "color-pink-300": string; //    :hsl(327.09 96.71% 82.03%)
-  "color-pink-400": string; //    :hsl(327.47 95.38% 68.88%)
-  "color-pink-500": string; //    :hsl(328.25 91.82% 58.2%)
-  "color-pink-600": string; //    :hsl(329.15 100% 45.07%)
-  "color-pink-700": string; //    :hsl(332.31 100% 38.89%)
-  "color-pink-800": string; //    :hsl(332 100% 31.93%)
-  "color-pink-900": string; //    :hsl(334.27 78.49% 29.42%)
-  "color-pink-950": string; //    :hsl(335.29 90.94% 16.65%)
-
-  "color-rose-50": string; //     :hsl(355.72 96.53% 97.19%)
-  "color-rose-100": string; //    :hsl(355.55 100% 94.67%)
-  "color-rose-200": string; //    :hsl(352.59 100% 90.06%)
-  "color-rose-300": string; //    :hsl(351.96 100% 81.5%)
-  "color-rose-400": string; //    :hsl(349.65 100% 69.44%)
-  "color-rose-500": string; //    :hsl(345.31 100% 56.23%)
-  "color-rose-600": string; //    :hsl(343.91 100% 46.37%)
-  "color-rose-700": string; //    :hsl(343.76 100% 38.93%)
-  "color-rose-800": string; //    :hsl(340.36 100% 32.33%)
-  "color-rose-900": string; //    :hsl(338.93 89.54% 28.73%)
-  "color-rose-950": string; //    :hsl(342.26 94.35% 15.6%)
-
-  "color-slate-50": string; //    :hsl(210 34.55% 98%)
-  "color-slate-100": string; //   :hsl(210 40.55% 96.05%)
-  "color-slate-200": string; //   :hsl(214.28 32.97% 91.42%)
-  "color-slate-300": string; //   :hsl(212.72 29.91% 84.02%)
-  "color-slate-400": string; //   :hsl(214.99 22.59% 64.5%)
-  "color-slate-500": string; //   :hsl(215.38 18.37% 47.03%)
-  "color-slate-600": string; //   :hsl(215.29 22.04% 34.76%)
-  "color-slate-700": string; //   :hsl(215.29 27.93% 26.85%)
-  "color-slate-800": string; //   :hsl(217.28 36.07% 17.54%)
-  "color-slate-900": string; //   :hsl(222.34 49.39% 11.3%)
-  "color-slate-950": string; //   :hsl(228.82 85.13% 5%)
-
-  "color-gray-50": string; //     :hsl(210 24.19% 98.1%)
-  "color-gray-100": string; //    :hsl(220 14.97% 95.9%)
-  "color-gray-200": string; //    :hsl(220 13.57% 91.05%)
-  "color-gray-300": string; //    :hsl(216 13.12% 84%)
-  "color-gray-400": string; //    :hsl(217.9 11.92% 64.26%)
-  "color-gray-500": string; //    :hsl(220.03 10.26% 46.3%)
-  "color-gray-600": string; //    :hsl(214.99 15.66% 34.25%)
-  "color-gray-700": string; //    :hsl(216.94 21.1% 26.81%)
-  "color-gray-800": string; //    :hsl(214.99 30.99% 16.95%)
-  "color-gray-900": string; //    :hsl(221 41.69% 11.07%)
-  "color-gray-950": string; //    :hsl(224.05 72.24% 4.17%)
-
-  "color-zinc-50": string; //     :hsl(0 0% 98.03%)
-  "color-zinc-100": string; //    :hsl(239.99 3.51% 95.79%)
-  "color-zinc-200": string; //    :hsl(240 5.86% 90.03%)
-  "color-zinc-300": string; //    :hsl(240.02 5.38% 83.97%)
-  "color-zinc-400": string; //    :hsl(240.08 5.71% 64.3%)
-  "color-zinc-500": string; //    :hsl(240.1 4.41% 46.34%)
-  "color-zinc-600": string; //    :hsl(240.13 6% 34.16%)
-  "color-zinc-700": string; //    :hsl(240.08 5.74% 26.15%)
-  "color-zinc-800": string; //    :hsl(240.05 4.04% 15.93%)
-  "color-zinc-900": string; //    :hsl(240.02 6.03% 9.98%)
-  "color-zinc-950": string; //    :hsl(240.1 11.24% 3.98%)
-
-  "color-neutral-50": string; //  :hsl(0 0% 98.03%)
-  "color-neutral-100": string; // :hsl(0 0% 96.06%)
-  "color-neutral-200": string; // :hsl(0 0% 89.82%)
-  "color-neutral-300": string; // :hsl(0 0% 83.14%)
-  "color-neutral-400": string; // :hsl(0 0% 63.02%)
-  "color-neutral-500": string; // :hsl(0 0% 45.15%)
-  "color-neutral-600": string; // :hsl(0 0% 32.2%)
-  "color-neutral-700": string; // :hsl(0 0% 25.05%)
-  "color-neutral-800": string; // :hsl(0 0% 14.94%)
-  "color-neutral-900": string; // :hsl(0 0% 9.05%)
-  "color-neutral-950": string; // :hsl(0 0% 3.94%)
-
-  "color-stone-50": string; //    :hsl(60.01 7.09% 97.9%)
-  "color-stone-100": string; //   :hsl(60.01 3.65% 95.94%)
-  "color-stone-200": string; //   :hsl(20 6.87% 89.98%)
-  "color-stone-300": string; //   :hsl(24.01 6.69% 82.98%)
-  "color-stone-400": string; //   :hsl(24.01 5.85% 63.05%)
-  "color-stone-500": string; //   :hsl(25.02 5.9% 44.64%)
-  "color-stone-600": string; //   :hsl(33.35 6.28% 32.24%)
-  "color-stone-700": string; //   :hsl(30.02 7.22% 25.04%)
-  "color-stone-800": string; //   :hsl(12 7.23% 15.07%)
-  "color-stone-900": string; //   :hsl(24 9.61% 9.99%)
-  "color-stone-950": string; //   :hsl(20.04 13.84% 4.13%)
-
-  "color-mauve-50": string; //    :hsl(0 0% 98.03%)
-  "color-mauve-100": string; //   :hsl(300 6.75% 94.86%)
-  "color-mauve-200": string; //   :hsl(300.01 5.72% 89.99%)
-  "color-mauve-300": string; //   :hsl(300 7.91% 82.91%)
-  "color-mauve-400": string; //   :hsl(294.55 5.88% 64.08%)
-  "color-mauve-500": string; //   :hsl(293.32 7.97% 44.71%)
-  "color-mauve-600": string; //   :hsl(292.01 8.87% 32.73%)
-  "color-mauve-700": string; //   :hsl(295.73 10.8% 25.11%)
-  "color-mauve-800": string; //   :hsl(289.09 14.31% 15.11%)
-  "color-mauve-900": string; //   :hsl(292.5 15.61% 10.17%)
-  "color-mauve-950": string; //   :hsl(300.04 13.94% 4.1%)
-
-  "color-olive-50": string; //    :hsl(60.06 22.98% 98.06%)
-  "color-olive-100": string; //   :hsl(60.01 14.61% 94.93%)
-  "color-olive-200": string; //   :hsl(59.95 10.3% 90.01%)
-  "color-olive-300": string; //   :hsl(59.97 9.45% 83.12%)
-  "color-olive-400": string; //   :hsl(59.99 8.17% 64.13%)
-  "color-olive-500": string; //   :hsl(59.96 9.27% 44.48%)
-  "color-olive-600": string; //   :hsl(59.96 9.68% 32.51%)
-  "color-olive-700": string; //   :hsl(59.99 11.08% 25.12%)
-  "color-olive-800": string; //   :hsl(60.04 11.83% 15.08%)
-  "color-olive-900": string; //   :hsl(60.02 13.73% 9.98%)
-  "color-olive-950": string; //   :hsl(60.02 13.63% 4.13%)
-
-  "color-mist-50": string; //     :hsl(179.98 19.51% 98.11%)
-  "color-mist-100": string; //    :hsl(179.98 7.29% 94.96%)
-  "color-mist-200": string; //    :hsl(191.98 10.78% 89.95%)
-  "color-mist-300": string; //    :hsl(195.02 9.15% 83.14%)
-  "color-mist-400": string; //    :hsl(192.01 8.04% 64.13%)
-  "color-mist-500": string; //    :hsl(191.43 9.22% 44.49%)
-  "color-mist-600": string; //    :hsl(191.25 9.66% 32.52%)
-  "color-mist-700": string; //    :hsl(192.85 10.76% 25.12%)
-  "color-mist-800": string; //    :hsl(193.35 12.19% 15.09%)
-  "color-mist-900": string; //    :hsl(197.18 12.89% 10.03%)
-  "color-mist-950": string; //    :hsl(199.99 14.1% 4.14%)
-
-  "color-taupe-50": string; //    :hsl(30 23.99% 98.08%)
-  "color-taupe-100": string; //   :hsl(0.01 7.21% 94.93%)
-  "color-taupe-200": string; //   :hsl(12 10.8% 90.06%)
-  "color-taupe-300": string; //   :hsl(15.02 9.05% 83.13%)
-  "color-taupe-400": string; //   :hsl(16.02 8.12% 64.12%)
-  "color-taupe-500": string; //   :hsl(17.15 9.19% 44.51%)
-  "color-taupe-600": string; //   :hsl(14.99 9.44% 32.52%)
-  "color-taupe-700": string; //   :hsl(12.85 10.73% 25.12%)
-  "color-taupe-800": string; //   :hsl(13.34 11.39% 15.14%)
-  "color-taupe-900": string; //   :hsl(17.16 13.88% 9.98%)
-  "color-taupe-950": string; //   :hsl(20.06 13.84% 4.12%)
 };
 ```
 
@@ -1508,23 +1081,736 @@ type TypographySystem = {
 };
 ```
 
-#### `DesignTokens: Tokens<DesignSystem>`
+#### `BorderTokens: Tokens<BorderSystem>`
 
-Ready-to-use preset of design tokens.
+Border radius scales.
 
 **System**
 
 ```ts
-type DesignSystem = AnimationSystem &
-  BorderSystem &
-  ColorSystem &
-  EffectSystem &
-  FilterSystem &
-  InteractivitySystem &
-  LayoutSystem &
-  PaletteSystem &
-  SpacingSystem &
-  TypographySystem;
+type BorderSystem = {
+  radius: string; //          0.5rem                 // :8px
+  "radius-none": string; //   0                      // :0
+  "radius-xs": string; //     calc({radius} * 0.25)  // :2px
+  "radius-sm": string; //     calc({radius} * 0.5)   // :4px
+  "radius-md": string; //     calc({radius} * 0.75)  // :6px
+  "radius-lg": string; //     {radius}               // :8px
+  "radius-xl": string; //     calc({radius} * 1.5)   // :12px
+  "radius-2xl": string; //    calc({radius} * 2)     // :16px
+  "radius-3xl": string; //    calc({radius} * 3)     // :24px
+  "radius-4xl": string; //    calc({radius} * 4)     // :32px
+  "radius-full": string; //   9999px                 // :9999px
+};
+```
+
+#### `EffectTokens: Tokens<EffectSystem>`
+
+Shadow effects for boxes and text.
+
+**System**
+
+```ts
+type EffectSystem = {
+  "shadow-none": string; //       0 0 #0000
+  "shadow-2xs": string; //        0 1px rgb(0 0 0 / 0.05)
+  "shadow-xs": string; //         0 1px 2px 0 rgb(0 0 0 / 0.05)
+  "shadow-sm": string; //         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
+  "shadow-md": string; //         0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
+  "shadow-lg": string; //         0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)
+  "shadow-xl": string; //         0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)
+  "shadow-2xl": string; //        0 25px 50px -12px rgb(0 0 0 / 0.25)
+
+  "inset-shadow-none": string; // inset 0 0 #0000
+  "inset-shadow-2xs": string; //  inset 0 1px rgb(0 0 0 / 0.05)
+  "inset-shadow-xs": string; //   inset 0 1px 1px rgb(0 0 0 / 0.05)
+  "inset-shadow-sm": string; //   inset 0 2px 4px rgb(0 0 0 / 0.05)
+
+  "text-shadow-none": string; //  none
+  "text-shadow-2xs": string; //   0px 1px 0px rgb(0 0 0 / 0.15)
+  "text-shadow-xs": string; //    0px 1px 1px rgb(0 0 0 / 0.2)
+  "text-shadow-sm": string; //    0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)
+  "text-shadow-md": string; //    0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1)
+  "text-shadow-lg": string; //    0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1)
+};
+```
+
+#### `AnimationTokens: Tokens<AnimationSystem>`
+
+Animation durations and easing curves.
+
+**System**
+
+```ts
+type AnimationSystem = {
+  "duration-fastest": string; //  50ms
+  "duration-faster": string; //   100ms
+  "duration-fast": string; //     150ms
+  "duration-normal": string; //   200ms
+  "duration-slow": string; //     300ms
+  "duration-slower": string; //   400ms
+  "duration-slowest": string; //  500ms
+
+  "ease-linear": string; //       linear
+  "ease-in": string; //           cubic-bezier(0.4, 0, 1, 1)
+  "ease-out": string; //          cubic-bezier(0, 0, 0.2, 1)
+  "ease-in-out": string; //       cubic-bezier(0.4, 0, 0.2, 1)
+};
+```
+
+#### `LayoutTokens: Tokens<LayoutSystem>`
+
+Layout layers and proportions.
+
+**System**
+
+```ts
+type LayoutSystem = {
+  "z-hide": string; //            -1
+  "z-base": string; //            0
+  "z-docked": string; //          10
+  "z-dropdown": string; //        1000
+  "z-sticky": string; //          1100
+  "z-banner": string; //          1200
+  "z-overlay": string; //         1300
+  "z-modal": string; //           1400
+  "z-popover": string; //         1500
+  "z-skip-nav": string; //        1600
+  "z-toast": string; //           1700
+  "z-tooltip": string; //         1800
+  "z-max": string; //             2147483647
+
+  "aspect-square": string; //     1 / 1
+  "aspect-landscape": string; //  4 / 3
+  "aspect-portrait": string; //   3 / 4
+  "aspect-wide": string; //       16 / 9
+  "aspect-ultrawide": string; //  18 / 5
+  "aspect-golden": string; //     1.618 / 1
+};
+```
+
+#### `InteractivityTokens: Tokens<InteractivitySystem>`
+
+Interactive cursor styles.
+
+**System**
+
+```ts
+type InteractivitySystem = {
+  "cursor-interactive": string; //  pointer
+  "cursor-disabled": string; //     not-allowed
+};
+```
+
+#### `FilterTokens: Tokens<FilterSystem>`
+
+Visual filters like blur and drop shadow.
+
+**System**
+
+```ts
+type FilterSystem = {
+  "blur-none": string; //         ""
+  "blur-xs": string; //           4px
+  "blur-sm": string; //           8px
+  "blur-md": string; //           12px
+  "blur-lg": string; //           16px
+  "blur-xl": string; //           24px
+  "blur-2xl": string; //          40px
+  "blur-3xl": string; //          64px
+
+  "drop-shadow-none": string; //  0 0 #0000
+  "drop-shadow-xs": string; //    0 1px 1px rgb(0 0 0 / 0.05)
+  "drop-shadow-sm": string; //    0 1px 2px rgb(0 0 0 / 0.15)
+  "drop-shadow-md": string; //    0 3px 3px rgb(0 0 0 / 0.12)
+  "drop-shadow-lg": string; //    0 4px 4px rgb(0 0 0 / 0.15)
+  "drop-shadow-xl": string; //    0 9px 7px rgb(0 0 0 / 0.1)
+  "drop-shadow-2xl": string; //   0 25px 25px rgb(0 0 0 / 0.15)
+};
+```
+
+#### `BlackWhiteTokens: Tokens<BlackWhiteSystem>`
+
+Black and white palette tokens.
+
+**System**
+
+```ts
+type BlackWhiteSystem = {
+  "color-black": string; //     0 0% 0%                  // :hsl(0 0% 0%)
+  "color-white": string; //     0 0% 100%                // :hsl(0 0% 100%)
+};
+```
+
+#### `RedTokens: Tokens<RedSystem>`
+
+Red palette tokens.
+
+**System**
+
+```ts
+type RedSystem = {
+  "color-red-50": string; //    0 88.21% 97.32%          // :hsl(0 88.21% 97.32%)
+  "color-red-100": string; //   359.98 98.78% 94.25%     // :hsl(359.98 98.78% 94.25%)
+  "color-red-200": string; //   359.95 100% 89.49%       // :hsl(359.95 100% 89.49%)
+  "color-red-300": string; //   359.72 100% 81.73%       // :hsl(359.72 100% 81.73%)
+  "color-red-400": string; //   358.75 100% 69.56%       // :hsl(358.75 100% 69.56%)
+  "color-red-500": string; //   356.95 95.9% 57.72%      // :hsl(356.95 95.9% 57.72%)
+  "color-red-600": string; //   357.21 100% 45.32%       // :hsl(357.21 100% 45.32%)
+  "color-red-700": string; //   357.72 100% 37.84%       // :hsl(357.72 100% 37.84%)
+  "color-red-800": string; //   355.94 91.15% 32.55%     // :hsl(355.94 91.15% 32.55%)
+  "color-red-900": string; //   358.8 69.3% 30.07%       // :hsl(358.8 69.3% 30.07%)
+  "color-red-950": string; //   359.29 79.42% 15.35%     // :hsl(359.29 79.42% 15.35%)
+};
+```
+
+#### `OrangeTokens: Tokens<OrangeSystem>`
+
+Orange palette tokens.
+
+**System**
+
+```ts
+type OrangeSystem = {
+  "color-orange-50": string; //   33.75 100% 96.46%      // :hsl(33.75 100% 96.46%)
+  "color-orange-100": string; //  34.51 100% 91.63%      // :hsl(34.51 100% 91.63%)
+  "color-orange-200": string; //  32.22 100% 82.84%      // :hsl(32.22 100% 82.84%)
+  "color-orange-300": string; //  31.57 100% 70.7%       // :hsl(31.57 100% 70.7%)
+  "color-orange-400": string; //  31.83 100% 50.69%      // :hsl(31.83 100% 50.69%)
+  "color-orange-500": string; //  24.64 100% 50%         // :hsl(24.64 100% 50%)
+  "color-orange-600": string; //  18 100% 48.04%         // :hsl(18 100% 48.04%)
+  "color-orange-700": string; //  15.7 100% 39.59%       // :hsl(15.7 100% 39.59%)
+  "color-orange-800": string; //  16.97 100% 31.22%      // :hsl(16.97 100% 31.22%)
+  "color-orange-900": string; //  15.99 83.12% 27.04%    // :hsl(15.99 83.12% 27.04%)
+  "color-orange-950": string; //  12.88 84.81% 14.42%    // :hsl(12.88 84.81% 14.42%)
+};
+```
+
+#### `AmberTokens: Tokens<AmberSystem>`
+
+Amber palette tokens.
+
+**System**
+
+```ts
+type AmberSystem = {
+  "color-amber-50": string; //    48.38 100% 96%         // :hsl(48.38 100% 96%)
+  "color-amber-100": string; //   47.99 97.34% 88.73%    // :hsl(47.99 97.34% 88.73%)
+  "color-amber-200": string; //   48.02 98.23% 75.9%     // :hsl(48.02 98.23% 75.9%)
+  "color-amber-300": string; //   46.99 100% 59.38%      // :hsl(46.99 100% 59.38%)
+  "color-amber-400": string; //   43.65 100% 50%         // :hsl(43.65 100% 50%)
+  "color-amber-500": string; //   36.49 100% 49.6%       // :hsl(36.49 100% 49.6%)
+  "color-amber-600": string; //   30.1 100% 44.19%       // :hsl(30.1 100% 44.19%)
+  "color-amber-700": string; //   24.68 100% 36.59%      // :hsl(24.68 100% 36.59%)
+  "color-amber-800": string; //   23.76 100% 29.52%      // :hsl(23.76 100% 29.52%)
+  "color-amber-900": string; //   23.04 90.17% 25.26%    // :hsl(23.04 90.17% 25.26%)
+  "color-amber-950": string; //   20.9 96.65% 13.94%     // :hsl(20.9 96.65% 13.94%)
+};
+```
+
+#### `YellowTokens: Tokens<YellowSystem>`
+
+Yellow palette tokens.
+
+**System**
+
+```ts
+type YellowSystem = {
+  "color-yellow-50": string; //   54.55 90.61% 95.28%    // :hsl(54.55 90.61% 95.28%)
+  "color-yellow-100": string; //  54.89 97.52% 87.84%    // :hsl(54.89 97.52% 87.84%)
+  "color-yellow-200": string; //  52.74 99.45% 76.08%    // :hsl(52.74 99.45% 76.08%)
+  "color-yellow-300": string; //  51.51 100% 56.29%      // :hsl(51.51 100% 56.29%)
+  "color-yellow-400": string; //  47.61 100% 49.38%      // :hsl(47.61 100% 49.38%)
+  "color-yellow-500": string; //  44.37 100% 46.93%      // :hsl(44.37 100% 46.93%)
+  "color-yellow-600": string; //  38.87 100% 40.88%      // :hsl(38.87 100% 40.88%)
+  "color-yellow-700": string; //  34.39 100% 32.55%      // :hsl(34.39 100% 32.55%)
+  "color-yellow-800": string; //  32.77 100% 26.8%       // :hsl(32.77 100% 26.8%)
+  "color-yellow-900": string; //  29.52 83.35% 24.57%    // :hsl(29.52 83.35% 24.57%)
+  "color-yellow-950": string; //  26.16 87.52% 13.96%    // :hsl(26.16 87.52% 13.96%)
+};
+```
+
+#### `LimeTokens: Tokens<LimeSystem>`
+
+Lime palette tokens.
+
+**System**
+
+```ts
+type LimeSystem = {
+  "color-lime-50": string; //     78.26 92.84% 95.14%    // :hsl(78.26 92.84% 95.14%)
+  "color-lime-100": string; //    79.56 89.72% 89.11%    // :hsl(79.56 89.72% 89.11%)
+  "color-lime-200": string; //    80.7 89.71% 78.91%     // :hsl(80.7 89.71% 78.91%)
+  "color-lime-300": string; //    80.92 87.66% 63.65%    // :hsl(80.92 87.66% 63.65%)
+  "color-lime-400": string; //    79.91 100% 45.08%      // :hsl(79.91 100% 45.08%)
+  "color-lime-500": string; //    83.9 100% 40.5%        // :hsl(83.9 100% 40.5%)
+  "color-lime-600": string; //    85.83 100% 32.37%      // :hsl(85.83 100% 32.37%)
+  "color-lime-700": string; //    85.23 100% 24.58%      // :hsl(85.23 100% 24.58%)
+  "color-lime-800": string; //    83.32 100% 19.4%       // :hsl(83.32 100% 19.4%)
+  "color-lime-900": string; //    86.52 71.11% 19.12%    // :hsl(86.52 71.11% 19.12%)
+  "color-lime-950": string; //    88.95 88.62% 9.61%     // :hsl(88.95 88.62% 9.61%)
+};
+```
+
+#### `GreenTokens: Tokens<GreenSystem>`
+
+Green palette tokens.
+
+**System**
+
+```ts
+type GreenSystem = {
+  "color-green-50": string; //    138.46 76.51% 96.68%   // :hsl(138.46 76.51% 96.68%)
+  "color-green-100": string; //   140.65 84.38% 92.45%   // :hsl(140.65 84.38% 92.45%)
+  "color-green-200": string; //   141.14 81.07% 84.82%   // :hsl(141.14 81.07% 84.82%)
+  "color-green-300": string; //   142.66 81.25% 71.39%   // :hsl(142.66 81.25% 71.39%)
+  "color-green-400": string; //   150.06 95.56% 44.76%   // :hsl(150.06 95.56% 44.76%)
+  "color-green-500": string; //   144.06 100% 39.36%     // :hsl(144.06 100% 39.36%)
+  "color-green-600": string; //   142.29 100% 32.57%     // :hsl(142.29 100% 32.57%)
+  "color-green-700": string; //   144.68 100% 25.5%      // :hsl(144.68 100% 25.5%)
+  "color-green-800": string; //   147.72 97.15% 20.36%   // :hsl(147.72 97.15% 20.36%)
+  "color-green-900": string; //   145.73 73.08% 18.99%   // :hsl(145.73 73.08% 18.99%)
+  "color-green-950": string; //   145.39 87.57% 9.65%    // :hsl(145.39 87.57% 9.65%)
+};
+```
+
+#### `EmeraldTokens: Tokens<EmeraldSystem>`
+
+Emerald palette tokens.
+
+**System**
+
+```ts
+type EmeraldSystem = {
+  "color-emerald-50": string; //  151.78 80.95% 95.82%   // :hsl(151.78 80.95% 95.82%)
+  "color-emerald-100": string; // 149.32 81.17% 89.84%   // :hsl(149.32 81.17% 89.84%)
+  "color-emerald-200": string; // 152.54 77.89% 80.02%   // :hsl(152.54 77.89% 80.02%)
+  "color-emerald-300": string; // 157.3 76.25% 64.25%    // :hsl(157.3 76.25% 64.25%)
+  "color-emerald-400": string; // 161.25 100% 41.63%     // :hsl(161.25 100% 41.63%)
+  "color-emerald-500": string; // 159.74 100% 36.94%     // :hsl(159.74 100% 36.94%)
+  "color-emerald-600": string; // 159.97 100% 29.95%     // :hsl(159.97 100% 29.95%)
+  "color-emerald-700": string; // 161.85 100% 23.91%     // :hsl(161.85 100% 23.91%)
+  "color-emerald-800": string; // 162.98 100% 18.89%     // :hsl(162.98 100% 18.89%)
+  "color-emerald-900": string; // 164.76 100% 15.41%     // :hsl(164.76 100% 15.41%)
+  "color-emerald-950": string; // 165.88 100% 8.68%      // :hsl(165.88 100% 8.68%)
+};
+```
+
+#### `TealTokens: Tokens<TealSystem>`
+
+Teal palette tokens.
+
+**System**
+
+```ts
+type TealSystem = {
+  "color-teal-50": string; //     166.15 77.06% 96.74%   // :hsl(166.15 77.06% 96.74%)
+  "color-teal-100": string; //    167.27 86.98% 89.13%   // :hsl(167.27 86.98% 89.13%)
+  "color-teal-200": string; //    168.51 85.39% 77.72%   // :hsl(168.51 85.39% 77.72%)
+  "color-teal-300": string; //    171.35 81.79% 60.15%   // :hsl(171.35 81.79% 60.15%)
+  "color-teal-400": string; //    173.4 100% 41.76%      // :hsl(173.4 100% 41.76%)
+  "color-teal-500": string; //    173.58 100% 36.67%     // :hsl(173.58 100% 36.67%)
+  "color-teal-600": string; //    174.71 100% 29.46%     // :hsl(174.71 100% 29.46%)
+  "color-teal-700": string; //    175.65 100% 23.45%     // :hsl(175.65 100% 23.45%)
+  "color-teal-800": string; //    176.62 100% 18.66%     // :hsl(176.62 100% 18.66%)
+  "color-teal-900": string; //    176.3 76.01% 17.51%    // :hsl(176.3 76.01% 17.51%)
+  "color-teal-950": string; //    178.66 91.58% 9.64%    // :hsl(178.66 91.58% 9.64%)
+};
+```
+
+#### `CyanTokens: Tokens<CyanSystem>`
+
+Cyan palette tokens.
+
+**System**
+
+```ts
+type CyanSystem = {
+  "color-cyan-50": string; //     183.16 99.92% 96.25%   // :hsl(183.16 99.92% 96.25%)
+  "color-cyan-100": string; //    185.11 96.43% 90.29%   // :hsl(185.11 96.43% 90.29%)
+  "color-cyan-200": string; //    186.2 95.77% 81.44%    // :hsl(186.2 95.77% 81.44%)
+  "color-cyan-300": string; //    186.71 97.47% 65.9%    // :hsl(186.71 97.47% 65.9%)
+  "color-cyan-400": string; //    187.8 100% 47.55%      // :hsl(187.8 100% 47.55%)
+  "color-cyan-500": string; //    189.48 100% 42.87%     // :hsl(189.48 100% 42.87%)
+  "color-cyan-600": string; //    192.32 100% 36.13%     // :hsl(192.32 100% 36.13%)
+  "color-cyan-700": string; //    192.78 100% 29.16%     // :hsl(192.78 100% 29.16%)
+  "color-cyan-800": string; //    192.74 100% 23.56%     // :hsl(192.74 100% 23.56%)
+  "color-cyan-900": string; //    195.82 72.14% 22.87%   // :hsl(195.82 72.14% 22.87%)
+  "color-cyan-950": string; //    196.69 85.44% 14.55%   // :hsl(196.69 85.44% 14.55%)
+};
+```
+
+#### `SkyTokens: Tokens<SkySystem>`
+
+Sky palette tokens.
+
+**System**
+
+```ts
+type SkySystem = {
+  "color-sky-50": string; //      203.34 100% 96.99%     // :hsl(203.34 100% 96.99%)
+  "color-sky-100": string; //     203.99 96.54% 93.67%   // :hsl(203.99 96.54% 93.67%)
+  "color-sky-200": string; //     200.57 97.87% 85.94%   // :hsl(200.57 97.87% 85.94%)
+  "color-sky-300": string; //     198.47 100% 72.66%     // :hsl(198.47 100% 72.66%)
+  "color-sky-400": string; //     195.82 100% 50%        // :hsl(195.82 100% 50%)
+  "color-sky-500": string; //     199.27 100% 47.86%     // :hsl(199.27 100% 47.86%)
+  "color-sky-600": string; //     202.08 100% 40.99%     // :hsl(202.08 100% 40.99%)
+  "color-sky-700": string; //     202.6 100% 33.01%      // :hsl(202.6 100% 33.01%)
+  "color-sky-800": string; //     201.21 100% 26.99%     // :hsl(201.21 100% 26.99%)
+  "color-sky-900": string; //     200.84 96.98% 22.39%   // :hsl(200.84 96.98% 22.39%)
+  "color-sky-950": string; //     203.63 87.23% 15.52%   // :hsl(203.63 87.23% 15.52%)
+};
+```
+
+#### `BlueTokens: Tokens<BlueSystem>`
+
+Blue palette tokens.
+
+**System**
+
+```ts
+type BlueSystem = {
+  "color-blue-50": string; //     213.75 96.48% 96.79%   // :hsl(213.75 96.48% 96.79%)
+  "color-blue-100": string; //    214.28 96.22% 92.78%   // :hsl(214.28 96.22% 92.78%)
+  "color-blue-200": string; //    213.27 100% 87.25%     // :hsl(213.27 100% 87.25%)
+  "color-blue-300": string; //    210.69 100% 77.83%     // :hsl(210.69 100% 77.83%)
+  "color-blue-400": string; //    211.96 100% 65.79%     // :hsl(211.96 100% 65.79%)
+  "color-blue-500": string; //    216.26 100% 58.47%     // :hsl(216.26 100% 58.47%)
+  "color-blue-600": string; //    221.34 97.06% 53.5%    // :hsl(221.34 97.06% 53.5%)
+  "color-blue-700": string; //    225.35 84.1% 48.98%    // :hsl(225.35 84.1% 48.98%)
+  "color-blue-800": string; //    227.1 75.74% 41.14%    // :hsl(227.1 75.74% 41.14%)
+  "color-blue-900": string; //    224.86 67.28% 33.33%   // :hsl(224.86 67.28% 33.33%)
+  "color-blue-950": string; //    226.51 58.74% 21.15%   // :hsl(226.51 58.74% 21.15%)
+};
+```
+
+#### `IndigoTokens: Tokens<IndigoSystem>`
+
+Indigo palette tokens.
+
+**System**
+
+```ts
+type IndigoSystem = {
+  "color-indigo-50": string; //   225.82 100% 96.67%     // :hsl(225.82 100% 96.67%)
+  "color-indigo-100": string; //  226.28 100% 93.9%      // :hsl(226.28 100% 93.9%)
+  "color-indigo-200": string; //  227.86 100% 88.92%     // :hsl(227.86 100% 88.92%)
+  "color-indigo-300": string; //  229.52 100% 81.96%     // :hsl(229.52 100% 81.96%)
+  "color-indigo-400": string; //  235.47 100% 74.39%     // :hsl(235.47 100% 74.39%)
+  "color-indigo-500": string; //  240.98 100% 68.59%     // :hsl(240.98 100% 68.59%)
+  "color-indigo-600": string; //  246.99 91.66% 59.53%   // :hsl(246.99 91.66% 59.53%)
+  "color-indigo-700": string; //  247.88 68.29% 51.07%   // :hsl(247.88 68.29% 51.07%)
+  "color-indigo-800": string; //  246.14 60.99% 41.85%   // :hsl(246.14 60.99% 41.85%)
+  "color-indigo-900": string; //  243.26 50.34% 34.77%   // :hsl(243.26 50.34% 34.77%)
+  "color-indigo-950": string; //  244.4 49.1% 20.16%     // :hsl(244.4 49.1% 20.16%)
+};
+```
+
+#### `VioletTokens: Tokens<VioletSystem>`
+
+Violet palette tokens.
+
+**System**
+
+```ts
+type VioletSystem = {
+  "color-violet-50": string; //   250 98.58% 97.62%      // :hsl(250 98.58% 97.62%)
+  "color-violet-100": string; //  251.44 93.48% 95.5%    // :hsl(251.44 93.48% 95.5%)
+  "color-violet-200": string; //  250.61 100% 91.89%     // :hsl(250.61 100% 91.89%)
+  "color-violet-300": string; //  253.4 100% 85.2%       // :hsl(253.4 100% 85.2%)
+  "color-violet-400": string; //  256.85 100% 75.85%     // :hsl(256.85 100% 75.85%)
+  "color-violet-500": string; //  260.92 100% 65.91%     // :hsl(260.92 100% 65.91%)
+  "color-violet-600": string; //  265.48 99.08% 56.49%   // :hsl(265.48 99.08% 56.49%)
+  "color-violet-700": string; //  268 93.3% 46.89%       // :hsl(268 93.3% 46.89%)
+  "color-violet-800": string; //  266.64 86.27% 40.44%   // :hsl(266.64 86.27% 40.44%)
+  "color-violet-900": string; //  264.88 74.27% 34.64%   // :hsl(264.88 74.27% 34.64%)
+  "color-violet-950": string; //  262.22 77.74% 22.86%   // :hsl(262.22 77.74% 22.86%)
+};
+```
+
+#### `PurpleTokens: Tokens<PurpleSystem>`
+
+Purple palette tokens.
+
+**System**
+
+```ts
+type PurpleSystem = {
+  "color-purple-50": string; //   270 98.85% 98.04%      // :hsl(270 98.85% 98.04%)
+  "color-purple-100": string; //  268.7 99.95% 95.45%    // :hsl(268.7 99.95% 95.45%)
+  "color-purple-200": string; //  269.45 100% 91.65%     // :hsl(269.45 100% 91.65%)
+  "color-purple-300": string; //  271.09 100% 84.89%     // :hsl(271.09 100% 84.89%)
+  "color-purple-400": string; //  272.27 100% 73.99%     // :hsl(272.27 100% 73.99%)
+  "color-purple-500": string; //  273.31 100% 63.8%      // :hsl(273.31 100% 63.8%)
+  "color-purple-600": string; //  274.91 96.1% 52.15%    // :hsl(274.91 96.1% 52.15%)
+  "color-purple-700": string; //  275.69 100% 42.86%     // :hsl(275.69 100% 42.86%)
+  "color-purple-800": string; //  274.93 82.4% 37.87%    // :hsl(274.93 82.4% 37.87%)
+  "color-purple-900": string; //  274.52 72.39% 31.62%   // :hsl(274.52 72.39% 31.62%)
+  "color-purple-950": string; //  274.32 94.3% 20.66%    // :hsl(274.32 94.3% 20.66%)
+};
+```
+
+#### `FuchsiaTokens: Tokens<FuchsiaSystem>`
+
+Fuchsia palette tokens.
+
+**System**
+
+```ts
+type FuchsiaSystem = {
+  "color-fuchsia-50": string; //  289.09 95.95% 97.79%   // :hsl(289.09 95.95% 97.79%)
+  "color-fuchsia-100": string; // 287.85 100% 95.45%     // :hsl(287.85 100% 95.45%)
+  "color-fuchsia-200": string; // 288.42 100% 90.67%     // :hsl(288.42 100% 90.67%)
+  "color-fuchsia-300": string; // 292.14 100% 82.86%     // :hsl(292.14 100% 82.86%)
+  "color-fuchsia-400": string; // 292.78 100% 70.88%     // :hsl(292.78 100% 70.88%)
+  "color-fuchsia-500": string; // 292.61 96.35% 57.51%   // :hsl(292.61 96.35% 57.51%)
+  "color-fuchsia-600": string; // 293.95 100% 43.58%     // :hsl(293.95 100% 43.58%)
+  "color-fuchsia-700": string; // 295.03 100% 35.9%      // :hsl(295.03 100% 35.9%)
+  "color-fuchsia-800": string; // 295.8 98.24% 29.35%    // :hsl(295.8 98.24% 29.35%)
+  "color-fuchsia-900": string; // 296.7 72.35% 27.25%    // :hsl(296.7 72.35% 27.25%)
+  "color-fuchsia-950": string; // 296.75 99.06% 15.6%    // :hsl(296.75 99.06% 15.6%)
+};
+```
+
+#### `PinkTokens: Tokens<PinkSystem>`
+
+Pink palette tokens.
+
+**System**
+
+```ts
+type PinkSystem = {
+  "color-pink-50": string; //     327.28 71.09% 97%      // :hsl(327.28 71.09% 97%)
+  "color-pink-100": string; //    325.7 78.63% 94.7%     // :hsl(325.7 78.63% 94.7%)
+  "color-pink-200": string; //    325.85 87.87% 89.84%   // :hsl(325.85 87.87% 89.84%)
+  "color-pink-300": string; //    327.09 96.71% 82.03%   // :hsl(327.09 96.71% 82.03%)
+  "color-pink-400": string; //    327.47 95.38% 68.88%   // :hsl(327.47 95.38% 68.88%)
+  "color-pink-500": string; //    328.25 91.82% 58.2%    // :hsl(328.25 91.82% 58.2%)
+  "color-pink-600": string; //    329.15 100% 45.07%     // :hsl(329.15 100% 45.07%)
+  "color-pink-700": string; //    332.31 100% 38.89%     // :hsl(332.31 100% 38.89%)
+  "color-pink-800": string; //    332 100% 31.93%        // :hsl(332 100% 31.93%)
+  "color-pink-900": string; //    334.27 78.49% 29.42%   // :hsl(334.27 78.49% 29.42%)
+  "color-pink-950": string; //    335.29 90.94% 16.65%   // :hsl(335.29 90.94% 16.65%)
+};
+```
+
+#### `RoseTokens: Tokens<RoseSystem>`
+
+Rose palette tokens.
+
+**System**
+
+```ts
+type RoseSystem = {
+  "color-rose-50": string; //     355.72 96.53% 97.19%   // :hsl(355.72 96.53% 97.19%)
+  "color-rose-100": string; //    355.55 100% 94.67%     // :hsl(355.55 100% 94.67%)
+  "color-rose-200": string; //    352.59 100% 90.06%     // :hsl(352.59 100% 90.06%)
+  "color-rose-300": string; //    351.96 100% 81.5%      // :hsl(351.96 100% 81.5%)
+  "color-rose-400": string; //    349.65 100% 69.44%     // :hsl(349.65 100% 69.44%)
+  "color-rose-500": string; //    345.31 100% 56.23%     // :hsl(345.31 100% 56.23%)
+  "color-rose-600": string; //    343.91 100% 46.37%     // :hsl(343.91 100% 46.37%)
+  "color-rose-700": string; //    343.76 100% 38.93%     // :hsl(343.76 100% 38.93%)
+  "color-rose-800": string; //    340.36 100% 32.33%     // :hsl(340.36 100% 32.33%)
+  "color-rose-900": string; //    338.93 89.54% 28.73%   // :hsl(338.93 89.54% 28.73%)
+  "color-rose-950": string; //    342.26 94.35% 15.6%    // :hsl(342.26 94.35% 15.6%)
+};
+```
+
+#### `SlateTokens: Tokens<SlateSystem>`
+
+Slate palette tokens.
+
+**System**
+
+```ts
+type SlateSystem = {
+  "color-slate-50": string; //    210 34.55% 98%         // :hsl(210 34.55% 98%)
+  "color-slate-100": string; //   210 40.55% 96.05%      // :hsl(210 40.55% 96.05%)
+  "color-slate-200": string; //   214.28 32.97% 91.42%   // :hsl(214.28 32.97% 91.42%)
+  "color-slate-300": string; //   212.72 29.91% 84.02%   // :hsl(212.72 29.91% 84.02%)
+  "color-slate-400": string; //   214.99 22.59% 64.5%    // :hsl(214.99 22.59% 64.5%)
+  "color-slate-500": string; //   215.38 18.37% 47.03%   // :hsl(215.38 18.37% 47.03%)
+  "color-slate-600": string; //   215.29 22.04% 34.76%   // :hsl(215.29 22.04% 34.76%)
+  "color-slate-700": string; //   215.29 27.93% 26.85%   // :hsl(215.29 27.93% 26.85%)
+  "color-slate-800": string; //   217.28 36.07% 17.54%   // :hsl(217.28 36.07% 17.54%)
+  "color-slate-900": string; //   222.34 49.39% 11.3%    // :hsl(222.34 49.39% 11.3%)
+  "color-slate-950": string; //   228.82 85.13% 5%       // :hsl(228.82 85.13% 5%)
+};
+```
+
+#### `GrayTokens: Tokens<GraySystem>`
+
+Gray palette tokens.
+
+**System**
+
+```ts
+type GraySystem = {
+  "color-gray-50": string; //     210 24.19% 98.1%       // :hsl(210 24.19% 98.1%)
+  "color-gray-100": string; //    220 14.97% 95.9%       // :hsl(220 14.97% 95.9%)
+  "color-gray-200": string; //    220 13.57% 91.05%      // :hsl(220 13.57% 91.05%)
+  "color-gray-300": string; //    216 13.12% 84%         // :hsl(216 13.12% 84%)
+  "color-gray-400": string; //    217.9 11.92% 64.26%    // :hsl(217.9 11.92% 64.26%)
+  "color-gray-500": string; //    220.03 10.26% 46.3%    // :hsl(220.03 10.26% 46.3%)
+  "color-gray-600": string; //    214.99 15.66% 34.25%   // :hsl(214.99 15.66% 34.25%)
+  "color-gray-700": string; //    216.94 21.1% 26.81%    // :hsl(216.94 21.1% 26.81%)
+  "color-gray-800": string; //    214.99 30.99% 16.95%   // :hsl(214.99 30.99% 16.95%)
+  "color-gray-900": string; //    221 41.69% 11.07%      // :hsl(221 41.69% 11.07%)
+  "color-gray-950": string; //    224.05 72.24% 4.17%    // :hsl(224.05 72.24% 4.17%)
+};
+```
+
+#### `ZincTokens: Tokens<ZincSystem>`
+
+Zinc palette tokens.
+
+**System**
+
+```ts
+type ZincSystem = {
+  "color-zinc-50": string; //     0 0% 98.03%            // :hsl(0 0% 98.03%)
+  "color-zinc-100": string; //    239.99 3.51% 95.79%    // :hsl(239.99 3.51% 95.79%)
+  "color-zinc-200": string; //    240 5.86% 90.03%       // :hsl(240 5.86% 90.03%)
+  "color-zinc-300": string; //    240.02 5.38% 83.97%    // :hsl(240.02 5.38% 83.97%)
+  "color-zinc-400": string; //    240.08 5.71% 64.3%     // :hsl(240.08 5.71% 64.3%)
+  "color-zinc-500": string; //    240.1 4.41% 46.34%     // :hsl(240.1 4.41% 46.34%)
+  "color-zinc-600": string; //    240.13 6% 34.16%       // :hsl(240.13 6% 34.16%)
+  "color-zinc-700": string; //    240.08 5.74% 26.15%    // :hsl(240.08 5.74% 26.15%)
+  "color-zinc-800": string; //    240.05 4.04% 15.93%    // :hsl(240.05 4.04% 15.93%)
+  "color-zinc-900": string; //    240.02 6.03% 9.98%     // :hsl(240.02 6.03% 9.98%)
+  "color-zinc-950": string; //    240.1 11.24% 3.98%     // :hsl(240.1 11.24% 3.98%)
+};
+```
+
+#### `NeutralTokens: Tokens<NeutralSystem>`
+
+Neutral palette tokens.
+
+**System**
+
+```ts
+type NeutralSystem = {
+  "color-neutral-50": string; //  0 0% 98.03%            // :hsl(0 0% 98.03%)
+  "color-neutral-100": string; // 0 0% 96.06%            // :hsl(0 0% 96.06%)
+  "color-neutral-200": string; // 0 0% 89.82%            // :hsl(0 0% 89.82%)
+  "color-neutral-300": string; // 0 0% 83.14%            // :hsl(0 0% 83.14%)
+  "color-neutral-400": string; // 0 0% 63.02%            // :hsl(0 0% 63.02%)
+  "color-neutral-500": string; // 0 0% 45.15%            // :hsl(0 0% 45.15%)
+  "color-neutral-600": string; // 0 0% 32.2%             // :hsl(0 0% 32.2%)
+  "color-neutral-700": string; // 0 0% 25.05%            // :hsl(0 0% 25.05%)
+  "color-neutral-800": string; // 0 0% 14.94%            // :hsl(0 0% 14.94%)
+  "color-neutral-900": string; // 0 0% 9.05%             // :hsl(0 0% 9.05%)
+  "color-neutral-950": string; // 0 0% 3.94%             // :hsl(0 0% 3.94%)
+};
+```
+
+#### `StoneTokens: Tokens<StoneSystem>`
+
+Stone palette tokens.
+
+**System**
+
+```ts
+type StoneSystem = {
+  "color-stone-50": string; //    60.01 7.09% 97.9%      // :hsl(60.01 7.09% 97.9%)
+  "color-stone-100": string; //   60.01 3.65% 95.94%     // :hsl(60.01 3.65% 95.94%)
+  "color-stone-200": string; //   20 6.87% 89.98%        // :hsl(20 6.87% 89.98%)
+  "color-stone-300": string; //   24.01 6.69% 82.98%     // :hsl(24.01 6.69% 82.98%)
+  "color-stone-400": string; //   24.01 5.85% 63.05%     // :hsl(24.01 5.85% 63.05%)
+  "color-stone-500": string; //   25.02 5.9% 44.64%      // :hsl(25.02 5.9% 44.64%)
+  "color-stone-600": string; //   33.35 6.28% 32.24%     // :hsl(33.35 6.28% 32.24%)
+  "color-stone-700": string; //   30.02 7.22% 25.04%     // :hsl(30.02 7.22% 25.04%)
+  "color-stone-800": string; //   12 7.23% 15.07%        // :hsl(12 7.23% 15.07%)
+  "color-stone-900": string; //   24 9.61% 9.99%         // :hsl(24 9.61% 9.99%)
+  "color-stone-950": string; //   20.04 13.84% 4.13%     // :hsl(20.04 13.84% 4.13%)
+};
+```
+
+#### `MauveTokens: Tokens<MauveSystem>`
+
+Mauve palette tokens.
+
+**System**
+
+```ts
+type MauveSystem = {
+  "color-mauve-50": string; //    0 0% 98.03%            // :hsl(0 0% 98.03%)
+  "color-mauve-100": string; //   300 6.75% 94.86%       // :hsl(300 6.75% 94.86%)
+  "color-mauve-200": string; //   300.01 5.72% 89.99%    // :hsl(300.01 5.72% 89.99%)
+  "color-mauve-300": string; //   300 7.91% 82.91%       // :hsl(300 7.91% 82.91%)
+  "color-mauve-400": string; //   294.55 5.88% 64.08%    // :hsl(294.55 5.88% 64.08%)
+  "color-mauve-500": string; //   293.32 7.97% 44.71%    // :hsl(293.32 7.97% 44.71%)
+  "color-mauve-600": string; //   292.01 8.87% 32.73%    // :hsl(292.01 8.87% 32.73%)
+  "color-mauve-700": string; //   295.73 10.8% 25.11%    // :hsl(295.73 10.8% 25.11%)
+  "color-mauve-800": string; //   289.09 14.31% 15.11%   // :hsl(289.09 14.31% 15.11%)
+  "color-mauve-900": string; //   292.5 15.61% 10.17%    // :hsl(292.5 15.61% 10.17%)
+  "color-mauve-950": string; //   300.04 13.94% 4.1%     // :hsl(300.04 13.94% 4.1%)
+};
+```
+
+#### `OliveTokens: Tokens<OliveSystem>`
+
+Olive palette tokens.
+
+**System**
+
+```ts
+type OliveSystem = {
+  "color-olive-50": string; //    60.06 22.98% 98.06%    // :hsl(60.06 22.98% 98.06%)
+  "color-olive-100": string; //   60.01 14.61% 94.93%    // :hsl(60.01 14.61% 94.93%)
+  "color-olive-200": string; //   59.95 10.3% 90.01%     // :hsl(59.95 10.3% 90.01%)
+  "color-olive-300": string; //   59.97 9.45% 83.12%     // :hsl(59.97 9.45% 83.12%)
+  "color-olive-400": string; //   59.99 8.17% 64.13%     // :hsl(59.99 8.17% 64.13%)
+  "color-olive-500": string; //   59.96 9.27% 44.48%     // :hsl(59.96 9.27% 44.48%)
+  "color-olive-600": string; //   59.96 9.68% 32.51%     // :hsl(59.96 9.68% 32.51%)
+  "color-olive-700": string; //   59.99 11.08% 25.12%    // :hsl(59.99 11.08% 25.12%)
+  "color-olive-800": string; //   60.04 11.83% 15.08%    // :hsl(60.04 11.83% 15.08%)
+  "color-olive-900": string; //   60.02 13.73% 9.98%     // :hsl(60.02 13.73% 9.98%)
+  "color-olive-950": string; //   60.02 13.63% 4.13%     // :hsl(60.02 13.63% 4.13%)
+};
+```
+
+#### `MistTokens: Tokens<MistSystem>`
+
+Mist palette tokens.
+
+**System**
+
+```ts
+type MistSystem = {
+  "color-mist-50": string; //     179.98 19.51% 98.11%   // :hsl(179.98 19.51% 98.11%)
+  "color-mist-100": string; //    179.98 7.29% 94.96%    // :hsl(179.98 7.29% 94.96%)
+  "color-mist-200": string; //    191.98 10.78% 89.95%   // :hsl(191.98 10.78% 89.95%)
+  "color-mist-300": string; //    195.02 9.15% 83.14%    // :hsl(195.02 9.15% 83.14%)
+  "color-mist-400": string; //    192.01 8.04% 64.13%    // :hsl(192.01 8.04% 64.13%)
+  "color-mist-500": string; //    191.43 9.22% 44.49%    // :hsl(191.43 9.22% 44.49%)
+  "color-mist-600": string; //    191.25 9.66% 32.52%    // :hsl(191.25 9.66% 32.52%)
+  "color-mist-700": string; //    192.85 10.76% 25.12%   // :hsl(192.85 10.76% 25.12%)
+  "color-mist-800": string; //    193.35 12.19% 15.09%   // :hsl(193.35 12.19% 15.09%)
+  "color-mist-900": string; //    197.18 12.89% 10.03%   // :hsl(197.18 12.89% 10.03%)
+  "color-mist-950": string; //    199.99 14.1% 4.14%     // :hsl(199.99 14.1% 4.14%)
+};
+```
+
+#### `TaupeTokens: Tokens<TaupeSystem>`
+
+Taupe palette tokens.
+
+**System**
+
+```ts
+type TaupeSystem = {
+  "color-taupe-50": string; //    30 23.99% 98.08%       // :hsl(30 23.99% 98.08%)
+  "color-taupe-100": string; //   0.01 7.21% 94.93%      // :hsl(0.01 7.21% 94.93%)
+  "color-taupe-200": string; //   12 10.8% 90.06%        // :hsl(12 10.8% 90.06%)
+  "color-taupe-300": string; //   15.02 9.05% 83.13%     // :hsl(15.02 9.05% 83.13%)
+  "color-taupe-400": string; //   16.02 8.12% 64.12%     // :hsl(16.02 8.12% 64.12%)
+  "color-taupe-500": string; //   17.15 9.19% 44.51%     // :hsl(17.15 9.19% 44.51%)
+  "color-taupe-600": string; //   14.99 9.44% 32.52%     // :hsl(14.99 9.44% 32.52%)
+  "color-taupe-700": string; //   12.85 10.73% 25.12%    // :hsl(12.85 10.73% 25.12%)
+  "color-taupe-800": string; //   13.34 11.39% 15.14%    // :hsl(13.34 11.39% 15.14%)
+  "color-taupe-900": string; //   17.16 13.88% 9.98%     // :hsl(17.16 13.88% 9.98%)
+  "color-taupe-950": string; //   20.06 13.84% 4.12%     // :hsl(20.06 13.84% 4.12%)
+};
 ```
 
 ## License
