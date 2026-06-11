@@ -1,3 +1,5 @@
+import type { Simplify } from "./shared/types";
+
 import { EMPTY_OBJECT } from "./shared/utils";
 
 export type TokenPrimitive = string | number;
@@ -40,7 +42,9 @@ export interface Tokens<TTokensValue extends TokensValue> {
     key: TKey,
     fallback?: NonNullable<TTokensValue[TKey]>,
   ): TokenVariable;
-  extend(config: TokensConfig<TTokensValue>): Tokens<TTokensValue>;
+  extend<TExtensionTokensValue extends TokensValue>(
+    extension: TExtensionTokensValue & TokensConfig<TTokensValue>,
+  ): Tokens<Simplify<TTokensValue & TExtensionTokensValue>>;
 }
 
 export type InferTokensConfig<TTokens extends Tokens<any>> =
@@ -197,8 +201,10 @@ export function createTokens<TTokensValue extends TokensValue>(
     return fallback === undefined ? `var(${property(key)})` : `var(${property(key)}, ${fallback})`;
   }
 
-  function extend(config: TokensConfig<TTokensValue>): Tokens<TTokensValue> {
-    return createTokens<TTokensValue>({ ...tokens, ...config }, options);
+  function extend<TExtensionTokensValue extends TokensValue>(
+    extension: TExtensionTokensValue & TokensConfig<TTokensValue>,
+  ): Tokens<Simplify<TTokensValue & TExtensionTokensValue>> {
+    return createTokens<TTokensValue & TExtensionTokensValue>({ ...tokens, ...extension }, options);
   }
 
   let _style: TokensStyle;

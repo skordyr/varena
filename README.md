@@ -436,7 +436,7 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens.value(key, fallback?)` - Reads a token value. Returns `undefined` if the key is not defined and no fallback is provided.
 - `Tokens.property(key)` - Returns the CSS custom property name for a token key.
 - `Tokens.variable(key, fallback?)` - Returns `var(...)` reference for a token key, with optional fallback.
-- `Tokens.extend(config)` - Returns a new `Tokens` instance with merged default values.
+- `Tokens.extend(extension)` - Returns a new `Tokens` instance with merged values. Supports both overriding existing token keys and adding new keys.
 
 **Call-time Parameters**
 
@@ -554,24 +554,32 @@ ThemeTokens.variable("radius.md", "6px");
 ```
 
 ```ts
-export const DarkThemeTokens = ThemeTokens.extend({
+export const CustomThemeTokens = ThemeTokens.extend({
   "color.primary": "#1e40af",
+  "color.secondary": "#475569",
 });
+
+export type CustomThemeTokensConfig = InferTokensConfig<typeof CustomThemeTokens>;
+// => { "color.primary"?: string; "color.border"?: string; "radius.md"?: string; border?: string; "color.secondary"?: string }
 ```
 
 ```ts
-DarkThemeTokens.definition;
-// => { "color.primary": "#1e40af", "radius.md": "8px", border: "1px solid {color.border ?? #e5e7eb}" }
+CustomThemeTokens.definition;
+// => { "color.primary": "#1e40af", "radius.md": "8px", border: "1px solid {color.border ?? #e5e7eb}", "color.secondary": "#475569" }
 
-DarkThemeTokens.style;
+CustomThemeTokens.style;
 // => {
 //   "--app-color-primary": "#1e40af",
 //   "--app-radius-md": "8px",
 //   "--app-border": "1px solid var(--app-color-border, #e5e7eb)",
+//   "--app-color-secondary": "#475569",
 // }
 
-DarkThemeTokens.value("color.primary");
+CustomThemeTokens.value("color.primary");
 // => "#1e40af"
+
+CustomThemeTokens.value("color.secondary");
+// => "#475569"
 ```
 
 #### `cx(...classes)`
