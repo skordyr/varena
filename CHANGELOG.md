@@ -1,5 +1,21 @@
 # varena
 
+## 0.4.5
+
+### Patch Changes
+
+- ded05bf: feat(tokens): :sparkles: add `{key}` reference syntax for `createTokens`
+
+  Token values can now reference other tokens using `{key}` and `{key ?? fallback}` syntax. `{key}` is dereferenced to `var(--prefix-key)`, and `{key ?? fallback}` to `var(--prefix-key, fallback)`, equivalent to `variable('key')` and `variable('key', 'fallback')`.
+
+- 47a0028: refactor(design-system): :recycle: use `calc({key} * n)` for derived border, spacing, and typography tokens
+
+  BorderTokens (`radius-xs`–`radius-4xl`), SpacingTokens (`spacing-0_5`–`spacing-96`), and TypographyTokens (`text-xs`–`text-9xl`) now use `calc({key} * n)` relative references instead of hardcoded rem values. Multipliers are the scale factors from the base token (e.g., `calc({radius} * 0.25)` for `radius-xs`). `calc({key} * 1)` is simplified to `{key}`, and `calc({key} * 0)` to `0`.
+
+- ffb6350: refactor(design-system): :recycle: split `PaletteSystem` into individual color systems
+
+  `PaletteSystem` has been split into 27 individual color systems, each with its own type and tokens pair (e.g., `RedSystem` + `RedTokens`, `BlueSystem` + `BlueTokens`). `PaletteSystem` and `PaletteTokens` are removed. `DesignSystem` is reordered by usage frequency, with color palette systems in definition order at the end.
+
 ## 0.4.4
 
 ### Patch Changes
