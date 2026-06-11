@@ -884,17 +884,17 @@ Border radius scales.
 
 ```ts
 type BorderSystem = {
-  radius: string; //        0.5rem
-  "radius-none": string; // 0
-  "radius-xs": string; //   0.125rem
-  "radius-sm": string; //   0.25rem
-  "radius-md": string; //   0.375rem
-  "radius-lg": string; //   0.5rem
-  "radius-xl": string; //   0.75rem
-  "radius-2xl": string; //  1rem
-  "radius-3xl": string; //  1.5rem
-  "radius-4xl": string; //  2rem
-  "radius-full": string; // 9999px
+  radius: string; //          0.5rem                 // :8px
+  "radius-none": string; //   0                      // :0
+  "radius-xs": string; //     calc({radius} * 0.25)  // :2px
+  "radius-sm": string; //     calc({radius} * 0.5)   // :4px
+  "radius-md": string; //     calc({radius} * 0.75)  // :6px
+  "radius-lg": string; //     {radius}               // :8px
+  "radius-xl": string; //     calc({radius} * 1.5)   // :12px
+  "radius-2xl": string; //    calc({radius} * 2)     // :16px
+  "radius-3xl": string; //    calc({radius} * 3)     // :24px
+  "radius-4xl": string; //    calc({radius} * 4)     // :32px
+  "radius-full": string; //   9999px                 // :9999px
 };
 ```
 
@@ -1390,43 +1390,43 @@ Spacing scales.
 
 ```ts
 type SpacingSystem = {
-  spacing: string; //       0.25rem
-  "spacing-0": string; //   0rem
-  "spacing-0_5": string; // 0.125rem
-  "spacing-1": string; //   0.25rem
-  "spacing-1_5": string; // 0.375rem
-  "spacing-2": string; //   0.5rem
-  "spacing-2_5": string; // 0.625rem
-  "spacing-3": string; //   0.75rem
-  "spacing-3_5": string; // 0.875rem
-  "spacing-4": string; //   1rem
-  "spacing-4_5": string; // 1.125rem
-  "spacing-5": string; //   1.25rem
-  "spacing-5_5": string; // 1.375rem
-  "spacing-6": string; //   1.5rem
-  "spacing-7": string; //   1.75rem
-  "spacing-8": string; //   2rem
-  "spacing-9": string; //   2.25rem
-  "spacing-10": string; //  2.5rem
-  "spacing-11": string; //  2.75rem
-  "spacing-12": string; //  3rem
-  "spacing-14": string; //  3.5rem
-  "spacing-16": string; //  4rem
-  "spacing-20": string; //  5rem
-  "spacing-24": string; //  6rem
-  "spacing-28": string; //  7rem
-  "spacing-32": string; //  8rem
-  "spacing-36": string; //  9rem
-  "spacing-40": string; //  10rem
-  "spacing-44": string; //  11rem
-  "spacing-48": string; //  12rem
-  "spacing-52": string; //  13rem
-  "spacing-56": string; //  14rem
-  "spacing-60": string; //  15rem
-  "spacing-64": string; //  16rem
-  "spacing-72": string; //  18rem
-  "spacing-80": string; //  20rem
-  "spacing-96": string; //  24rem
+  spacing: string; //          0.25rem                // :4px
+  "spacing-0": string; //      0                      // :0
+  "spacing-0_5": string; //    calc({spacing} * 0.5)  // :2px
+  "spacing-1": string; //      {spacing}              // :4px
+  "spacing-1_5": string; //    calc({spacing} * 1.5)  // :6px
+  "spacing-2": string; //      calc({spacing} * 2)    // :8px
+  "spacing-2_5": string; //    calc({spacing} * 2.5)  // :10px
+  "spacing-3": string; //      calc({spacing} * 3)    // :12px
+  "spacing-3_5": string; //    calc({spacing} * 3.5)  // :14px
+  "spacing-4": string; //      calc({spacing} * 4)    // :16px
+  "spacing-4_5": string; //    calc({spacing} * 4.5)  // :18px
+  "spacing-5": string; //      calc({spacing} * 5)    // :20px
+  "spacing-5_5": string; //    calc({spacing} * 5.5)  // :22px
+  "spacing-6": string; //      calc({spacing} * 6)    // :24px
+  "spacing-7": string; //      calc({spacing} * 7)    // :28px
+  "spacing-8": string; //      calc({spacing} * 8)    // :32px
+  "spacing-9": string; //      calc({spacing} * 9)    // :36px
+  "spacing-10": string; //     calc({spacing} * 10)   // :40px
+  "spacing-11": string; //     calc({spacing} * 11)   // :44px
+  "spacing-12": string; //     calc({spacing} * 12)   // :48px
+  "spacing-14": string; //     calc({spacing} * 14)   // :56px
+  "spacing-16": string; //     calc({spacing} * 16)   // :64px
+  "spacing-20": string; //     calc({spacing} * 20)   // :80px
+  "spacing-24": string; //     calc({spacing} * 24)   // :96px
+  "spacing-28": string; //     calc({spacing} * 28)   // :112px
+  "spacing-32": string; //     calc({spacing} * 32)   // :128px
+  "spacing-36": string; //     calc({spacing} * 36)   // :144px
+  "spacing-40": string; //     calc({spacing} * 40)   // :160px
+  "spacing-44": string; //     calc({spacing} * 44)   // :176px
+  "spacing-48": string; //     calc({spacing} * 48)   // :192px
+  "spacing-52": string; //     calc({spacing} * 52)   // :208px
+  "spacing-56": string; //     calc({spacing} * 56)   // :224px
+  "spacing-60": string; //     calc({spacing} * 60)   // :240px
+  "spacing-64": string; //     calc({spacing} * 64)   // :256px
+  "spacing-72": string; //     calc({spacing} * 72)   // :288px
+  "spacing-80": string; //     calc({spacing} * 80)   // :320px
+  "spacing-96": string; //     calc({spacing} * 96)   // :384px
 };
 ```
 
@@ -1464,33 +1464,33 @@ type TypographySystem = {
   "font-weight-extrabold": string; //                 800
   "font-weight-black": string; //                     900
 
-  text: string; //                                    1rem
-  "text-xs": string; //                               0.75rem
-  "text-xs--line-height": string; //                  calc(1 / 0.75)
-  "text-sm": string; //                               0.875rem
-  "text-sm--line-height": string; //                  calc(1.25 / 0.875)
-  "text-md": string; //                               1rem
-  "text-md--line-height": string; //                  calc(1.5 / 1)
-  "text-lg": string; //                               1.125rem
-  "text-lg--line-height": string; //                  calc(1.75 / 1.125)
-  "text-xl": string; //                               1.25rem
-  "text-xl--line-height": string; //                  calc(1.75 / 1.25)
-  "text-2xl": string; //                              1.5rem
-  "text-2xl--line-height": string; //                 calc(2 / 1.5)
-  "text-3xl": string; //                              1.875rem
-  "text-3xl--line-height": string; //                 calc(2.25 / 1.875)
-  "text-4xl": string; //                              2.25rem
-  "text-4xl--line-height": string; //                 calc(2.5 / 2.25)
-  "text-5xl": string; //                              3rem
-  "text-5xl--line-height": string; //                 1
-  "text-6xl": string; //                              3.75rem
-  "text-6xl--line-height": string; //                 1
-  "text-7xl": string; //                              4.5rem
-  "text-7xl--line-height": string; //                 1
-  "text-8xl": string; //                              6rem
-  "text-8xl--line-height": string; //                 1
-  "text-9xl": string; //                              8rem
-  "text-9xl--line-height": string; //                 1
+  text: string; //                                    1rem                  // :16px
+  "text-xs": string; //                               calc({text} * 0.75)   // :12px
+  "text-xs--line-height": string; //                  calc(1 / 0.75)        // :1.333
+  "text-sm": string; //                               calc({text} * 0.875)  // :14px
+  "text-sm--line-height": string; //                  calc(1.25 / 0.875)    // :1.429
+  "text-md": string; //                               {text}                // :16px
+  "text-md--line-height": string; //                  calc(1.5 / 1)         // :1.5
+  "text-lg": string; //                               calc({text} * 1.125)  // :18px
+  "text-lg--line-height": string; //                  calc(1.75 / 1.125)    // :1.556
+  "text-xl": string; //                               calc({text} * 1.25)   // :20px
+  "text-xl--line-height": string; //                  calc(1.75 / 1.25)     // :1.4
+  "text-2xl": string; //                              calc({text} * 1.5)    // :24px
+  "text-2xl--line-height": string; //                 calc(2 / 1.5)         // :1.333
+  "text-3xl": string; //                              calc({text} * 1.875)  // :30px
+  "text-3xl--line-height": string; //                 calc(2.25 / 1.875)    // :1.2
+  "text-4xl": string; //                              calc({text} * 2.25)   // :36px
+  "text-4xl--line-height": string; //                 calc(2.5 / 2.25)      // :1.111
+  "text-5xl": string; //                              calc({text} * 3)      // :48px
+  "text-5xl--line-height": string; //                 1                     // :1
+  "text-6xl": string; //                              calc({text} * 3.75)   // :60px
+  "text-6xl--line-height": string; //                 1                     // :1
+  "text-7xl": string; //                              calc({text} * 4.5)    // :72px
+  "text-7xl--line-height": string; //                 1                     // :1
+  "text-8xl": string; //                              calc({text} * 6)      // :96px
+  "text-8xl--line-height": string; //                 1                     // :1
+  "text-9xl": string; //                              calc({text} * 8)      // :128px
+  "text-9xl--line-height": string; //                 1                     // :1
 
   "leading-none": string; //                          1
   "leading-tight": string; //                         1.25

@@ -17,15 +17,15 @@ export type BorderSystem = {
 };
 
 export const BorderTokens: Tokens<BorderSystem> = /* @__PURE__ */ createTokens({
-  radius: "0.5rem",
-  "radius-none": "0",
-  "radius-xs": "0.125rem",
-  "radius-sm": "0.25rem",
-  "radius-md": "0.375rem",
-  "radius-lg": "0.5rem",
-  "radius-xl": "0.75rem",
-  "radius-2xl": "1rem",
-  "radius-3xl": "1.5rem",
-  "radius-4xl": "2rem",
-  "radius-full": "9999px",
+  radius: "0.5rem", //                      :8px
+  "radius-none": "0", //                    :0
+  "radius-xs": "calc({radius} * 0.25)", //  :2px
+  "radius-sm": "calc({radius} * 0.5)", //   :4px
+  "radius-md": "calc({radius} * 0.75)", //  :6px
+  "radius-lg": "{radius}", //               :8px
+  "radius-xl": "calc({radius} * 1.5)", //   :12px
+  "radius-2xl": "calc({radius} * 2)", //    :16px
+  "radius-3xl": "calc({radius} * 3)", //    :24px
+  "radius-4xl": "calc({radius} * 4)", //    :32px
+  "radius-full": "9999px", //               :9999px
 });

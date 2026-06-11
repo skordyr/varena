@@ -102,33 +102,33 @@ export const TypographyTokens: Tokens<TypographySystem> = /* @__PURE__ */ create
   "font-weight-extrabold": "800",
   "font-weight-black": "900",
 
-  text: "1rem",
-  "text-xs": "0.75rem",
-  "text-xs--line-height": "calc(1 / 0.75)",
-  "text-sm": "0.875rem",
-  "text-sm--line-height": "calc(1.25 / 0.875)",
-  "text-md": "1rem",
-  "text-md--line-height": "calc(1.5 / 1)",
-  "text-lg": "1.125rem",
-  "text-lg--line-height": "calc(1.75 / 1.125)",
-  "text-xl": "1.25rem",
-  "text-xl--line-height": "calc(1.75 / 1.25)",
-  "text-2xl": "1.5rem",
-  "text-2xl--line-height": "calc(2 / 1.5)",
-  "text-3xl": "1.875rem",
-  "text-3xl--line-height": "calc(2.25 / 1.875)",
-  "text-4xl": "2.25rem",
-  "text-4xl--line-height": "calc(2.5 / 2.25)",
-  "text-5xl": "3rem",
-  "text-5xl--line-height": "1",
-  "text-6xl": "3.75rem",
-  "text-6xl--line-height": "1",
-  "text-7xl": "4.5rem",
-  "text-7xl--line-height": "1",
-  "text-8xl": "6rem",
-  "text-8xl--line-height": "1",
-  "text-9xl": "8rem",
-  "text-9xl--line-height": "1",
+  text: "1rem", //                                  :16px
+  "text-xs": "calc({text} * 0.75)", //              :12px
+  "text-xs--line-height": "calc(1 / 0.75)", //      :1.333
+  "text-sm": "calc({text} * 0.875)", //             :14px
+  "text-sm--line-height": "calc(1.25 / 0.875)", //  :1.429
+  "text-md": "{text}", //                           :16px
+  "text-md--line-height": "calc(1.5 / 1)", //       :1.5
+  "text-lg": "calc({text} * 1.125)", //             :18px
+  "text-lg--line-height": "calc(1.75 / 1.125)", //  :1.556
+  "text-xl": "calc({text} * 1.25)", //              :20px
+  "text-xl--line-height": "calc(1.75 / 1.25)", //   :1.4
+  "text-2xl": "calc({text} * 1.5)", //              :24px
+  "text-2xl--line-height": "calc(2 / 1.5)", //      :1.333
+  "text-3xl": "calc({text} * 1.875)", //            :30px
+  "text-3xl--line-height": "calc(2.25 / 1.875)", // :1.2
+  "text-4xl": "calc({text} * 2.25)", //             :36px
+  "text-4xl--line-height": "calc(2.5 / 2.25)", //   :1.111
+  "text-5xl": "calc({text} * 3)", //                :48px
+  "text-5xl--line-height": "1", //                  :1
+  "text-6xl": "calc({text} * 3.75)", //             :60px
+  "text-6xl--line-height": "1", //                  :1
+  "text-7xl": "calc({text} * 4.5)", //              :72px
+  "text-7xl--line-height": "1", //                  :1
+  "text-8xl": "calc({text} * 6)", //                :96px
+  "text-8xl--line-height": "1", //                  :1
+  "text-9xl": "calc({text} * 8)", //                :128px
+  "text-9xl--line-height": "1", //                  :1
 
   "leading-none": "1",
   "leading-tight": "1.25",
