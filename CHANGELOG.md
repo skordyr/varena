@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.6
+
+### Patch Changes
+
+- 58eb6cc: feat(tokens): :sparkles: support adding new keys in `Tokens.extend()`
+
 ## 0.4.5
 
 ### Patch Changes
