@@ -1,6 +1,7 @@
-import type { Simplify } from "./shared/types";
+import type { PartialShallow, Simplify, SimplifyShallow } from "./shared/types";
 
 import { EMPTY_OBJECT, run } from "./shared/utils";
+import { sx } from "./utils";
 
 export type SlotsValue = {
   [name: string]: string;
@@ -85,6 +86,20 @@ export interface Styles<
   ): Slots<TSlotsValue>;
   definition: StylesValue<TSlotsValue, TVariantsValue>;
   slots: Slots<TSlotsValue>;
+  extend<
+    TExtensionSlotsValue extends SlotsValue,
+    TExtensionVariantsValue extends VariantsValue<TExtensionSlotsValue & Partial<TSlotsValue>>,
+  >(
+    extension: Partial<
+      StylesValue<
+        Simplify<TExtensionSlotsValue & Partial<TSlotsValue>>,
+        SimplifyShallow<TExtensionVariantsValue & PartialShallow<TVariantsValue>>
+      >
+    >,
+  ): Styles<
+    Simplify<TSlotsValue & TExtensionSlotsValue>,
+    SimplifyShallow<TVariantsValue & TExtensionVariantsValue>
+  >;
 }
 
 export type InferStylesConfig<TStyles extends Styles<any, any>> =
@@ -133,9 +148,11 @@ export function isStyles(target: unknown): target is Styles<any, any> {
     candidate &&
     candidate.definition &&
     candidate.slots &&
+    candidate.extend &&
     typeof candidate === "function" &&
     typeof candidate.definition === "object" &&
-    typeof candidate.slots === "object",
+    typeof candidate.slots === "object" &&
+    typeof candidate.extend === "function",
   );
 }
 
@@ -367,6 +384,181 @@ export function createStyles<
     return mergedSlots;
   }
 
+  function extend<
+    TExtensionSlotsValue extends SlotsValue,
+    TExtensionVariantsValue extends VariantsValue<TExtensionSlotsValue & Partial<TSlotsValue>>,
+  >(
+    extension: Partial<
+      StylesValue<
+        Simplify<TExtensionSlotsValue & Partial<TSlotsValue>>,
+        SimplifyShallow<TExtensionVariantsValue & PartialShallow<TVariantsValue>>
+      >
+    >,
+  ): Styles<
+    Simplify<TSlotsValue & TExtensionSlotsValue>,
+    SimplifyShallow<TVariantsValue & TExtensionVariantsValue>
+  > {
+    function mergeSlots(base?: Partial<SlotsValue>, patch?: Partial<SlotsValue>) {
+      if (!patch) {
+        return base;
+      }
+
+      if (!base) {
+        return patch;
+      }
+
+      const merged = { ...base };
+
+      for (const [name, value] of Object.entries(patch)) {
+        if (value) {
+          merged[name] = base[name] ? mergeClasses(base[name], value) : value;
+        }
+      }
+
+      return merged;
+    }
+
+    function mergeVariants(base?: VariantsValue<SlotsValue>, patch?: VariantsValue<SlotsValue>) {
+      if (!patch) {
+        return base;
+      }
+
+      if (!base) {
+        return patch;
+      }
+
+      const merged = { ...base };
+
+      for (const [variantName, value] of Object.entries(patch)) {
+        if (base[variantName]) {
+          const mergedValue = { ...base[variantName] };
+
+          for (const [variantValue, slots] of Object.entries(value)) {
+            mergedValue[variantValue] = mergeSlots(base[variantName][variantValue], slots)!;
+          }
+
+          merged[variantName] = mergedValue;
+        } else {
+          merged[variantName] = value;
+        }
+      }
+
+      return merged;
+    }
+
+    function mergeCompoundVariants(
+      base?: CompoundVariants<SlotsValue, VariantsValue<SlotsValue>>,
+      patch?: CompoundVariants<SlotsValue, VariantsValue<SlotsValue>>,
+    ) {
+      if (!patch) {
+        return base;
+      }
+
+      if (!base) {
+        return patch;
+      }
+
+      const baseCompoundVariants = Array.isArray(base) ? base : [base];
+      const patchCompoundVariants = Array.isArray(patch) ? patch : [patch];
+
+      const merged = [...baseCompoundVariants];
+
+      const variantsNamesCache: Map<
+        CompoundVariant<SlotsValue, VariantsValue<SlotsValue>>,
+        string[]
+      > = new Map();
+
+      const getVariantsNames = (
+        variant: CompoundVariant<SlotsValue, VariantsValue<SlotsValue>>,
+      ) => {
+        let names = variantsNamesCache.get(variant);
+
+        if (!names) {
+          names = Object.keys(variant.variants);
+
+          variantsNamesCache.set(variant, names);
+        }
+
+        return names;
+      };
+
+      for (const patchCompoundVariant of patchCompoundVariants) {
+        const patchVariantsNames = getVariantsNames(patchCompoundVariant);
+
+        const index = baseCompoundVariants.findIndex((baseCompoundVariant) => {
+          const baseVariantsNames = getVariantsNames(baseCompoundVariant);
+
+          if (baseVariantsNames.length !== patchVariantsNames.length) {
+            return false;
+          }
+
+          for (const variantName of patchVariantsNames) {
+            const baseVariantValue = baseCompoundVariant.variants[variantName];
+            const patchVariantValue = patchCompoundVariant.variants[variantName];
+
+            if (baseVariantValue !== patchVariantValue) {
+              if (!baseVariantValue || !patchVariantValue) {
+                return false;
+              }
+
+              const baseVariantValues = Array.isArray(baseVariantValue)
+                ? baseVariantValue
+                : [baseVariantValue];
+              const patchVariantValues = Array.isArray(patchVariantValue)
+                ? patchVariantValue
+                : [patchVariantValue];
+
+              if (
+                baseVariantValues.length !== patchVariantValues.length ||
+                baseVariantValues.some((value) => !patchVariantValues.includes(value)) ||
+                patchVariantValues.some((value) => !baseVariantValues.includes(value))
+              ) {
+                return false;
+              }
+            }
+          }
+
+          return true;
+        });
+
+        if (index > -1) {
+          merged[index] = {
+            ...merged[index],
+            slots: mergeSlots(merged[index].slots, patchCompoundVariant.slots)!,
+          };
+        } else {
+          merged.push(patchCompoundVariant);
+        }
+      }
+
+      if (merged.length === 1 && !Array.isArray(base) && !Array.isArray(patch)) {
+        return merged[0];
+      }
+
+      return merged;
+    }
+
+    return createStyles(
+      {
+        slots: mergeSlots(styles.slots, extension.slots),
+        variants: mergeVariants(styles.variants, extension.variants),
+        compoundVariants: mergeCompoundVariants(
+          styles.compoundVariants as
+            | CompoundVariants<SlotsValue, VariantsValue<SlotsValue>>
+            | undefined,
+          extension.compoundVariants as
+            | CompoundVariants<SlotsValue, VariantsValue<SlotsValue>>
+            | undefined,
+        ),
+        defaultVariants: sx(styles.defaultVariants, extension.defaultVariants),
+      } as StylesValue<
+        Simplify<TSlotsValue & TExtensionSlotsValue>,
+        SimplifyShallow<TVariantsValue & TExtensionVariantsValue>
+      >,
+      options,
+    );
+  }
+
   let _slots: Slots<TSlotsValue>;
 
   function createSlots(
@@ -385,6 +577,8 @@ export function createStyles<
   }
 
   createSlots.definition = styles;
+
+  createSlots.extend = extend;
 
   Object.defineProperty(createSlots, "slots", {
     get() {

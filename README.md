@@ -287,6 +287,7 @@ Create a typed slot styles factory for slot-based components with variants, comp
 - `Styles(config?, overrides?)` - Resolves final slot classes by combining defaults, variants, and overrides.
 - `Styles.definition` - Original style definition passed to `createStyles`.
 - `Styles.slots` - Cached slots resolved from base slots + `defaultVariants`.
+- `Styles.extend(extension)` - Returns a new `Styles` instance with merged definitions. Supports both adding new slots and variants, and merging with existing ones.
 
 **Call-time Parameters**
 
@@ -397,6 +398,58 @@ const slots = ButtonStyles({
 
 slots.root;
 // => "btn btn--sm btn--danger btn--ring"
+```
+
+```ts
+const PricingButtonStyles = ButtonStyles.extend({
+  slots: {
+    root: "pricing-btn",
+    badge: "pricing-btn__badge",
+  },
+  variants: {
+    size: {
+      lg: { root: "pricing-btn--lg", icon: "pricing-btn__icon--lg" },
+      xl: { root: "pricing-btn--xl", icon: "pricing-btn__icon--xl" },
+    },
+    tier: {
+      starter: { root: "pricing-btn--starter" },
+      pro: { root: "pricing-btn--pro" },
+    },
+  },
+  compoundVariants: [
+    {
+      variants: { size: "lg", tone: "danger" },
+      slots: { root: "pricing-btn--lg-danger", badge: "pricing-btn__badge--danger" },
+    },
+    {
+      variants: { size: "xl", tier: "pro" },
+      slots: { root: "pricing-btn--hero", badge: "pricing-btn__badge--hero" },
+    },
+  ],
+  defaultVariants: { size: "lg", tier: "pro" },
+});
+
+PricingButtonStyles.definition;
+// => {
+//   slots: { root: "btn pricing-btn", icon: "btn__icon", badge: "pricing-btn__badge" },
+//   variants: {
+//     size: {
+//       sm: { root: "btn--sm", icon: "btn__icon--sm" },
+//       lg: { root: "btn--lg pricing-btn--lg", icon: "btn__icon--lg pricing-btn__icon--lg" },
+//       xl: { root: "pricing-btn--xl", icon: "pricing-btn__icon--xl" },
+//     },
+//     tone: { neutral: { root: "btn--neutral" }, danger: { root: "btn--danger" } },
+//     tier: { starter: { root: "pricing-btn--starter" }, pro: { root: "pricing-btn--pro" } },
+//   },
+//   compoundVariants: [
+//     { variants: { size: "lg", tone: "danger" }, slots: { root: "btn--lg-danger pricing-btn--lg-danger", badge: "pricing-btn__badge--danger" } },
+//     { variants: { size: "xl", tier: "pro" }, slots: { root: "pricing-btn--hero", badge: "pricing-btn__badge--hero" } },
+//   ],
+//   defaultVariants: { size: "lg", tone: "neutral", tier: "pro" },
+// }
+
+PricingButtonStyles.slots;
+// => { root: "btn pricing-btn btn--lg pricing-btn--lg btn--neutral pricing-btn--pro", icon: "btn__icon btn__icon--lg pricing-btn__icon--lg", badge: "pricing-btn__badge" }
 ```
 
 #### `createTokens(tokens, options?)`
