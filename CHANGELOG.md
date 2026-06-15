@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.7
+
+### Patch Changes
+
+- 63fe0c0: feat(styles): :sparkles: support extending style definitions in `Styles.extend()`
+
 ## 0.4.6
 
 ### Patch Changes
