@@ -1172,26 +1172,26 @@ Shadow effects for boxes and text.
 
 ```ts
 type EffectSystem = {
-  "shadow-none": string; //       0 0 #0000
-  "shadow-2xs": string; //        0 1px rgb(0 0 0 / 0.05)
-  "shadow-xs": string; //         0 1px 2px 0 rgb(0 0 0 / 0.05)
-  "shadow-sm": string; //         0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
-  "shadow-md": string; //         0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
-  "shadow-lg": string; //         0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)
-  "shadow-xl": string; //         0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)
-  "shadow-2xl": string; //        0 25px 50px -12px rgb(0 0 0 / 0.25)
+  "shadow-none": string; //       0 0 hsl(0 0% 0% / 0)
+  "shadow-2xs": string; //        0 1px hsl(0 0% 0% / 0.05)
+  "shadow-xs": string; //         0 1px 2px 0 hsl(0 0% 0% / 0.05)
+  "shadow-sm": string; //         0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1)
+  "shadow-md": string; //         0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1)
+  "shadow-lg": string; //         0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1)
+  "shadow-xl": string; //         0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1)
+  "shadow-2xl": string; //        0 25px 50px -12px hsl(0 0% 0% / 0.25)
 
-  "inset-shadow-none": string; // inset 0 0 #0000
-  "inset-shadow-2xs": string; //  inset 0 1px rgb(0 0 0 / 0.05)
-  "inset-shadow-xs": string; //   inset 0 1px 1px rgb(0 0 0 / 0.05)
-  "inset-shadow-sm": string; //   inset 0 2px 4px rgb(0 0 0 / 0.05)
+  "inset-shadow-none": string; // inset 0 0 hsl(0 0% 0% / 0)
+  "inset-shadow-2xs": string; //  inset 0 1px hsl(0 0% 0% / 0.05)
+  "inset-shadow-xs": string; //   inset 0 1px 1px hsl(0 0% 0% / 0.05)
+  "inset-shadow-sm": string; //   inset 0 2px 4px hsl(0 0% 0% / 0.05)
 
   "text-shadow-none": string; //  none
-  "text-shadow-2xs": string; //   0px 1px 0px rgb(0 0 0 / 0.15)
-  "text-shadow-xs": string; //    0px 1px 1px rgb(0 0 0 / 0.2)
-  "text-shadow-sm": string; //    0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)
-  "text-shadow-md": string; //    0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1)
-  "text-shadow-lg": string; //    0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1)
+  "text-shadow-2xs": string; //   0px 1px 0px hsl(0 0% 0% / 0.15)
+  "text-shadow-xs": string; //    0px 1px 1px hsl(0 0% 0% / 0.2)
+  "text-shadow-sm": string; //    0px 1px 0px hsl(0 0% 0% / 0.075), 0px 1px 1px hsl(0 0% 0% / 0.075), 0px 2px 2px hsl(0 0% 0% / 0.075)
+  "text-shadow-md": string; //    0px 1px 1px hsl(0 0% 0% / 0.1), 0px 1px 2px hsl(0 0% 0% / 0.1), 0px 2px 4px hsl(0 0% 0% / 0.1)
+  "text-shadow-lg": string; //    0px 1px 2px hsl(0 0% 0% / 0.1), 0px 3px 2px hsl(0 0% 0% / 0.1), 0px 4px 8px hsl(0 0% 0% / 0.1)
 };
 ```
 
@@ -1279,13 +1279,13 @@ type FilterSystem = {
   "blur-2xl": string; //          40px
   "blur-3xl": string; //          64px
 
-  "drop-shadow-none": string; //  0 0 #0000
-  "drop-shadow-xs": string; //    0 1px 1px rgb(0 0 0 / 0.05)
-  "drop-shadow-sm": string; //    0 1px 2px rgb(0 0 0 / 0.15)
-  "drop-shadow-md": string; //    0 3px 3px rgb(0 0 0 / 0.12)
-  "drop-shadow-lg": string; //    0 4px 4px rgb(0 0 0 / 0.15)
-  "drop-shadow-xl": string; //    0 9px 7px rgb(0 0 0 / 0.1)
-  "drop-shadow-2xl": string; //   0 25px 25px rgb(0 0 0 / 0.15)
+  "drop-shadow-none": string; //  0 0 hsl(0 0% 0% / 0)
+  "drop-shadow-xs": string; //    0 1px 1px hsl(0 0% 0% / 0.05)
+  "drop-shadow-sm": string; //    0 1px 2px hsl(0 0% 0% / 0.15)
+  "drop-shadow-md": string; //    0 3px 3px hsl(0 0% 0% / 0.12)
+  "drop-shadow-lg": string; //    0 4px 4px hsl(0 0% 0% / 0.15)
+  "drop-shadow-xl": string; //    0 9px 7px hsl(0 0% 0% / 0.1)
+  "drop-shadow-2xl": string; //   0 25px 25px hsl(0 0% 0% / 0.15)
 };
 ```
 

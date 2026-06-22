@@ -2,6 +2,104 @@ import type { Tokens } from "../tokens";
 
 import { createTokens } from "../tokens";
 
+export type ColorSystem = {
+  "color-background": string;
+  "color-foreground": string;
+
+  "color-brand": string;
+  "color-brand-foreground": string;
+  "color-primary": string;
+  "color-primary-foreground": string;
+  "color-secondary": string;
+  "color-secondary-foreground": string;
+  "color-muted": string;
+  "color-muted-foreground": string;
+  "color-accent": string;
+  "color-accent-foreground": string;
+
+  "color-danger": string;
+  "color-danger-foreground": string;
+  "color-warning": string;
+  "color-warning-foreground": string;
+  "color-success": string;
+  "color-success-foreground": string;
+  "color-info": string;
+  "color-info-foreground": string;
+
+  "color-border": string;
+  "color-input": string;
+  "color-ring": string;
+
+  "color-card": string;
+  "color-card-foreground": string;
+  "color-popover": string;
+  "color-popover-foreground": string;
+
+  "color-sidebar": string;
+  "color-sidebar-foreground": string;
+  "color-sidebar-primary": string;
+  "color-sidebar-primary-foreground": string;
+  "color-sidebar-accent": string;
+  "color-sidebar-accent-foreground": string;
+  "color-sidebar-border": string;
+  "color-sidebar-ring": string;
+
+  "color-chart-1": string;
+  "color-chart-2": string;
+  "color-chart-3": string;
+  "color-chart-4": string;
+  "color-chart-5": string;
+};
+
+export const ColorTokens: Tokens<ColorSystem> = /* @__PURE__ */ createTokens({
+  "color-background": "0 0% 100%", //                   color-white      :hsl(0 0% 100%)
+  "color-foreground": "0 0% 3.94%", //                  color-neutral-950:hsl(0 0% 3.94%)
+
+  "color-brand": "0 0% 9.05%", //                       color-neutral-900:hsl(0 0% 9.05%)
+  "color-brand-foreground": "0 0% 98.03%", //           color-neutral-50: hsl(0 0% 98.03%)
+  "color-primary": "0 0% 9.05%", //                     color-neutral-900:hsl(0 0% 9.05%)
+  "color-primary-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
+  "color-secondary": "0 0% 96.06%", //                  color-neutral-100:hsl(0 0% 96.06%)
+  "color-secondary-foreground": "0 0% 9.05%", //        color-neutral-900:hsl(0 0% 9.05%)
+  "color-muted": "0 0% 96.06%", //                      color-neutral-100:hsl(0 0% 96.06%)
+  "color-muted-foreground": "0 0% 45.15%", //           color-neutral-500:hsl(0 0% 45.15%)
+  "color-accent": "0 0% 96.06%", //                     color-neutral-100:hsl(0 0% 96.06%)
+  "color-accent-foreground": "0 0% 9.05%", //           color-neutral-900:hsl(0 0% 9.05%)
+
+  "color-danger": "357.21 100% 45.32%", //              color-red-600:    hsl(357.21 100% 45.32%)
+  "color-danger-foreground": "0 0% 98.03%", //          color-neutral-50: hsl(0 0% 98.03%)
+  "color-warning": "30.1 100% 44.19%", //               color-amber-600:  hsl(30.1 100% 44.19%)
+  "color-warning-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
+  "color-success": "142.29 100% 32.57%", //             color-green-600:  hsl(142.29 100% 32.57%)
+  "color-success-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
+  "color-info": "221.34 97.06% 53.5%", //               color-blue-600:   hsl(221.34 97.06% 53.5%)
+  "color-info-foreground": "0 0% 98.03%", //            color-neutral-50: hsl(0 0% 98.03%)
+
+  "color-border": "0 0% 89.82%", //                     color-neutral-200:hsl(0 0% 89.82%)
+  "color-input": "0 0% 89.82%", //                      color-neutral-200:hsl(0 0% 89.82%)
+  "color-ring": "0 0% 63.02%", //                       color-neutral-400:hsl(0 0% 63.02%)
+
+  "color-card": "0 0% 100%", //                         color-white:      hsl(0 0% 100%)
+  "color-card-foreground": "0 0% 3.94%", //             color-neutral-950:hsl(0 0% 3.94%)
+  "color-popover": "0 0% 100%", //                      color-white:      hsl(0 0% 100%)
+  "color-popover-foreground": "0 0% 3.94%", //          color-neutral-950:hsl(0 0% 3.94%)
+
+  "color-sidebar": "0 0% 98.03%", //                    color-neutral-50: hsl(0 0% 98.03%)
+  "color-sidebar-foreground": "0 0% 3.94%", //          color-neutral-950:hsl(0 0% 3.94%)
+  "color-sidebar-primary": "0 0% 9.05%", //             color-neutral-900:hsl(0 0% 9.05%)
+  "color-sidebar-primary-foreground": "0 0% 98.03%", // color-neutral-50: hsl(0 0% 98.03%)
+  "color-sidebar-accent": "0 0% 96.06%", //             color-neutral-100:hsl(0 0% 96.06%)
+  "color-sidebar-accent-foreground": "0 0% 9.05%", //   color-neutral-900:hsl(0 0% 9.05%)
+  "color-sidebar-border": "0 0% 89.82%", //             color-neutral-200:hsl(0 0% 89.82%)
+  "color-sidebar-ring": "0 0% 63.02%", //               color-neutral-400:hsl(0 0% 63.02%)
+
+  "color-chart-1": "210.69 100% 77.83%", //             color-blue-300:   hsl(210.69 100% 77.83%)
+  "color-chart-2": "216.26 100% 58.47%", //             color-blue-500:   hsl(216.26 100% 58.47%)
+  "color-chart-3": "221.34 97.06% 53.5%", //            color-blue-600:   hsl(221.34 97.06% 53.5%)
+  "color-chart-4": "225.35 84.1% 48.98%", //            color-blue-700:   hsl(225.35 84.1% 48.98%)
+  "color-chart-5": "227.1 75.74% 41.14%", //            color-blue-800:   hsl(227.1 75.74% 41.14%)
+});
+
 export type BlackWhiteSystem = {
   "color-black": string;
   "color-white": string;
@@ -738,102 +836,4 @@ export const TaupeTokens: Tokens<TaupeSystem> = /* @__PURE__ */ createTokens({
   "color-taupe-800": "13.34 11.39% 15.14%", //    :hsl(13.34 11.39% 15.14%)
   "color-taupe-900": "17.16 13.88% 9.98%", //     :hsl(17.16 13.88% 9.98%)
   "color-taupe-950": "20.06 13.84% 4.12%", //     :hsl(20.06 13.84% 4.12%)
-});
-
-export type ColorSystem = {
-  "color-background": string;
-  "color-foreground": string;
-
-  "color-brand": string;
-  "color-brand-foreground": string;
-  "color-primary": string;
-  "color-primary-foreground": string;
-  "color-secondary": string;
-  "color-secondary-foreground": string;
-  "color-muted": string;
-  "color-muted-foreground": string;
-  "color-accent": string;
-  "color-accent-foreground": string;
-
-  "color-danger": string;
-  "color-danger-foreground": string;
-  "color-warning": string;
-  "color-warning-foreground": string;
-  "color-success": string;
-  "color-success-foreground": string;
-  "color-info": string;
-  "color-info-foreground": string;
-
-  "color-border": string;
-  "color-input": string;
-  "color-ring": string;
-
-  "color-card": string;
-  "color-card-foreground": string;
-  "color-popover": string;
-  "color-popover-foreground": string;
-
-  "color-sidebar": string;
-  "color-sidebar-foreground": string;
-  "color-sidebar-primary": string;
-  "color-sidebar-primary-foreground": string;
-  "color-sidebar-accent": string;
-  "color-sidebar-accent-foreground": string;
-  "color-sidebar-border": string;
-  "color-sidebar-ring": string;
-
-  "color-chart-1": string;
-  "color-chart-2": string;
-  "color-chart-3": string;
-  "color-chart-4": string;
-  "color-chart-5": string;
-};
-
-export const ColorTokens: Tokens<ColorSystem> = /* @__PURE__ */ createTokens({
-  "color-background": "0 0% 100%", //                   color-white      :hsl(0 0% 100%)
-  "color-foreground": "0 0% 3.94%", //                  color-neutral-950:hsl(0 0% 3.94%)
-
-  "color-brand": "0 0% 9.05%", //                       color-neutral-900:hsl(0 0% 9.05%)
-  "color-brand-foreground": "0 0% 98.03%", //           color-neutral-50: hsl(0 0% 98.03%)
-  "color-primary": "0 0% 9.05%", //                     color-neutral-900:hsl(0 0% 9.05%)
-  "color-primary-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
-  "color-secondary": "0 0% 96.06%", //                  color-neutral-100:hsl(0 0% 96.06%)
-  "color-secondary-foreground": "0 0% 9.05%", //        color-neutral-900:hsl(0 0% 9.05%)
-  "color-muted": "0 0% 96.06%", //                      color-neutral-100:hsl(0 0% 96.06%)
-  "color-muted-foreground": "0 0% 45.15%", //           color-neutral-500:hsl(0 0% 45.15%)
-  "color-accent": "0 0% 96.06%", //                     color-neutral-100:hsl(0 0% 96.06%)
-  "color-accent-foreground": "0 0% 9.05%", //           color-neutral-900:hsl(0 0% 9.05%)
-
-  "color-danger": "357.21 100% 45.32%", //              color-red-600:    hsl(357.21 100% 45.32%)
-  "color-danger-foreground": "0 0% 98.03%", //          color-neutral-50: hsl(0 0% 98.03%)
-  "color-warning": "30.1 100% 44.19%", //               color-amber-600:  hsl(30.1 100% 44.19%)
-  "color-warning-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
-  "color-success": "142.29 100% 32.57%", //             color-green-600:  hsl(142.29 100% 32.57%)
-  "color-success-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
-  "color-info": "221.34 97.06% 53.5%", //               color-blue-600:   hsl(221.34 97.06% 53.5%)
-  "color-info-foreground": "0 0% 98.03%", //            color-neutral-50: hsl(0 0% 98.03%)
-
-  "color-border": "0 0% 89.82%", //                     color-neutral-200:hsl(0 0% 89.82%)
-  "color-input": "0 0% 89.82%", //                      color-neutral-200:hsl(0 0% 89.82%)
-  "color-ring": "0 0% 63.02%", //                       color-neutral-400:hsl(0 0% 63.02%)
-
-  "color-card": "0 0% 100%", //                         color-white:      hsl(0 0% 100%)
-  "color-card-foreground": "0 0% 3.94%", //             color-neutral-950:hsl(0 0% 3.94%)
-  "color-popover": "0 0% 100%", //                      color-white:      hsl(0 0% 100%)
-  "color-popover-foreground": "0 0% 3.94%", //          color-neutral-950:hsl(0 0% 3.94%)
-
-  "color-sidebar": "0 0% 98.03%", //                    color-neutral-50: hsl(0 0% 98.03%)
-  "color-sidebar-foreground": "0 0% 3.94%", //          color-neutral-950:hsl(0 0% 3.94%)
-  "color-sidebar-primary": "0 0% 9.05%", //             color-neutral-900:hsl(0 0% 9.05%)
-  "color-sidebar-primary-foreground": "0 0% 98.03%", // color-neutral-50: hsl(0 0% 98.03%)
-  "color-sidebar-accent": "0 0% 96.06%", //             color-neutral-100:hsl(0 0% 96.06%)
-  "color-sidebar-accent-foreground": "0 0% 9.05%", //   color-neutral-900:hsl(0 0% 9.05%)
-  "color-sidebar-border": "0 0% 89.82%", //             color-neutral-200:hsl(0 0% 89.82%)
-  "color-sidebar-ring": "0 0% 63.02%", //               color-neutral-400:hsl(0 0% 63.02%)
-
-  "color-chart-1": "210.69 100% 77.83%", //             color-blue-300:   hsl(210.69 100% 77.83%)
-  "color-chart-2": "216.26 100% 58.47%", //             color-blue-500:   hsl(216.26 100% 58.47%)
-  "color-chart-3": "221.34 97.06% 53.5%", //            color-blue-600:   hsl(221.34 97.06% 53.5%)
-  "color-chart-4": "225.35 84.1% 48.98%", //            color-blue-700:   hsl(225.35 84.1% 48.98%)
-  "color-chart-5": "227.1 75.74% 41.14%", //            color-blue-800:   hsl(227.1 75.74% 41.14%)
 });
