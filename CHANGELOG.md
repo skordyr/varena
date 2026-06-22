@@ -1,5 +1,14 @@
 # varena
 
+## 0.4.8
+
+### Patch Changes
+
+- d157718: refactor(design-system): :art: standardize shadow tokens on HSL format
+
+  - Migrated EffectTokens shadow values from `rgb(0 0 0 / x)` and `#0000` to HSL format
+  - Migrated FilterTokens drop-shadow values from `rgb(0 0 0 / x)` and `#0000` to HSL format
+
 ## 0.4.7
 
 ### Patch Changes
@@ -78,6 +87,7 @@
 ### Patch Changes
 
 - c9ca716: refactor: :recycle: optimize variant resolution in `createStyles`
+
   - Replace `.reduce()` with explicit `for...of` loops for readability
   - Pre-compute compound variant conditions to avoid redundant iteration
   - Extract `slotsEntries` outside `create()` to avoid repeated `Object.entries()`
@@ -94,6 +104,7 @@
   **BREAKING CHANGE:** All `classes` references renamed to `slots` to align with slot-based architecture.
 
   Changes:
+
   - `ClassesValue` → `SlotsValue`
   - `styles.classes` → `styles.slots`
   - `config.classes` → `config.slots`
@@ -141,6 +152,7 @@
 - 69ee1dc: feat: add `ExtractStylesConfig`, `ExcludeStylesConfig`, `ExtractComponentStylesConfig`, and `ExcludeComponentStylesConfig` for pattern-based class filtering
 
   Support pattern-based class filtering via `Extract`/`Exclude` semantics:
+
   - `ExtractStylesConfig<typeof styles, "_${string}">` / `ExtractComponentStylesConfig<typeof styles, "_${string}">` - extract classes by pattern
   - `ExcludeStylesConfig<typeof styles, "_${string}">` / `ExcludeComponentStylesConfig<typeof styles, "_${string}">` - exclude classes by pattern
 
