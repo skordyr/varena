@@ -17,8 +17,8 @@ export type ColorSystem = {
   "color-accent": string;
   "color-accent-foreground": string;
 
-  "color-danger": string;
-  "color-danger-foreground": string;
+  "color-error": string;
+  "color-error-foreground": string;
   "color-warning": string;
   "color-warning-foreground": string;
   "color-success": string;
@@ -66,8 +66,8 @@ export const ColorTokens: Tokens<ColorSystem> = /* @__PURE__ */ createTokens({
   "color-accent": "0 0% 96.06%", //                     color-neutral-100:hsl(0 0% 96.06%)
   "color-accent-foreground": "0 0% 9.05%", //           color-neutral-900:hsl(0 0% 9.05%)
 
-  "color-danger": "357.21 100% 45.32%", //              color-red-600:    hsl(357.21 100% 45.32%)
-  "color-danger-foreground": "0 0% 98.03%", //          color-neutral-50: hsl(0 0% 98.03%)
+  "color-error": "357.21 100% 45.32%", //               color-red-600:    hsl(357.21 100% 45.32%)
+  "color-error-foreground": "0 0% 98.03%", //           color-neutral-50: hsl(0 0% 98.03%)
   "color-warning": "30.1 100% 44.19%", //               color-amber-600:  hsl(30.1 100% 44.19%)
   "color-warning-foreground": "0 0% 98.03%", //         color-neutral-50: hsl(0 0% 98.03%)
   "color-success": "142.29 100% 32.57%", //             color-green-600:  hsl(142.29 100% 32.57%)

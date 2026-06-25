@@ -12,12 +12,6 @@ export type TypographySystem = {
   "font-mono": string;
   "font-mono--font-feature-settings": string;
   "font-mono--font-variation-settings": string;
-  "font-heading": string;
-  "font-heading--font-feature-settings": string;
-  "font-heading--font-variation-settings": string;
-  "font-body": string;
-  "font-body--font-feature-settings": string;
-  "font-body--font-variation-settings": string;
 
   "font-weight-thin": string;
   "font-weight-extralight": string;
@@ -84,13 +78,6 @@ export const TypographyTokens: Tokens<TypographySystem> = /* @__PURE__ */ create
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   "font-mono--font-feature-settings": "normal",
   "font-mono--font-variation-settings": "normal",
-  "font-heading": 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  "font-heading--font-feature-settings": "normal",
-  "font-heading--font-variation-settings": "normal",
-  "font-body":
-    'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-  "font-body--font-feature-settings": "normal",
-  "font-body--font-variation-settings": "normal",
 
   "font-weight-thin": "100",
   "font-weight-extralight": "200",

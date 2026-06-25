@@ -190,8 +190,8 @@ import { ThemeTokens } from "@/styles/theme";
 
 // Color tokens use space-separated HSL values, supporting opacity via CSS hsl()
 css`
-  background-color: hsl(${ThemeTokens.variable("color-danger")} / 0.1);
-  color: hsl(${ThemeTokens.variable("color-danger")});
+  background-color: hsl(${ThemeTokens.variable("color-error")} / 0.1);
+  color: hsl(${ThemeTokens.variable("color-error")});
 `;
 ```
 
@@ -234,7 +234,7 @@ ${ThemeTokens.css(":root")}
 // Use theme tokens with Tailwind CSS
 
 // Use color tokens with opacity modifier
-<div className="bg-danger/10 text-danger" />
+<div className="bg-error/10 text-error" />
 ```
 
 ## API Reference
@@ -981,8 +981,8 @@ type ColorSystem = {
   "color-accent": string; //                       0 0% 96.06%          // color-neutral-100:hsl(0 0% 96.06%)
   "color-accent-foreground": string; //            0 0% 9.05%           // color-neutral-900:hsl(0 0% 9.05%)
 
-  "color-danger": string; //                       357.21 100% 45.32%   // color-red-600    :hsl(357.21 100% 45.32%)
-  "color-danger-foreground": string; //            0 0% 98.03%          // color-neutral-50 :hsl(0 0% 98.03%)
+  "color-error": string; //                        357.21 100% 45.32%   // color-red-600    :hsl(357.21 100% 45.32%)
+  "color-error-foreground": string; //             0 0% 98.03%          // color-neutral-50 :hsl(0 0% 98.03%)
   "color-warning": string; //                      30.1 100% 44.19%     // color-amber-600  :hsl(30.1 100% 44.19%)
   "color-warning-foreground": string; //           0 0% 98.03%          // color-neutral-50 :hsl(0 0% 98.03%)
   "color-success": string; //                      142.29 100% 32.57%   // color-green-600  :hsl(142.29 100% 32.57%)
@@ -1081,12 +1081,6 @@ type TypographySystem = {
   "font-mono": string; //                             ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
   "font-mono--font-feature-settings": string; //      normal
   "font-mono--font-variation-settings": string; //    normal
-  "font-heading": string; //                          ui-serif, Georgia, Cambria, "Times New Roman", Times, serif
-  "font-heading--font-feature-settings": string; //   normal
-  "font-heading--font-variation-settings": string; // normal
-  "font-body": string; //                             ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
-  "font-body--font-feature-settings": string; //      normal
-  "font-body--font-variation-settings": string; //    normal
 
   "font-weight-thin": string; //                      100
   "font-weight-extralight": string; //                200
