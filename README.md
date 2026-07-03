@@ -605,6 +605,9 @@ ThemeTokens.atProperties({
 //   initial-value: 8px;
 // }
 
+ThemeTokens.atProperties({});
+// => ""
+
 ThemeTokens.value("color.primary");
 // => "#0ea5e9"
 

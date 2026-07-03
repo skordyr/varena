@@ -213,9 +213,15 @@ export function createTokens<TTokensValue extends TokensValue>(
   }
 
   function atProperties(config: TokenPropertyConfig<TTokensValue>): string {
+    const entries = Object.entries(config);
+
+    if (entries.length === 0) {
+      return "";
+    }
+
     const output: string[] = [];
 
-    for (const [key, descriptor] of Object.entries(config)) {
+    for (const [key, descriptor] of entries) {
       if (descriptor !== undefined) {
         const { syntax, inherits, initialValue } = descriptor;
 
