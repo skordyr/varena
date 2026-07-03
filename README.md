@@ -478,6 +478,7 @@ Create a typed token factory for generating CSS custom properties and `var(...)`
 - `Tokens.css(selector, wrapper?)` - Returns a formatted CSS string wrapped in a CSS selector for creating CSS files.
 - `Tokens.css(config)` - Returns a formatted CSS string with only the specified CSS custom property overrides, without a selector.
 - `Tokens.css(config, selector, wrapper?)` - Returns a formatted CSS string with only the specified CSS custom property overrides, wrapped in a CSS selector.
+- `Tokens.atProperties(config)` - Returns a formatted CSS string of `@property` at-rules for registering typed custom properties.
 - `Tokens.value(key)` - Reads a token value. Returns `undefined` if the key is not defined.
 
   > Token value may contain `{key[?? fallback]}` references.
@@ -586,6 +587,23 @@ ThemeTokens.css({ ...ThemeTokens.definition, "color.primary": "#f97316" }, ":roo
 
 ThemeTokens.css({});
 // => ""
+
+ThemeTokens.atProperties({
+  "color.primary": { syntax: '"<color>"', inherits: true, initialValue: "#0ea5e9" },
+  "radius.md": { syntax: '"<length>"', inherits: true, initialValue: "8px" },
+});
+// =>
+// @property --app-color-primary {
+//   syntax: "<color>";
+//   inherits: true;
+//   initial-value: #0ea5e9;
+// }
+//
+// @property --app-radius-md {
+//   syntax: "<length>";
+//   inherits: true;
+//   initial-value: 8px;
+// }
 
 ThemeTokens.value("color.primary");
 // => "#0ea5e9"

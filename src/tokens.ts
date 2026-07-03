@@ -2,11 +2,35 @@ import type { Simplify } from "./shared/types";
 
 import { EMPTY_OBJECT } from "./shared/utils";
 
-export type TokenPrimitive = string | number;
+export type TokenPropertyKnownSyntax =
+  | "*"
+  | "<color>"
+  | "<length>"
+  | "<number>"
+  | "<percentage>"
+  | "<length-percentage>"
+  | "<time>"
+  | "<angle>"
+  | "<transform-function>"
+  | "<transform-list>"
+  | "<integer>"
+  | "<url>"
+  | "<image>"
+  | "<string>"
+  | "<resolution>"
+  | "<custom-ident>";
+
+export type TokenPropertySyntax =
+  | `"${TokenPropertyKnownSyntax}"`
+  | `'${TokenPropertyKnownSyntax}'`
+  | (`"${string}"` & {})
+  | (`'${string}'` & {});
 
 export type TokenProperty = `--${string}`;
 
 export type TokenVariable = `var(${string})`;
+
+export type TokenPrimitive = string | number;
 
 export type TokensStyle = {
   [key: TokenProperty]: TokenPrimitive;
@@ -18,6 +42,16 @@ export type TokensValue = {
 
 export type TokensKey<TTokensValue extends TokensValue> = keyof TTokensValue & string;
 
+export interface TokenPropertyDescriptor<TTokenValue extends TokenPrimitive> {
+  syntax: TokenPropertySyntax;
+  inherits: boolean;
+  initialValue?: NonNullable<TTokenValue>;
+}
+
+export type TokenPropertyConfig<TTokensValue extends TokensValue> = {
+  [TKey in TokensKey<TTokensValue>]?: TokenPropertyDescriptor<TTokensValue[TKey]>;
+};
+
 export type TokensConfig<TTokensValue extends TokensValue> = Partial<TTokensValue>;
 
 export interface Tokens<TTokensValue extends TokensValue> {
@@ -28,6 +62,7 @@ export interface Tokens<TTokensValue extends TokensValue> {
   css(selector: string, wrapper?: string): string;
   css(config: TokensConfig<TTokensValue>): string;
   css(config: TokensConfig<TTokensValue>, selector: string, wrapper?: string): string;
+  atProperties(config: TokenPropertyConfig<TTokensValue>): string;
   value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey];
   value<TKey extends TokensKey<TTokensValue>>(
     key: TKey,
@@ -58,6 +93,7 @@ export function isTokens(target: unknown): target is Tokens<any> {
     candidate.definition &&
     candidate.style &&
     candidate.css &&
+    candidate.atProperties &&
     candidate.value &&
     candidate.property &&
     candidate.variable &&
@@ -66,6 +102,7 @@ export function isTokens(target: unknown): target is Tokens<any> {
     typeof candidate.definition === "object" &&
     typeof candidate.style === "object" &&
     typeof candidate.css === "function" &&
+    typeof candidate.atProperties === "function" &&
     typeof candidate.value === "function" &&
     typeof candidate.property === "function" &&
     typeof candidate.variable === "function" &&
@@ -175,6 +212,34 @@ export function createTokens<TTokensValue extends TokensValue>(
     return output.join("\n");
   }
 
+  function atProperties(config: TokenPropertyConfig<TTokensValue>): string {
+    const output: string[] = [];
+
+    for (const [key, descriptor] of Object.entries(config)) {
+      if (descriptor !== undefined) {
+        const { syntax, inherits, initialValue } = descriptor;
+
+        if (output.length > 0) {
+          output.push("");
+        }
+
+        const name = property(key as TokensKey<TTokensValue>);
+
+        output.push(`@property ${name} {`);
+        output.push(`  syntax: ${syntax};`);
+        output.push(`  inherits: ${inherits};`);
+
+        if (initialValue !== undefined) {
+          output.push(`  initial-value: ${initialValue};`);
+        }
+
+        output.push(`}`);
+      }
+    }
+
+    return output.join("\n");
+  }
+
   function value<TKey extends TokensKey<TTokensValue>>(key: TKey): TTokensValue[TKey] | undefined;
   function value<TKey extends TokensKey<TTokensValue>>(
     key: TKey,
@@ -224,6 +289,8 @@ export function createTokens<TTokensValue extends TokensValue>(
   createStyle.definition = tokens;
 
   createStyle.css = css;
+
+  createStyle.atProperties = atProperties;
 
   createStyle.value = value;
 
