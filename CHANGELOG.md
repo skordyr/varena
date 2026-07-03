@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.12
+
+### Patch Changes
+
+- d897f2c: perf(tokens): add early-return guard for empty config in `atProperties()`
+
 ## 0.4.11
 
 ### Patch Changes
