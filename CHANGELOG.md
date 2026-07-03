@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.11
+
+### Patch Changes
+
+- 0e31c63: feat(tokens): :sparkles: add `Tokens.atProperties()` for generating CSS `@property` at-rules
+
 ## 0.4.10
 
 ### Patch Changes
