@@ -141,19 +141,12 @@ export type ExcludeComponentStylesConfig<
   Pick<ExcludeStylesConfig<TStyles, TRules>, "slots"> & InferStylesConfig<TStyles>["variants"]
 >;
 
-export function isStyles(target: unknown): target is Styles<any, any> {
-  const candidate = target as Styles<any, any>;
+const STYLES_BRAND = Symbol("varena.styles");
 
-  return Boolean(
-    candidate &&
-    candidate.definition &&
-    candidate.slots &&
-    candidate.extend &&
-    typeof candidate === "function" &&
-    typeof candidate.definition === "object" &&
-    typeof candidate.slots === "object" &&
-    typeof candidate.extend === "function",
-  );
+export function isStyles(target: unknown): target is Styles<any, any> {
+  const candidate = target as { [STYLES_BRAND]: true };
+
+  return Boolean(candidate && candidate[STYLES_BRAND] === true);
 }
 
 export interface CreateStylesOptions {
@@ -585,6 +578,8 @@ export function createStyles<
       return createSlots();
     },
   });
+
+  Object.defineProperty(createSlots, STYLES_BRAND, { value: true });
 
   return createSlots as Styles<TSlotsValue, TVariantsValue>;
 }

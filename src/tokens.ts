@@ -85,29 +85,12 @@ export interface Tokens<TTokensValue extends TokensValue> {
 export type InferTokensConfig<TTokens extends Tokens<any>> =
   TTokens extends Tokens<infer TTokenValue> ? TokensConfig<TTokenValue> : never;
 
-export function isTokens(target: unknown): target is Tokens<any> {
-  const candidate = target as Tokens<any>;
+const TOKENS_BRAND = Symbol("varena.tokens");
 
-  return Boolean(
-    candidate &&
-    candidate.definition &&
-    candidate.style &&
-    candidate.css &&
-    candidate.atProperties &&
-    candidate.value &&
-    candidate.property &&
-    candidate.variable &&
-    candidate.extend &&
-    typeof candidate === "function" &&
-    typeof candidate.definition === "object" &&
-    typeof candidate.style === "object" &&
-    typeof candidate.css === "function" &&
-    typeof candidate.atProperties === "function" &&
-    typeof candidate.value === "function" &&
-    typeof candidate.property === "function" &&
-    typeof candidate.variable === "function" &&
-    typeof candidate.extend === "function",
-  );
+export function isTokens(target: unknown): target is Tokens<any> {
+  const candidate = target as { [TOKENS_BRAND]: true };
+
+  return Boolean(candidate && candidate[TOKENS_BRAND] === true);
 }
 
 export interface CreateTokensOptions {
@@ -311,6 +294,8 @@ export function createTokens<TTokensValue extends TokensValue>(
       return createStyle(tokens);
     },
   });
+
+  Object.defineProperty(createStyle, TOKENS_BRAND, { value: true });
 
   return createStyle as Tokens<TTokensValue>;
 }
