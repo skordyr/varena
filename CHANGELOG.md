@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.13
+
+### Patch Changes
+
+- e0e5e02: refactor(styles,tokens): :recycle: replace hand-maintained structural checks with Symbol brands in `isStyles` and `isTokens`
+
 ## 0.4.12
 
 ### Patch Changes
