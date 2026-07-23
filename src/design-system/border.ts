@@ -18,7 +18,7 @@ export type BorderSystem = {
 
 export const BorderTokens: Tokens<BorderSystem> = /* @__PURE__ */ createTokens({
   radius: "0.5rem", //                      :8px
-  "radius-none": "0", //                    :0
+  "radius-none": "0px", //                  :0px
   "radius-xs": "calc({radius} * 0.25)", //  :2px
   "radius-sm": "calc({radius} * 0.5)", //   :4px
   "radius-md": "calc({radius} * 0.75)", //  :6px

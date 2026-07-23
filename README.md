@@ -1046,7 +1046,7 @@ Spacing scales.
 ```ts
 type SpacingSystem = {
   spacing: string; //          0.25rem                // :4px
-  "spacing-0": string; //      0                      // :0
+  "spacing-0": string; //      0px                    // :0px
   "spacing-0_5": string; //    calc({spacing} * 0.5)  // :2px
   "spacing-1": string; //      {spacing}              // :4px
   "spacing-1_5": string; //    calc({spacing} * 1.5)  // :6px
@@ -1166,7 +1166,7 @@ Border radius scales.
 ```ts
 type BorderSystem = {
   radius: string; //          0.5rem                 // :8px
-  "radius-none": string; //   0                      // :0
+  "radius-none": string; //   0px                    // :0px
   "radius-xs": string; //     calc({radius} * 0.25)  // :2px
   "radius-sm": string; //     calc({radius} * 0.5)   // :4px
   "radius-md": string; //     calc({radius} * 0.75)  // :6px
@@ -1202,11 +1202,11 @@ type EffectSystem = {
   "inset-shadow-sm": string; //   inset 0 2px 4px hsl(0 0% 0% / 0.05)
 
   "text-shadow-none": string; //  none
-  "text-shadow-2xs": string; //   0px 1px 0px hsl(0 0% 0% / 0.15)
-  "text-shadow-xs": string; //    0px 1px 1px hsl(0 0% 0% / 0.2)
-  "text-shadow-sm": string; //    0px 1px 0px hsl(0 0% 0% / 0.075), 0px 1px 1px hsl(0 0% 0% / 0.075), 0px 2px 2px hsl(0 0% 0% / 0.075)
-  "text-shadow-md": string; //    0px 1px 1px hsl(0 0% 0% / 0.1), 0px 1px 2px hsl(0 0% 0% / 0.1), 0px 2px 4px hsl(0 0% 0% / 0.1)
-  "text-shadow-lg": string; //    0px 1px 2px hsl(0 0% 0% / 0.1), 0px 3px 2px hsl(0 0% 0% / 0.1), 0px 4px 8px hsl(0 0% 0% / 0.1)
+  "text-shadow-2xs": string; //   0 1px 0 hsl(0 0% 0% / 0.15)
+  "text-shadow-xs": string; //    0 1px 1px hsl(0 0% 0% / 0.2)
+  "text-shadow-sm": string; //    0 1px 0 hsl(0 0% 0% / 0.075), 0 1px 1px hsl(0 0% 0% / 0.075), 0 2px 2px hsl(0 0% 0% / 0.075)
+  "text-shadow-md": string; //    0 1px 1px hsl(0 0% 0% / 0.1), 0 1px 2px hsl(0 0% 0% / 0.1), 0 2px 4px hsl(0 0% 0% / 0.1)
+  "text-shadow-lg": string; //    0 1px 2px hsl(0 0% 0% / 0.1), 0 3px 2px hsl(0 0% 0% / 0.1), 0 4px 8px hsl(0 0% 0% / 0.1)
 };
 ```
 

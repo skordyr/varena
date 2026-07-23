@@ -41,12 +41,12 @@ export const EffectTokens: Tokens<EffectSystem> = /* @__PURE__ */ createTokens({
   "inset-shadow-sm": "inset 0 2px 4px hsl(0 0% 0% / 0.05)",
 
   "text-shadow-none": "none",
-  "text-shadow-2xs": "0px 1px 0px hsl(0 0% 0% / 0.15)",
-  "text-shadow-xs": "0px 1px 1px hsl(0 0% 0% / 0.2)",
+  "text-shadow-2xs": "0 1px 0 hsl(0 0% 0% / 0.15)",
+  "text-shadow-xs": "0 1px 1px hsl(0 0% 0% / 0.2)",
   "text-shadow-sm":
-    "0px 1px 0px hsl(0 0% 0% / 0.075), 0px 1px 1px hsl(0 0% 0% / 0.075), 0px 2px 2px hsl(0 0% 0% / 0.075)",
+    "0 1px 0 hsl(0 0% 0% / 0.075), 0 1px 1px hsl(0 0% 0% / 0.075), 0 2px 2px hsl(0 0% 0% / 0.075)",
   "text-shadow-md":
-    "0px 1px 1px hsl(0 0% 0% / 0.1), 0px 1px 2px hsl(0 0% 0% / 0.1), 0px 2px 4px hsl(0 0% 0% / 0.1)",
+    "0 1px 1px hsl(0 0% 0% / 0.1), 0 1px 2px hsl(0 0% 0% / 0.1), 0 2px 4px hsl(0 0% 0% / 0.1)",
   "text-shadow-lg":
-    "0px 1px 2px hsl(0 0% 0% / 0.1), 0px 3px 2px hsl(0 0% 0% / 0.1), 0px 4px 8px hsl(0 0% 0% / 0.1)",
+    "0 1px 2px hsl(0 0% 0% / 0.1), 0 3px 2px hsl(0 0% 0% / 0.1), 0 4px 8px hsl(0 0% 0% / 0.1)",
 });

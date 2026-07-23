@@ -44,7 +44,7 @@ export type SpacingSystem = {
 
 export const SpacingTokens: Tokens<SpacingSystem> = /* @__PURE__ */ createTokens({
   spacing: "0.25rem", //                     :4px
-  "spacing-0": "0", //                       :0
+  "spacing-0": "0px", //                     :0px
   "spacing-0_5": "calc({spacing} * 0.5)", // :2px
   "spacing-1": "{spacing}", //               :4px
   "spacing-1_5": "calc({spacing} * 1.5)", // :6px
