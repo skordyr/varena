@@ -1,5 +1,11 @@
 # varena
 
+## 0.4.14
+
+### Patch Changes
+
+- 5505974: refactor(tokens): :art: standardize CSS zero values — standalone `radius-none` and `spacing-0` to `0px`, shadow offsets in `text-shadow-*` to `0`
+
 ## 0.4.13
 
 ### Patch Changes
